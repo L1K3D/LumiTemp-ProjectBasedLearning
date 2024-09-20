@@ -19,6 +19,6 @@
         public string telf_cont_empr { get; set; }
 
         // Propriedade para armazenar o número do usuário (ID) associado à empresa
-        public int fk_nr_usua { get; set; }
+        public int fk_cd_func { get; set; }
     }
 }
