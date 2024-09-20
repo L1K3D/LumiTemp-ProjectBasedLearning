@@ -1,0 +1,35 @@
+﻿using System; // Importa o namespace necessário para trabalhar com tipos básicos, como DateTime e Nullable
+
+namespace LumiTempMVC.Models // Declaração do namespace para organizar o código dos modelos
+{
+    // Classe SensorViewModel que representa os dados de um sensor
+    public class SensorViewModel
+    {
+        // Propriedade para armazenar o código do sensor (ID)
+        public int cd_sens { get; set; }
+
+        // Propriedade para armazenar a descrição do tipo de sensor
+        public string ds_tipo_sens { get; set; }
+
+        // Propriedade para armazenar a data de venda do sensor
+        // É nullable para permitir que não haja um valor definido
+        public DateTime? dt_vend { get; set; }
+
+        // Propriedade para armazenar o valor da temperatura alvo configurada
+        // É nullable para permitir que não haja um valor definido
+        public decimal? vl_temp_alvo { get; set; }
+
+        // Propriedade para armazenar o valor da umidade alvo configurada
+        // É nullable para permitir que não haja um valor definido
+        public decimal? vl_umid_alvo { get; set; }
+
+        // Propriedade para armazenar o código do motor associado ao sensor
+        public int cd_motor { get; set; }
+
+        // Propriedade para armazenar o número do usuário (ID) que está associado ao sensor
+        public int fk_cd_func { get; set; }
+
+        // Propriedade para armazenar o código da empresa associada ao sensor
+        public int fk_cd_empr { get; set; }
+    }
+}
