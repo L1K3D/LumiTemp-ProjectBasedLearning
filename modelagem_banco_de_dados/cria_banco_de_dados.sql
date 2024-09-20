@@ -20,9 +20,9 @@ CREATE TABLE cadr_func (
 ------------------------------------
 -- Criação de tabela que guarda informações dos sensores
 
-DROP TABLE sens_info;
+DROP TABLE cadr_sens;
 
-CREATE TABLE sens_info (
+CREATE TABLE cadr_sens (
 
     CD_SENS INT IDENTITY(1, 1) PRIMARY KEY
     ,DS_TIPO_SENS VARCHAR(30)
