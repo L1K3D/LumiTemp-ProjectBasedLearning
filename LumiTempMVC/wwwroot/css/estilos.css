@@ -1,0 +1,117 @@
+﻿/* Estilos gerais do corpo */
+body {
+    background-color: #001f3f; /* Azul marinho de fundo */
+    font-family: 'PT Sans', sans-serif; /* Fonte padrão para o corpo */
+    color: #003366; /* Cor do texto, um azul mais claro */
+    margin: 0; /* Remove margens padrão do navegador */
+    padding: 0; /* Remove preenchimento padrão do navegador */
+    display: flex; /* Usa flexbox para layout */
+    flex-direction: column; /* Organiza os elementos em coluna */
+    align-items: center; /* Centraliza os itens horizontalmente */
+    justify-content: center; /* Centraliza os itens verticalmente */
+    height: 100vh; /* Altura da tela completa */
+}
+
+/* Estilo do cabeçalho */
+header {
+    width: 100%; /* Cabeçalho ocupa toda a largura */
+    padding: 0; /* Remove preenchimento interno */
+    margin: 0; /* Remove margens externas */
+    background-color: #003366; /* Azul mais escuro para o cabeçalho */
+    text-align: center; /* Centraliza o texto no cabeçalho */
+    position: fixed; /* Mantém o cabeçalho fixo no topo */
+    top: 0; /* Posiciona no topo */
+    left: 0; /* Alinha à esquerda */
+    z-index: 1000; /* Garante que o cabeçalho esteja acima de outros elementos */
+}
+
+/* Estilo do menu de navegação */
+nav.menu-opcoes {
+    width: 100%; /* Preenche toda a largura */
+    display: flex; /* Flexbox para alinhar os itens */
+    justify-content: space-around; /* Espaçamento igual entre os itens */
+    padding: 10px 0; /* Espaçamento vertical do menu */
+}
+
+.menu-opcoes ul {
+    list-style: none; /* Remove marcadores da lista */
+    margin: 0; /* Remove margem */
+    padding: 0; /* Remove preenchimento */
+    display: flex; /* Alinha os itens horizontalmente */
+}
+
+.menu-opcoes li {
+    margin: 0 15px; /* Espaçamento horizontal entre os itens do menu */
+}
+
+.menu-opcoes a {
+    text-decoration: none; /* Remove o sublinhado dos links */
+    color: #0366d6; /* Cor do texto dos links */
+}
+
+/* Estilo do painel de login */
+#painel-login {
+    display: flex; /* Flexbox para centralizar o painel */
+    align-items: center; /* Centraliza verticalmente */
+    justify-content: center; /* Centraliza horizontalmente */
+    flex-grow: 1; /* Faz o painel ocupar o espaço restante da tela */
+}
+
+.container-login {
+    background-color: #CDCDCD; /* Fundo claro para o painel de login */
+    padding: 30px; /* Espaçamento interno do painel */
+    border-radius: 10px; /* Bordas arredondadas */
+    width: 300px; /* Largura fixa do painel */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra sutil ao redor do painel */
+    margin-top: 100px; /* Espaço acima do painel para não encostar no cabeçalho */
+}
+
+/* Estilos do formulário */
+label {
+    display: block; /* Faz os labels ocuparem toda a linha */
+    margin-top: 10px; /* Espaçamento acima dos labels */
+    color: white; /* Cor do texto dos labels */
+}
+
+input {
+    width: 100%; /* Inputs ocupam toda a largura do contêiner */
+    padding: 8px; /* Preenchimento interno */
+    margin-top: 5px; /* Espaçamento acima dos inputs */
+    border: 1px solid #ccc; /* Bordas suaves */
+    border-radius: 4px; /* Bordas arredondadas */
+}
+
+/* Estilo dos botões */
+.button-container {
+    display: flex; /* Flexbox para organizar os botões */
+    flex-direction: row; /* Direção horizontal para os botões */
+    justify-content: left; /* Alinha os botões à esquerda */
+    flex-wrap: wrap; /* Permite que os botões quebrem em linha se necessário */
+}
+
+.botao {
+    display: inline-block; /* Permite aplicar margens e preenchimentos */
+    padding: 15px 25px; /* Preenchimento interno do botão */
+    margin: 10px; /* Espaçamento entre os botões */
+    background-color: #1b6ec2; /* Cor de fundo do botão */
+    color: white; /* Cor do texto do botão */
+    border: none; /* Remove bordas */
+    border-radius: 5px; /* Bordas arredondadas */
+    text-decoration: none; /* Remove sublinhado do link */
+    font-size: 16px; /* Tamanho da fonte */
+    transition: background-color 0.3s; /* Transição suave na cor de fundo */
+}
+
+    /* Efeito hover nos botões */
+    .botao:hover {
+        background-color: #1861ac; /* Cor do botão ao passar o mouse */
+    }
+
+/* Estilos para tabelas */
+th, td { /* Estilo comum para cabeçalhos e células da tabela */
+    color: white; /* Cor do texto em tabelas */
+}
+
+h1 {
+    color: white; /* Cor do título principal */
+}

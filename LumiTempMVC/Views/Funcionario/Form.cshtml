@@ -1,0 +1,48 @@
+﻿@model FuncionarioViewModel
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml"; // Define o layout compartilhado da página
+}
+
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="utf-8" /> <!-- Define a codificação de caracteres -->
+    <link rel="stylesheet" type="text/css" href="~/css/estilos.css" /> <!-- Link para o CSS -->
+    <title>Cadastro de Funcionários</title> <!-- Título da página -->
+</head>
+
+<body>
+    <form action="Salvar" method="post">
+        <!-- Define a ação do formulário -->
+        <h2>Cadastro de Funcionários</h2> <!-- Título do formulário -->
+
+        <div>
+            <label for="cd_func" class="control-label">Código do Funcionário</label>
+            <input type="number" id="cd_func" name="cd_func" value="@Model.cd_func" required /> <!-- Campo para o código do funcionário -->
+        </div>
+
+        <div>
+            <label for="login_func" class="control-label">Login do Funcionário</label>
+            <input type="text" id="login_func" name="login_func" value="@Model.login_func" required /> <!-- Campo para o login -->
+        </div>
+
+        <div>
+            <label for="senha_func" class="control-label">Senha do Funcionário</label>
+            <input type="password" id="senha_func" name="senha_func" value="@Model.senha_func" required /> <!-- Campo para a senha -->
+        </div>
+
+        <div>
+            <label for="dt_cadr" class="control-label">Data de Cadastro do Funcionário</label>
+            <input type="date" id="dt_cadr" name="dt_cadr" value="@Model.dt_cadr.ToString("yyyy-MM-dd")" required /> <!-- Campo para a data de cadastro -->
+        </div>
+
+        <div>
+            <input type="submit" value="Salvar Dados" /> <!-- Botão para submeter o formulário -->
+        </div>
+
+        <div>
+            <h2><a href="/Funcionario">Página Inicial</a></h2> <!-- Link para a página inicial -->
+        </div>
+    </form>
+</body>
+</html>

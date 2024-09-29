@@ -1,71 +1,102 @@
-﻿/* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
-for details on configuring this project to bundle and minify static web assets. */
-
-a.navbar-brand {
-  white-space: normal;
-  text-align: center;
-  word-break: break-all;
-}
-
-/* Provide sufficient contrast against white background */
-a {
-  color: #0366d6;
-}
-
-.btn-primary {
-  color: #fff;
-  background-color: #1b6ec2;
-  border-color: #1861ac;
-}
-
-.nav-pills .nav-link.active, .nav-pills .show > .nav-link {
-  color: #fff;
-  background-color: #1b6ec2;
-  border-color: #1861ac;
-}
-
-/* Sticky footer styles
--------------------------------------------------- */
-html {
-  font-size: 14px;
-}
-@media (min-width: 768px) {
-  html {
-    font-size: 16px;
-  }
-}
-
-.border-top {
-  border-top: 1px solid #e5e5e5;
-}
-.border-bottom {
-  border-bottom: 1px solid #e5e5e5;
-}
-
-.box-shadow {
-  box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
-}
-
-button.accept-policy {
-  font-size: 1rem;
-  line-height: inherit;
-}
-
-/* Sticky footer styles
--------------------------------------------------- */
-html {
-  position: relative;
-  min-height: 100%;
-}
-
+﻿/* Aplica o fundo azul marinho em todo o corpo da página */
 body {
-  /* Margin bottom by footer height */
-  margin-bottom: 60px;
+    background-color: #001f3f; /* Azul marinho */
+    font-family: 'PT Sans', sans-serif;
+    color: #003366; /* Cor do texto branco para contraste */
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
 }
-.footer {
-  position: absolute;
-  bottom: 0;
-  width: 100%;
-  white-space: nowrap;
-  line-height: 60px; /* Vertically center the text there */
+
+/* Estilo para o cabeçalho */
+header {
+    width: 100%;
+    padding: 0; /* Remove espaçamento interno */
+    margin: 0; /* Remove espaçamento externo */
+    background-color: #003366; /* Tom mais escuro de azul */
+    text-align: center;
+    position: fixed; /* Fixar a barra no topo da página */
+    top: 0; /* Posicionar no topo */
+    left: 0;
+    z-index: 1000; /* Garante que o cabeçalho fique acima do conteúdo */
 }
+
+/* Estilo para os links de navegação no cabeçalho */
+nav.menu-opcoes ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+    nav.menu-opcoes ul li {
+        display: inline;
+        margin: 0 15px;
+    }
+
+        nav.menu-opcoes ul li a {
+            color: white;
+            text-decoration: none;
+            font-size: 18px;
+            padding: 10px 0; /* Adiciona espaçamento interno */
+            display: inline-block;
+        }
+
+            nav.menu-opcoes ul li a:hover {
+                text-decoration: underline;
+            }
+
+/* Estilo do painel de login */
+.container-login {
+    background-color: #CDCDCD; /* Azul mais claro para o painel */
+    padding: 30px;
+    border-radius: 10px;
+    width: 300px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra sutil */
+    margin-top: 100px; /* Espaço para que o login não fique encostado no menu */
+}
+
+    /* Estilo para o título de login */
+    .container-login h2 {
+        text-align: center;
+        margin-bottom: 20px;
+        font-size: 24px;
+    }
+
+    /* Estilo para os rótulos dos campos de formulário */
+    .container-login label {
+        display: block;
+        margin-bottom: 5px;
+        font-size: 16px;
+    }
+
+    /* Estilo para os campos de entrada */
+    .container-login input[type="text"],
+    .container-login input[type="password"] {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 15px;
+        border: none;
+        border-radius: 5px;
+        font-size: 16px;
+    }
+
+    /* Estilo para o botão */
+    .container-login button {
+        width: 100%;
+        padding: 10px;
+        background-color: #0059b3; /* Cor de botão azul */
+        color: white;
+        border: none;
+        border-radius: 5px;
+        font-size: 18px;
+        cursor: pointer;
+    }
+
+        /* Efeito ao passar o mouse no botão */
+        .container-login button:hover {
+            background-color: #003d80; /* Tom mais escuro ao passar o mouse */
+        }

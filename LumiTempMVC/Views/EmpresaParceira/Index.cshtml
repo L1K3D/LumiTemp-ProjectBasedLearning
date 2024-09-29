@@ -1,0 +1,95 @@
+﻿@model List<EmpresaParceiraViewModel>
+@{
+    ViewData["Title"] = "Empresa Parceira"; // Define o título da página
+}
+
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="utf-8" /> <!-- Define a codificação de caracteres -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /> <!-- Responsividade para dispositivos móveis -->
+    <title>Tela de Empresa Parceira</title> <!-- Título da página -->
+    <link rel="stylesheet" href="~/css/estilos.css" /> <!-- Link para o CSS -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> <!-- Importa a biblioteca jQuery -->
+    <script>
+        // Função para extrair dados
+        function extrairDados() {
+            window.location.href = '@Url.Action("ExtrairDados", "EmpresaParceira")'; // Redireciona para a ação de extração de dados
+        }
+
+        // Função para apagar uma empresa parceira
+        function apagarEmpresaParceira(id) {
+            if (confirm('Confirma a exclusão do registro?')) { // Confirmação da exclusão
+                window.location.href = '@Url.Action("Delete", "EmpresaParceira")?id=' + id; // Redireciona para a ação de deletar
+            }
+        }
+    </script>
+</head>
+
+<body>
+    <header>
+        <nav class="menu-opcoes">
+            <ul>
+                <li><a href="Home">Home</a></li>
+                <li><a href="Sensor">Cadastro de Sensores</a></li>
+                <li><a href="Funcionario">Cadastro de Funcionários</a></li>
+                <li><a href="Dashboard">Dashboard</a></li>
+                <li><a href="Sobre">Sobre</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <div>
+            <h1>Empresas Parceiras</h1> <!-- Título principal da página -->
+        </div>
+
+        <div>
+            <a href="/EmpresaParceira/create" class="btn btn-primary">Novo Registro</a> <!-- Botão para criar um novo registro -->
+            <a href="/home" class="btn btn-light">Página Inicial</a> <!-- Botão para voltar à página inicial -->
+            <button class="btn btn-success" onclick="extrairDados()">Extrair Dados</button> <!-- Botão para extrair dados -->
+        </div>
+        <br />
+
+        <table class="table table-responsive"> <!-- Tabela para exibir as empresas parceiras -->
+            <thead>
+                <tr>
+                    <th>Ação</th>
+                    <th>Código da Empresa</th>
+                    <th>Nome da Empresa</th>
+                    <th>CEP da Empresa</th>
+                    <th>CNPJ da Empresa</th>
+                    <th>Telefone para Contato</th>
+                    <th>ID do Usuário Relacionado à Empresa</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model != null && Model.Count > 0) // Verifica se existem empresas cadastradas
+                {
+                    foreach (var empresa in Model) // Itera sobre a lista de empresas
+                    {
+                        <tr>
+                            <td>
+                                <a href="/EmpresaParceira/Edit?id=@empresa.cd_empr" class="btn btn-warning">Editar</a> <!-- Botão para editar a empresa -->
+                                <a href="javascript:void(0);" onclick="apagarEmpresaParceira(@empresa.cd_empr)" class="btn btn-danger">Apagar</a> <!-- Botão para apagar a empresa -->
+                            </td>
+                            <td>@empresa.cd_empr</td> <!-- Código da empresa -->
+                            <td>@empresa.nm_empr</td> <!-- Nome da empresa -->
+                            <td>@empresa.cep_empr</td> <!-- CEP da empresa -->
+                            <td>@empresa.cnpj_empr</td> <!-- CNPJ da empresa -->
+                            <td>@empresa.telf_cont_empr</td> <!-- Telefone para contato -->
+                            <td>@empresa.fk_cd_func</td> <!-- ID do usuário associado -->
+                        </tr>
+                    }
+                }
+                else // Se não houver empresas cadastradas
+                {
+                    <tr>
+                        <td colspan="7" class="text-center">Nenhuma Empresa Cadastrada.</td> <!-- Mensagem informativa -->
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </main>
+</body>
+</html>

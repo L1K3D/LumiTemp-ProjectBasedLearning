@@ -1,0 +1,96 @@
+﻿@model List<SensorViewModel> // Define o modelo como uma lista de SensorViewModel
+@{
+    ViewData["Title"] = "Sensor"; // Define o título da página
+}
+<head>
+    <meta charset="utf-8" /> <!-- Define a codificação de caracteres -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /> <!-- Configura a visualização em dispositivos móveis -->
+    <title>Tela de Sensores</title> <!-- Título da aba do navegador -->
+    <link rel="stylesheet" href="~/css/estilos.css" /> <!-- Link para o arquivo CSS -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> <!-- Inclui a biblioteca jQuery -->
+    <script>
+        // Função para extrair dados, redirecionando para a ação no controlador
+        function extrairDados() {
+            window.location.href = '@Url.Action("ExtrairDados", "Sensor")'; // Redireciona para a ação ExtrairDados
+        }
+    </script>
+    <script>
+        // Função para confirmar a exclusão de um sensor
+        function apagarSensor(id) {
+            if (confirm('Confirma a exclusão do registro?')) { // Confirma a ação
+                location.href = '@Url.Action("Delete", "Sensor")?id=' + id; // Redireciona para a ação Delete com o ID do sensor
+            }
+        }
+    </script>
+</head>
+
+<body>
+    <header>
+        <!-- Cabeçalho com a barra de navegação -->
+        <nav class="menu-opcoes">
+            <ul>
+                <li><a href="Home">Home</a></li>
+                <li><a href="EmpresaParceira">Cadastro de Empresas</a></li>
+                <li><a href="Funcionario">Cadastro de Funcionários</a></li>
+                <li><a href="Dashboard">Dashboard</a></li>
+                <li><a href="Sobre">Sobre</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div>
+        <h1>Sensores</h1> <!-- Título principal da seção -->
+    </div>
+
+    <div>
+        <!-- Botões de ação para criar novo registro e extrair dados -->
+        <a href="/Sensor/create" class="btn btn-primary">Novo Registro</a>
+        <a href="/home" class="btn btn-light">Página Inicial</a>
+        <button class="btn btn-success" onclick="extrairDados()">Extrair Dados</button> <!-- Botão para extrair dados -->
+    </div>
+    <br />
+    
+    <!-- Tabela para exibir os sensores cadastrados -->
+    <table class="table table-responsive">
+        <thead>
+            <tr>
+                <th>Ação</th> <!-- Coluna para ações como editar e apagar -->
+                <th>Código do Sensor</th>
+                <th>Descrição do Tipo de Sensor</th>
+                <th>Data da Venda</th>
+                <th>Valor da Temperatura Alvo Configurada</th>
+                <th>Valor da Umidade Alvo Configurada</th>
+                <th>Código do Motor Associado ao Sensor</th>
+                <th>Código da Empresa Associada ao Sensor</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model != null && Model.Count > 0) // Verifica se há sensores cadastrados
+            {
+                foreach (var sensor in Model) // Itera sobre a lista de sensores
+                {
+                    <tr>
+                        <td>
+                            <!-- Botões para editar e apagar o registro do sensor -->
+                            <a href="/Sensor/Edit?id=@sensor.cd_sens" class="btn btn-warning">Editar</a>
+                            <a href="javascript:void(0);" onclick="apagarSensor(@sensor.cd_sens)" class="btn btn-danger">Apagar</a>
+                        </td>
+                        <td>@sensor.cd_sens</td> <!-- Código do sensor -->
+                        <td>@sensor.ds_tipo_sens</td> <!-- Descrição do tipo de sensor -->
+                        <td>@sensor.dt_vend</td> <!-- Data da venda -->
+                        <td>@sensor.vl_temp_alvo</td> <!-- Valor da temperatura alvo -->
+                        <td>@sensor.vl_umid_alvo</td> <!-- Valor da umidade alvo -->
+                        <td>@sensor.cd_motor</td> <!-- Código do motor associado -->
+                        <td>@sensor.fk_cd_empr</td> <!-- Código da empresa associada -->
+                    </tr>
+                }
+            }
+            else // Se não houver sensores cadastrados
+            {
+                <tr>
+                    <td colspan="8" class="text-center">Nenhum Sensor Cadastrado.</td> <!-- Mensagem de aviso -->
+                </tr>
+            }
+        </tbody>
+    </table>
+</body>

@@ -1,0 +1,91 @@
+﻿@model List<FuncionarioViewModel>
+@{
+    ViewData["Title"] = "Funcionário"; // Define o título da página
+}
+
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="utf-8" /> <!-- Define a codificação de caracteres -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /> <!-- Responsividade para dispositivos móveis -->
+    <title>Tela Funcionário</title> <!-- Título da página -->
+    <link rel="stylesheet" href="~/css/estilos.css" /> <!-- Link para o CSS -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> <!-- Importa a biblioteca jQuery -->
+    <script>
+        // Função para extrair dados
+        function extrairDados() {
+            window.location.href = '@Url.Action("ExtrairDados", "Funcionario")'; // Redireciona para a ação de extração de dados
+        }
+
+        // Função para apagar um funcionário
+        function apagarFuncionario(id) {
+            if (confirm('Confirma a exclusão do registro?')) { // Confirmação da exclusão
+                window.location.href = '@Url.Action("Delete", "Funcionario")?id=' + id; // Redireciona para a ação de deletar
+            }
+        }
+    </script>
+</head>
+
+<body>
+    <header>
+        <nav class="menu-opcoes"> <!-- Cabeçalho com barra de opções -->
+            <ul>
+                <li><a href="Home">Home</a></li>
+                <li><a href="Sensor">Cadastro de Sensores</a></li>
+                <li><a href="EmpresaParceira">Cadastro de Empresas</a></li>
+                <li><a href="Dashboard">Dashboard</a></li>
+                <li><a href="Sobre">Sobre</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <div>
+            <h1>Funcionários</h1> <!-- Título principal da página -->
+        </div>
+
+        <div>
+            <a href="/Funcionario/create" class="btn btn-primary">Novo Registro</a> <!-- Botão para criar um novo registro -->
+            <a href="/home" class="btn btn-light">Página Inicial</a> <!-- Botão para voltar à página inicial -->
+            <button class="btn btn-success" onclick="extrairDados()">Extrair Dados</button> <!-- Botão para extrair dados -->
+        </div>
+        <br />
+
+        <table class="table table-responsive"> <!-- Tabela para exibir os funcionários -->
+            <thead>
+                <tr>
+                    <th>Ação</th>
+                    <th>Número do Usuário</th>
+                    <th>Login do Usuário</th>
+                    <th>Senha do Funcionário</th>
+                    <th>Data de Cadastro do Usuário</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model != null && Model.Count > 0) // Verifica se existem funcionários cadastrados
+                {
+                    foreach (var funcionario in Model) // Itera sobre a lista de funcionários
+                    {
+                        <tr>
+                            <td>
+                                <a href="/Funcionario/Edit?id=@funcionario.cd_func" class="btn btn-warning">Editar</a> <!-- Botão para editar o funcionário -->
+                                <a href="javascript:void(0);" onclick="apagarFuncionario(@funcionario.cd_func)" class="btn btn-danger">Apagar</a> <!-- Botão para apagar o funcionário -->
+                            </td>
+                            <td>@funcionario.cd_func</td> <!-- Número do usuário -->
+                            <td>@funcionario.login_func</td> <!-- Login do usuário -->
+                            <td>@funcionario.senha_func</td> <!-- Senha do funcionário -->
+                            <td>@funcionario.dt_cadr</td> <!-- Data de cadastro do usuário -->
+                        </tr>
+                    }
+                }
+                else // Se não houver funcionários cadastrados
+                {
+                    <tr>
+                        <td colspan="5" class="text-center">Nenhum Funcionário Cadastrado.</td> <!-- Mensagem informativa -->
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </main>
+</body>
+</html>

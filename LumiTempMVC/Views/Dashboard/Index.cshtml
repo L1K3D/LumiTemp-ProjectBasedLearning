@@ -1,0 +1,37 @@
+﻿@* @model List<DashboardViewModel>
+@{
+    ViewData["Title"] = "Empresa Parceira";
+}
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dahsboard</title>
+    <!-- Link para o CSS -->
+    <link rel="stylesheet" href="~/css/estilos.css" />
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        function extrairDados() {
+            // Chama a ação que irá extrair os dados
+            window.location.href = '@Url.Action("ExtrairDados", "Dashboard")';
+        }
+    </script>
+</head>
+
+<body>
+    <header>
+        <!-- Criando o Cabeçalho com barra de opções -->
+        <nav class="menu-opcoes">
+            <ul>
+                <li><a href="Home">Home</a></li>
+                <li><a href="Sensor">Cadastro de Sensores</a></li>
+                <li><a href="Funcionario">Cadastro de Funcionários</a></li>
+                <li><a href="Sobre">Sobre</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div>
+        <h1>Dashboard</h1>
+    </div>
+</body>
+ *@

@@ -1,0 +1,56 @@
+﻿@model SensorViewModel
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml"; // Define o layout da página
+}
+
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="utf-8" /> <!-- Define a codificação de caracteres -->
+    <link rel="stylesheet" type="text/css" href="~/css/estilos.css" /> <!-- Link para o CSS -->
+</head>
+
+<body>
+    <form action="Salvar" method="post">
+        <!-- Formulário para cadastro de sensores -->
+        <label><h2>Cadastro de Sensores</h2></label> <!-- Título do formulário -->
+        <br />
+
+        <label for="cd_sens" class="control-label">Código do Sensor</label>
+        <input type="number" name="cd_sens" value="@Model.cd_sens" required /> <!-- Campo para código do sensor -->
+        <br />
+
+        <label for="ds_tipo_sens" class="control-label">Descrição</label>
+        <input type="text" name="ds_tipo_sens" value="@Model.ds_tipo_sens" required /> <!-- Campo para descrição do sensor -->
+        <br />
+
+        <label for="dt_vend" class="control-label">Data da Venda</label>
+        <input type="datetime-local" name="dt_vend" value="@Model.dt_vend.HasValue ? Model.dt_vend.Value.ToString(" yyyy-MM-ddTHH:mm") : string.Empty" required /> <!-- Campo para data da venda -->
+        <br />
+
+        <label for="vl_temp_alvo" class="control-label">Valor da Temperatura Alvo Configurada</label>
+        <input type="number" name="vl_temp_alvo" value="@Model.vl_temp_alvo" step="0.01" required /> <!-- Campo para valor da temperatura alvo -->
+        <br />
+
+        <label for="vl_umid_alvo" class="control-label">Valor da Umidade Alvo Configurada</label>
+        <input type="number" name="vl_umid_alvo" value="@Model.vl_umid_alvo" step="0.01" required /> <!-- Campo para valor da umidade alvo -->
+        <br />
+
+        <label for="cd_motor" class="control-label">Código do Motor Associado ao Sensor</label>
+        <input type="number" name="cd_motor" value="@Model.cd_motor" required /> <!-- Campo para código do motor associado -->
+        <br />
+
+        <label for="fk_cd_empr" class="control-label">Código da Empresa Associada ao Sensor</label>
+        <input type="number" name="fk_cd_empr" value="@Model.fk_cd_empr" required /> <!-- Campo para código da empresa associada -->
+        <br />
+
+        <br />
+        <input type="submit" value="Salvar Dados" /> <!-- Botão para enviar o formulário -->
+        <br />
+
+        <label>
+            <h2><a href="/Sensor">Página Inicial</a></h2> <!-- Link para a página inicial -->
+        </label>
+    </form>
+</body>
+</html>

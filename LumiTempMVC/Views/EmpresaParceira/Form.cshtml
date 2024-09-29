@@ -1,0 +1,53 @@
+﻿@model EmpresaParceiraViewModel
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml"; // Define o layout compartilhado da página
+}
+
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" type="text/css" href="~/css/estilos.css" /> <!-- Estilo da página -->
+    <title>Cadastro da Empresa Parceira</title> <!-- Título da página -->
+</head>
+
+<body>
+    <form action="Salvar" method="post">
+        <!-- Ação que será chamada ao submeter o formulário -->
+        <h2>Cadastro da Empresa Parceira</h2> <!-- Título do formulário -->
+
+        <div>
+            <label for="cd_empr" class="control-label">Código da Empresa</label>
+            <input type="number" id="cd_empr" name="cd_empr" value="@Model.cd_empr" required /> <!-- Campo para o código da empresa -->
+        </div>
+
+        <div>
+            <label for="cep_empr" class="control-label">CEP da Empresa</label>
+            <input type="text" id="cep_empr" name="cep_empr" value="@Model.cep_empr" required /> <!-- Campo para o CEP -->
+        </div>
+
+        <div>
+            <label for="cnpj_empr" class="control-label">CNPJ da Empresa</label>
+            <input type="text" id="cnpj_empr" name="cnpj_empr" value="@Model.cnpj_empr" required /> <!-- Campo para o CNPJ -->
+        </div>
+
+        <div>
+            <label for="telf_cont_empr" class="control-label">Telefone de Contato da Empresa</label>
+            <input type="text" id="telf_cont_empr" name="telf_cont_empr" value="@Model.telf_cont_empr" required /> <!-- Campo para telefone -->
+        </div>
+
+        <div>
+            <label for="fk_cd_func" class="control-label">Código do Usuário Associado à Empresa</label>
+            <input type="number" id="fk_cd_func" name="fk_cd_func" value="@Model.fk_cd_func" required /> <!-- Campo para código do usuário -->
+        </div>
+
+        <div>
+            <input type="submit" value="Salvar Dados" /> <!-- Botão para submeter o formulário -->
+        </div>
+
+        <div>
+            <h2><a href="/EmpresaParceira">Página Inicial</a></h2> <!-- Link para a página inicial -->
+        </div>
+    </form>
+</body>
+</html>
