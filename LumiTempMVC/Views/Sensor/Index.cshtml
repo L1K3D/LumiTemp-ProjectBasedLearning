@@ -61,6 +61,7 @@
                 <th>Valor da Temperatura Alvo Configurada</th>
                 <th>Valor da Umidade Alvo Configurada</th>
                 <th>Código do Motor Associado ao Sensor</th>
+                <th>Código do Funcionário Associado ao Motor</th>
                 <th>Código da Empresa Associada ao Sensor</th>
             </tr>
         </thead>
@@ -81,6 +82,7 @@
                         <td>@sensor.vl_temp_alvo</td> <!-- Valor da temperatura alvo -->
                         <td>@sensor.vl_umid_alvo</td> <!-- Valor da umidade alvo -->
                         <td>@sensor.cd_motor</td> <!-- Código do motor associado -->
+                        <td>@sensor.fk_cd_func</td> <!-- Código do funcionário associado -->
                         <td>@sensor.fk_cd_empr</td> <!-- Código da empresa associada -->
                     </tr>
                 }

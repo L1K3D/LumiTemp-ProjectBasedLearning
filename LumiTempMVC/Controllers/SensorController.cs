@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System;
 using LumiTempMVC.DAO;
+using System.Text;
 
 namespace LumiTempMVC.Controllers
 {
@@ -35,23 +36,36 @@ namespace LumiTempMVC.Controllers
             }
         }
 
-        // Método para salvar um sensor novo ou atualizar um sensor existente
+        // Método para salvar o sensor (novo ou existente)
+        [HttpPost]
         public IActionResult Salvar(SensorViewModel sensor)
         {
+            if (!ModelState.IsValid)
+            {
+                // Se o modelo não for válido, retorna o formulário com os dados para correção
+                return View("Form", sensor);
+            }
+
             try
             {
-                SensorDAO dao = new SensorDAO(); // Instancia o DAO para operações de banco de dados
-                if (dao.Consulta(sensor.cd_sens) == null) // Verifica se o sensor já existe
-                    dao.Inserir(sensor); // Se não existir, insere o novo sensor
+                SensorDAO dao = new SensorDAO();
+                if (sensor.cd_sens == 0 || dao.Consulta(sensor.cd_sens) == null)
+                {
+                    // Se for um novo funcionário, insere
+                    dao.Inserir(sensor);
+                }
                 else
-                    dao.Alterar(sensor); // Se já existir, atualiza os dados do sensor
+                {
+                    // Se já existir, faz a atualização
+                    dao.Alterar(sensor);
+                }
 
-                return RedirectToAction("Index"); // Redireciona para a página inicial com a lista de sensores
+                return RedirectToAction("Index");
             }
             catch (Exception erro)
             {
-                // Em caso de erro, retorna a View de erro com a mensagem detalhada
-                return View("Error", new ErrorViewModel(erro.ToString()));
+                // Em caso de erro, retorna a View de erro
+                return View("Error", new ErrorViewModel { Erro = erro.ToString() });
             }
         }
 
@@ -89,5 +103,35 @@ namespace LumiTempMVC.Controllers
                 return View("Error", new ErrorViewModel(erro.ToString()));
             }
         }
+
+        public IActionResult ExtrairDados()
+        {
+            try
+            {
+                SensorDAO dao = new SensorDAO(); // Instancia o DAO para acessar os dados de funcionarios
+                List<SensorViewModel> lista = dao.Listagem(); // Obtém a lista de funcionarios do banco de dados
+
+                // Criação do conteúdo do arquivo
+                StringBuilder sb = new StringBuilder();
+                sb.AppendLine("Id, Nome"); // Cabeçalho do arquivo
+
+                foreach (var sensor in lista)
+                {
+                    sb.AppendLine($"{sensor.cd_sens}, {sensor.ds_tipo_sens}, {sensor.dt_vend}, {sensor.vl_temp_alvo}, {sensor.cd_motor}, {sensor.fk_cd_func}, {sensor.fk_cd_empr}"); // Adiciona cada funcionario ao arquivo
+                }
+
+                // Definindo o nome do arquivo
+                string fileName = "sensores.txt";
+
+                // Retorna o arquivo para download
+                return File(Encoding.UTF8.GetBytes(sb.ToString()), "text/plain", fileName);
+            }
+            catch (Exception erro)
+            {
+                // Em caso de erro, redireciona para a página de erro com a mensagem de erro
+                return RedirectToAction("Error", new ErrorViewModel(erro.ToString()));
+            }
+        }
+
     }
 }

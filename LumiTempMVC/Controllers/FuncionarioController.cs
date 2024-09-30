@@ -1,93 +1,136 @@
 ﻿using LumiTempMVC.Models;
 using Microsoft.AspNetCore.Mvc;
-using System.Collections.Generic;
 using System;
 using LumiTempMVC.DAO;
+using System.Collections.Generic;
+using System.Text;
 
 namespace LumiTempMVC.Controllers
 {
-    // Controlador responsável por gerenciar as operações relacionadas aos funcionários
     public class FuncionarioController : Controller
     {
-        // Método para exibir a página inicial com a lista de funcionários cadastrados
+        // Exibe a lista de funcionários cadastrados
         public IActionResult Index()
         {
-            FuncionarioDAO dao = new FuncionarioDAO(); // Instancia o DAO para acessar os dados dos funcionários
-            List<FuncionarioViewModel> lista = dao.Listagem(); // Busca a lista de funcionários cadastrados
-            return View(lista); // Retorna a View com a lista de funcionários
+            FuncionarioDAO dao = new FuncionarioDAO();
+            var lista = dao.Listagem();
+            return View(lista);
         }
 
-        // Método para criar um novo funcionário
+        // Exibe o formulário de criação de um novo funcionário
         public IActionResult Create()
         {
             try
             {
-                FuncionarioViewModel funcionario = new FuncionarioViewModel(); // Cria um novo objeto FuncionarioViewModel
-                FuncionarioDAO dao = new FuncionarioDAO(); // Instancia o DAO para operações de banco de dados
-                funcionario.cd_func = dao.ProximoId(); // Atribui o próximo ID disponível ao novo funcionário
-
-                return View("Form", funcionario); // Retorna a View do formulário para preenchimento dos dados do funcionário
+                FuncionarioDAO dao = new FuncionarioDAO();
+                FuncionarioViewModel funcionario = new FuncionarioViewModel
+                {
+                    cd_func = dao.ProximoId(), // Gera o próximo ID disponível
+                    dt_cadr = DateTime.Now // Define a data de cadastro atual
+                };
+                return View("Form", funcionario);
             }
             catch (Exception erro)
             {
-                // Em caso de erro, redireciona para a página de erro, passando a mensagem de erro
-                return RedirectToAction("Error", new ErrorViewModel(erro.ToString()));
+                return View("Error", new ErrorViewModel { Erro = erro.ToString() });
             }
         }
 
-        // Método para salvar um novo funcionário ou atualizar um funcionário existente
+        // Método para salvar o funcionário (novo ou existente)
+        [HttpPost]
         public IActionResult Salvar(FuncionarioViewModel funcionario)
         {
+            if (!ModelState.IsValid)
+            {
+                // Se o modelo não for válido, retorna o formulário com os dados para correção
+                return View("Form", funcionario);
+            }
+
             try
             {
-                FuncionarioDAO dao = new FuncionarioDAO(); // Instancia o DAO para operações de banco de dados
-                if (dao.Consulta(funcionario.cd_func) == null) // Verifica se o funcionário já existe
-                    dao.Inserir(funcionario); // Se não existir, insere o novo funcionário
+                FuncionarioDAO dao = new FuncionarioDAO();
+                if (funcionario.cd_func == 0 || dao.Consulta(funcionario.cd_func) == null)
+                {
+                    // Se for um novo funcionário, insere
+                    dao.Inserir(funcionario);
+                }
                 else
-                    dao.Alterar(funcionario); // Se já existir, atualiza os dados do funcionário
+                {
+                    // Se já existir, faz a atualização
+                    dao.Alterar(funcionario);
+                }
 
-                return RedirectToAction("Index"); // Redireciona para a página inicial com a lista de funcionários
+                return RedirectToAction("Index");
             }
             catch (Exception erro)
             {
-                // Em caso de erro, retorna a View de erro com a mensagem detalhada
-                return View("Error", new ErrorViewModel(erro.ToString()));
+                // Em caso de erro, retorna a View de erro
+                return View("Error", new ErrorViewModel { Erro = erro.ToString() });
             }
         }
 
-        // Método para editar os dados de um funcionário existente
+        // Método para editar um funcionário existente
         public IActionResult Edit(int cd_func)
         {
             try
             {
-                FuncionarioDAO dao = new FuncionarioDAO(); // Instancia o DAO para consulta no banco de dados
-                FuncionarioViewModel funcionario = dao.Consulta(cd_func); // Busca o funcionário pelo ID
+                FuncionarioDAO dao = new FuncionarioDAO();
+                var funcionario = dao.Consulta(cd_func);
                 if (funcionario == null)
-                    return RedirectToAction("Index"); // Se o funcionário não existir, redireciona para a lista
-                else
-                    return View("Form", funcionario); // Se existir, retorna a View do formulário com os dados preenchidos
+                {
+                    return RedirectToAction("Index");
+                }
+                return View("Form", funcionario);
             }
             catch (Exception erro)
             {
-                // Em caso de erro, retorna a View de erro com a mensagem detalhada
-                return View("Error", new ErrorViewModel(erro.ToString()));
+                return View("Error", new ErrorViewModel { Erro = erro.ToString() });
             }
         }
 
-        // Método para excluir um funcionário pelo seu ID
-        public IActionResult Delete(int id)
+        // Método para excluir um funcionário
+        public IActionResult Delete(int cd_func)
         {
             try
             {
-                FuncionarioDAO dao = new FuncionarioDAO(); // Instancia o DAO para a exclusão
-                dao.Excluir(id); // Exclui o funcionário do banco de dados
-                return RedirectToAction("Index"); // Após a exclusão, redireciona para a lista de funcionários
+                FuncionarioDAO dao = new FuncionarioDAO();
+                dao.Excluir(cd_func);
+                return RedirectToAction("Index");
             }
             catch (Exception erro)
             {
-                // Em caso de erro, retorna a View de erro com a mensagem detalhada
-                return View("Error", new ErrorViewModel(erro.ToString()));
+                return View("Error", new ErrorViewModel { Erro = erro.ToString() });
             }
         }
+
+        public IActionResult ExtrairDados()
+        {
+            try
+            {
+                FuncionarioDAO dao = new FuncionarioDAO(); // Instancia o DAO para acessar os dados de funcionarios
+                List<FuncionarioViewModel> lista = dao.Listagem(); // Obtém a lista de funcionarios do banco de dados
+
+                // Criação do conteúdo do arquivo
+                StringBuilder sb = new StringBuilder();
+                sb.AppendLine("Id, Nome"); // Cabeçalho do arquivo
+
+                foreach (var funcionario in lista)
+                {
+                    sb.AppendLine($"{funcionario.cd_func}, {funcionario.login_func}, {funcionario.dt_cadr}"); // Adiciona cada funcionario ao arquivo
+                }
+
+                // Definindo o nome do arquivo
+                string fileName = "funcionarios.txt";
+
+                // Retorna o arquivo para download
+                return File(Encoding.UTF8.GetBytes(sb.ToString()), "text/plain", fileName);
+            }
+            catch (Exception erro)
+            {
+                // Em caso de erro, redireciona para a página de erro com a mensagem de erro
+                return RedirectToAction("Error", new ErrorViewModel(erro.ToString()));
+            }
+        }
+
     }
 }

@@ -1,71 +1,12 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "C:\\Users\\enzob\\Downloads\\LumiTemp-ProjectBasedLearning-main (1)\\LumiTemp-ProjectBasedLearning-main\\LumiTempMVC\\",
-  "Documents": [
-    {
-      "AbsoluteMoniker": "D:0:0:{284BEE7B-16A5-4990-8919-25DFDA38DC62}|LumiTempMVC.csproj|c:\\users\\enzob\\downloads\\lumitemp-projectbasedlearning-main (1)\\lumitemp-projectbasedlearning-main\\lumitempmvc\\wwwroot\\css\\estilos.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}",
-      "RelativeMoniker": "D:0:0:{284BEE7B-16A5-4990-8919-25DFDA38DC62}|LumiTempMVC.csproj|solutionrelative:wwwroot\\css\\estilos.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{284BEE7B-16A5-4990-8919-25DFDA38DC62}|LumiTempMVC.csproj|c:\\users\\enzob\\downloads\\lumitemp-projectbasedlearning-main (1)\\lumitemp-projectbasedlearning-main\\lumitempmvc\\views\\sensor\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{284BEE7B-16A5-4990-8919-25DFDA38DC62}|LumiTempMVC.csproj|solutionrelative:views\\sensor\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{284BEE7B-16A5-4990-8919-25DFDA38DC62}|LumiTempMVC.csproj|c:\\users\\enzob\\downloads\\lumitemp-projectbasedlearning-main (1)\\lumitemp-projectbasedlearning-main\\lumitempmvc\\views\\sensor\\form.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{284BEE7B-16A5-4990-8919-25DFDA38DC62}|LumiTempMVC.csproj|solutionrelative:views\\sensor\\form.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    }
-  ],
+  "WorkspaceRootPath": "C:\\Users\\Heitor\\Documents\\Program\\LumiTemp-ProjectBasedLearning\\LumiTempMVC\\",
+  "Documents": [],
   "DocumentGroupContainers": [
     {
       "Orientation": 0,
       "VerticalTabListWidth": 112,
-      "DocumentGroups": [
-        {
-          "DockedWidth": 200,
-          "SelectedChildIndex": 0,
-          "Children": [
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "estilos.css",
-              "DocumentMoniker": "C:\\Users\\enzob\\Downloads\\LumiTemp-ProjectBasedLearning-main (1)\\LumiTemp-ProjectBasedLearning-main\\LumiTempMVC\\wwwroot\\css\\estilos.css",
-              "RelativeDocumentMoniker": "wwwroot\\css\\estilos.css",
-              "ToolTip": "C:\\Users\\enzob\\Downloads\\LumiTemp-ProjectBasedLearning-main (1)\\LumiTemp-ProjectBasedLearning-main\\LumiTempMVC\\wwwroot\\css\\estilos.css",
-              "RelativeToolTip": "wwwroot\\css\\estilos.css",
-              "ViewState": "AgIAAFUAAAAAAAAAAAAYwHUAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003000|",
-              "WhenOpened": "2024-09-28T16:11:24.965Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "Index.cshtml",
-              "DocumentMoniker": "C:\\Users\\enzob\\Downloads\\LumiTemp-ProjectBasedLearning-main (1)\\LumiTemp-ProjectBasedLearning-main\\LumiTempMVC\\Views\\Sensor\\Index.cshtml",
-              "RelativeDocumentMoniker": "Views\\Sensor\\Index.cshtml",
-              "ToolTip": "C:\\Users\\enzob\\Downloads\\LumiTemp-ProjectBasedLearning-main (1)\\LumiTemp-ProjectBasedLearning-main\\LumiTempMVC\\Views\\Sensor\\Index.cshtml",
-              "RelativeToolTip": "Views\\Sensor\\Index.cshtml",
-              "ViewState": "AgIAAEEAAAAAAAAAAAAowGAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2024-09-28T16:10:19.885Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "Form.cshtml",
-              "DocumentMoniker": "C:\\Users\\enzob\\Downloads\\LumiTemp-ProjectBasedLearning-main (1)\\LumiTemp-ProjectBasedLearning-main\\LumiTempMVC\\Views\\Sensor\\Form.cshtml",
-              "RelativeDocumentMoniker": "Views\\Sensor\\Form.cshtml",
-              "ToolTip": "C:\\Users\\enzob\\Downloads\\LumiTemp-ProjectBasedLearning-main (1)\\LumiTemp-ProjectBasedLearning-main\\LumiTempMVC\\Views\\Sensor\\Form.cshtml",
-              "RelativeToolTip": "Views\\Sensor\\Form.cshtml",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAB0AAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2024-09-28T16:07:50.916Z",
-              "EditorCaption": ""
-            }
-          ]
-        }
-      ]
+      "DocumentGroups": []
     }
   ]
 }

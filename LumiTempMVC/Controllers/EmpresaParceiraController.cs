@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System;
 using LumiTempMVC.DAO;
+using System.Text;
 
 namespace LumiTempMVC.Controllers
 {
@@ -36,23 +37,35 @@ namespace LumiTempMVC.Controllers
             }
         }
 
-        // Método para salvar uma nova empresa ou atualizar uma existente
+        [HttpPost]
         public IActionResult Salvar(EmpresaParceiraViewModel empresa)
         {
+            if (!ModelState.IsValid)
+            {
+                // Se o modelo não for válido, retorna o formulário com os dados para correção
+                return View("Form", empresa);
+            }
+
             try
             {
-                EmpresaParceiraDAO dao = new EmpresaParceiraDAO(); // Instancia o DAO para operações no banco
-                if (dao.Consulta(empresa.cd_empr) == null) // Verifica se a empresa já existe
-                    dao.Inserir(empresa); // Se não existir, insere a nova empresa
+                EmpresaParceiraDAO dao = new EmpresaParceiraDAO();
+                if (empresa.cd_empr == 0 || dao.Consulta(empresa.cd_empr) == null)
+                {
+                    // Se for um novo funcionário, insere
+                    dao.Inserir(empresa);
+                }
                 else
-                    dao.Alterar(empresa); // Se já existir, atualiza os dados da empresa
+                {
+                    // Se já existir, faz a atualização
+                    dao.Alterar(empresa);
+                }
 
-                return RedirectToAction("Index"); // Redireciona para a lista de empresas
+                return RedirectToAction("Index");
             }
             catch (Exception erro)
             {
-                // Em caso de erro, retorna a View de erro com a mensagem detalhada
-                return View("Error", new ErrorViewModel(erro.ToString()));
+                // Em caso de erro, retorna a View de erro
+                return View("Error", new ErrorViewModel { Erro = erro.ToString() });
             }
         }
 
@@ -90,5 +103,35 @@ namespace LumiTempMVC.Controllers
                 return View("Error", new ErrorViewModel(erro.ToString()));
             }
         }
+
+        public IActionResult ExtrairDados()
+        {
+            try
+            {
+                EmpresaParceiraDAO dao = new EmpresaParceiraDAO(); // Instancia o DAO para acessar os dados de funcionarios
+                List<EmpresaParceiraViewModel> lista = dao.Listagem(); // Obtém a lista de funcionarios do banco de dados
+
+                // Criação do conteúdo do arquivo
+                StringBuilder sb = new StringBuilder();
+                sb.AppendLine("Id, Nome"); // Cabeçalho do arquivo
+
+                foreach (var empresa in lista)
+                {
+                    sb.AppendLine($"{empresa.cep_empr}, {empresa.nm_empr}, {empresa.cep_empr}, {empresa.cnpj_empr}, {empresa.telf_cont_empr}, {empresa.fk_cd_func}"); // Adiciona cada funcionario ao arquivo
+                }
+
+                // Definindo o nome do arquivo
+                string fileName = "empresas.txt";
+
+                // Retorna o arquivo para download
+                return File(Encoding.UTF8.GetBytes(sb.ToString()), "text/plain", fileName);
+            }
+            catch (Exception erro)
+            {
+                // Em caso de erro, redireciona para a página de erro com a mensagem de erro
+                return RedirectToAction("Error", new ErrorViewModel(erro.ToString()));
+            }
+        }
+
     }
 }

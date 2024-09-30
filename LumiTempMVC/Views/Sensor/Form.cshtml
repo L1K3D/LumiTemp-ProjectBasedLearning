@@ -11,46 +11,58 @@
 </head>
 
 <body>
-    <form action="Salvar" method="post">
+    <form asp-action="Salvar" method="post">
         <!-- Formulário para cadastro de sensores -->
         <label><h2>Cadastro de Sensores</h2></label> <!-- Título do formulário -->
         <br />
 
-        <label for="cd_sens" class="control-label">Código do Sensor</label>
-        <input type="number" name="cd_sens" value="@Model.cd_sens" required /> <!-- Campo para código do sensor -->
-        <br />
+        <div>
+            <label for="cd_sens" class="control-label">Código do Sensor</label>
+            <input type="number" id="cd_sens" name="cd_sens" value="@Model.cd_sens" required /> <!-- Campo para o código do funcionário -->
+        </div>
 
-        <label for="ds_tipo_sens" class="control-label">Descrição</label>
-        <input type="text" name="ds_tipo_sens" value="@Model.ds_tipo_sens" required /> <!-- Campo para descrição do sensor -->
-        <br />
+        <div>
+            <label for="ds_tipo_sens" class="control-label">Descrição do tipo de sensor</label>
+            <input type="text" id="ds_tipo_sens" name="ds_tipo_sens" value="@Model.ds_tipo_sens" required /> <!-- Campo para o login -->
+        </div>
 
-        <label for="dt_vend" class="control-label">Data da Venda</label>
-        <input type="datetime-local" name="dt_vend" value="@Model.dt_vend.HasValue ? Model.dt_vend.Value.ToString(" yyyy-MM-ddTHH:mm") : string.Empty" required /> <!-- Campo para data da venda -->
-        <br />
+        <div>
+            <label for="dt_vend" class="control-label">Data da venda</label>
+            <input type="date" id="dt_vend" name="dt_vend" value="@Model.dt_vend.ToString("yyyy-MM-dd")" required /> <!-- Campo para a senha -->
+        </div>
 
-        <label for="vl_temp_alvo" class="control-label">Valor da Temperatura Alvo Configurada</label>
-        <input type="number" name="vl_temp_alvo" value="@Model.vl_temp_alvo" step="0.01" required /> <!-- Campo para valor da temperatura alvo -->
-        <br />
+        <div>
+            <label for="vl_temp_alvo" class="control-label">Valor da Temperatura configurada</label>
+            <input type="number" id="vl_temp_alvo" name="vl_temp_alvo" value="@Model.vl_temp_alvo" required /> <!-- Campo para a data de cadastro -->
+        </div
 
-        <label for="vl_umid_alvo" class="control-label">Valor da Umidade Alvo Configurada</label>
-        <input type="number" name="vl_umid_alvo" value="@Model.vl_umid_alvo" step="0.01" required /> <!-- Campo para valor da umidade alvo -->
-        <br />
+        <div>
+            <label for="vl_umid_alvo" class="control-label">Valor da Umidade configurada</label>
+            <input type="number" id="vl_umid_alvo" name="vl_umid_alvo" value="@Model.vl_umid_alvo" required /> <!-- Campo para a data de cadastro -->
+        </div>
 
-        <label for="cd_motor" class="control-label">Código do Motor Associado ao Sensor</label>
-        <input type="number" name="cd_motor" value="@Model.cd_motor" required /> <!-- Campo para código do motor associado -->
-        <br />
+        <div>
+            <label for="cd_motor" class="control-label">Código do motor associado</label>
+            <input type="number" id="cd_motor" name="cd_motor" value="@Model.cd_motor" required /> <!-- Campo para a data de cadastro -->
+        </div>
 
-        <label for="fk_cd_empr" class="control-label">Código da Empresa Associada ao Sensor</label>
-        <input type="number" name="fk_cd_empr" value="@Model.fk_cd_empr" required /> <!-- Campo para código da empresa associada -->
-        <br />
+        <div>
+            <label for="fk_cd_func" class="control-label">Código do funcionário associado</label>
+            <input type="number" id="fk_cd_func" name="fk_cd_func" value="@Model.fk_cd_func" required /> <!-- Campo para a data de cadastro -->
+        </div>
 
-        <br />
-        <input type="submit" value="Salvar Dados" /> <!-- Botão para enviar o formulário -->
-        <br />
+        <div>
+            <label for="fk_cd_empr" class="control-label">Código da empresa associada</label>
+            <input type="number" id="fk_cd_empr" name="fk_cd_empr" value="@Model.fk_cd_empr" required /> <!-- Campo para a data de cadastro -->
+        </div>
 
-        <label>
+        <div>
+            <input type="submit" value="Salvar Dados" /> <!-- Botão para submeter o formulário -->
+        </div>
+
+        <div>
             <h2><a href="/Sensor">Página Inicial</a></h2> <!-- Link para a página inicial -->
-        </label>
+        </div>
     </form>
 </body>
 </html>

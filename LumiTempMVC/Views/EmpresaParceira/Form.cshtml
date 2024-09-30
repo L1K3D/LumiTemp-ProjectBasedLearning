@@ -12,13 +12,18 @@
 </head>
 
 <body>
-    <form action="Salvar" method="post">
+    <form asp-action="Salvar" method="post">
         <!-- Ação que será chamada ao submeter o formulário -->
         <h2>Cadastro da Empresa Parceira</h2> <!-- Título do formulário -->
 
         <div>
             <label for="cd_empr" class="control-label">Código da Empresa</label>
             <input type="number" id="cd_empr" name="cd_empr" value="@Model.cd_empr" required /> <!-- Campo para o código da empresa -->
+        </div>
+
+        <div>
+            <label for="nm_empr" class="control-label">Nome da Empresa</label>
+            <input type="text" id="nm_empr" name="nm_empr" value="@Model.nm_empr" required /> <!-- Campo para o código da empresa -->
         </div>
 
         <div>

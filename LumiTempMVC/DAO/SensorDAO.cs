@@ -86,8 +86,8 @@ namespace LumiTempMVC.DAO
             sensor.cd_sens = Convert.ToInt32(registro["CD_SENS"]);
             sensor.ds_tipo_sens = Convert.ToString(registro["DS_TIPO_SENS"]);
             sensor.dt_vend = Convert.ToDateTime(registro["DT_VEND"]);
-            sensor.vl_temp_alvo = Convert.ToDecimal(registro["VL_TEMP_ALVO"]);
-            sensor.vl_umid_alvo = Convert.ToDecimal(registro["VL_UMID_ALVO"]);
+            sensor.vl_temp_alvo = Convert.ToInt32(registro["VL_TEMP_ALVO"]);
+            sensor.vl_umid_alvo = Convert.ToInt32(registro["VL_UMID_ALVO"]);
             sensor.cd_motor = Convert.ToInt32(registro["CD_MOTOR"]);
             sensor.fk_cd_func = Convert.ToInt32(registro["FK_CD_FUNC"]);
             sensor.fk_cd_empr = Convert.ToInt32(registro["FK_CD_EMPR"]);

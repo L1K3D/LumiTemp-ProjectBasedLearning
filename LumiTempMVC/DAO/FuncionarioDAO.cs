@@ -49,7 +49,7 @@ namespace LumiTempMVC.DAO // Declaração do namespace para organizar o código 
         public void Excluir(int cd_func)
         {
             // Define a string SQL para a exclusão
-            string sql = "DELETE FROM cadr_func WHERE CD_FUNC = " + cd_func;
+            string sql = "DELETE cadr_func WHERE CD_FUNC = " + cd_func;
             // Executa o comando SQL (não precisa de parâmetros)
             HelperDAO.ExecutaSQL(sql, null);
         }
@@ -70,7 +70,7 @@ namespace LumiTempMVC.DAO // Declaração do namespace para organizar o código 
         public FuncionarioViewModel Consulta(int cd_func)
         {
             // Define a string SQL para a consulta
-            string sql = "SELECT CD_FUNC, LOGIN_FUNC, DT_CADR FROM cadr_func WHERE CD_FUNC = " + cd_func;
+            string sql = "SELECT * FROM cadr_func WHERE CD_FUNC = " + cd_func;
             // Executa a consulta e armazena o resultado em um DataTable
             DataTable tabela = HelperDAO.ExecutaSelect(sql, null);
             // Verifica se algum registro foi encontrado
@@ -88,7 +88,7 @@ namespace LumiTempMVC.DAO // Declaração do namespace para organizar o código 
             using (SqlConnection cx = ConexaoDB.GetConexao()) // Usa a conexão com o banco de dados
             {
                 // Define a string SQL para buscar todos os funcionários
-                string sql = "SELECT CD_FUNC, LOGIN_FUNC, DT_CADR FROM cadr_func";
+                string sql = "SELECT * FROM cadr_func";
                 using (SqlDataAdapter adapter = new SqlDataAdapter(sql, cx)) // Cria um SqlDataAdapter
                 {
                     DataTable tabela = new DataTable(); // Cria um DataTable para armazenar os dados
@@ -110,7 +110,7 @@ namespace LumiTempMVC.DAO // Declaração do namespace para organizar o código 
         {
             List<FuncionarioViewModel> lista = new List<FuncionarioViewModel>(); // Cria uma lista para armazenar os funcionários
             // Define a string SQL para buscar todos os funcionários ordenados
-            string sql = "SELECT CD_FUNC, LOGIN_FUNC, DT_CADR FROM cadr_func ORDER BY CD_FUNC";
+            string sql = "SELECT * FROM cadr_func ORDER BY CD_FUNC";
             DataTable tabela = HelperDAO.ExecutaSelect(sql, null); // Executa a consulta
 
             // Percorre cada registro da tabela e monta os modelos
