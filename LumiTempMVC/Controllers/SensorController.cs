@@ -114,7 +114,7 @@ namespace LumiTempMVC.Controllers
 
                 // Criação do conteúdo do arquivo
                 StringBuilder sb = new StringBuilder();
-                sb.AppendLine("Id, Nome"); // Cabeçalho do arquivo
+                sb.AppendLine("Id, Descrição do tipo de sensor, Data da venda do sensor, valor da temperatura alvo configurada, código do motor atrelado ao sensor, id do funcionário atrelado ao sensor, id da empresa atrelada ao sensor"); // Cabeçalho do arquivo
 
                 foreach (var sensor in lista)
                 {

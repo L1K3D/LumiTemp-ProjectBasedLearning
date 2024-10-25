@@ -17,7 +17,7 @@ namespace LumiTempMVC.Models // Declaração do namespace para organizar o códi
 
         // Propriedade para armazenar o valor da temperatura alvo configurada
         // É nullable para permitir que não haja um valor definido
-        public decimal vl_temp_alvo { get; set; }
+        public double vl_temp_alvo { get; set; }
 
         // Propriedade para armazenar o código do motor associado ao sensor
         public int cd_motor { get; set; }

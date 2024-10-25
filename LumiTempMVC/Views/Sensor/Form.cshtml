@@ -1,63 +1,62 @@
 ﻿@model SensorViewModel
 @{
-    Layout = "~/Views/Shared/_Layout.cshtml"; // Define o layout da página
+    Layout = "~/Views/Shared/_Layout.cshtml"; // Define o layout padrão da página
 }
 
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-    <meta charset="utf-8" /> <!-- Define a codificação de caracteres -->
-    <link rel="stylesheet" type="text/css" href="~/css/estilos.css" /> <!-- Link para o CSS -->
-    <title>Cadastro de Sensores</title>
+    <meta charset="utf-8" /> <!-- Configura a codificação de caracteres para UTF-8 -->
+    <link rel="stylesheet" type="text/css" href="~/css/estilos.css" /> <!-- Referencia o arquivo de estilos CSS -->
+    <title>Cadastro de Sensores</title> <!-- Define o título da página -->
 </head>
 
 <body>
     <form asp-action="Salvar" method="post">
-        <!-- Formulário para cadastro de sensores -->
-        <label><h2>Cadastro de Sensores</h2></label> <!-- Título do formulário -->
-        <br />
+        <!-- Define o método POST e a ação de envio do formulário -->
+        <h2>Cadastro de Sensores</h2> <!-- Cabeçalho do formulário -->
 
         <div>
             <label for="id" class="control-label">Código do Sensor</label>
-            <input type="number" id="id" name="id" value="@Model.id" required /> <!-- Campo para o código do funcionário -->
+            <input type="number" id="id" name="id" value="@Model.id" required /> <!-- Campo para o código do sensor -->
         </div>
 
         <div>
-            <label for="ds_tipo_sens" class="control-label">Descrição do tipo de sensor</label>
-            <input type="text" id="ds_tipo_sens" name="ds_tipo_sens" value="@Model.ds_tipo_sens" required /> <!-- Campo para o login -->
+            <label for="ds_tipo_sens" class="control-label">Descrição do Tipo de Sensor</label>
+            <input type="text" id="ds_tipo_sens" name="ds_tipo_sens" value="@Model.ds_tipo_sens" required /> <!-- Campo para a descrição do tipo de sensor -->
         </div>
 
         <div>
-            <label for="dt_vend" class="control-label">Data da venda</label>
-            <input type="date" id="dt_vend" name="dt_vend" value="@Model.dt_vend.ToString("yyyy-MM-dd")" required /> <!-- Campo para a senha -->
+            <label for="dt_vend" class="control-label">Data de Venda do Sensor</label>
+            <input type="date" id="dt_vend" name="dt_vend" value="@Model.dt_vend.ToString("yyyy-MM-dd")" required /> <!-- Campo para a data de venda do sensor -->
         </div>
 
         <div>
-            <label for="vl_temp_alvo" class="control-label">Valor da Temperatura configurada</label>
-            <input type="number" id="vl_temp_alvo" name="vl_temp_alvo" value="@Model.vl_temp_alvo" required /> <!-- Campo para a data de cadastro -->
+            <label for="vl_temp_alvo" class="control-label">Temperatura Alvo Configurada</label>
+            <input type="text" id="vl_temp_alvo" name="vl_temp_alvo" value="@Model.vl_temp_alvo" required /> <!-- Campo para a temperatura alvo configurada -->
         </div>
 
         <div>
-            <label for="cd_motor" class="control-label">Código do motor associado</label>
-            <input type="number" id="cd_motor" name="cd_motor" value="@Model.cd_motor" required /> <!-- Campo para a data de cadastro -->
+            <label for="cd_motor" class="control-label">Código do Motor Vinculado</label>
+            <input type="number" id="cd_motor" name="cd_motor" value="@Model.cd_motor" required /> <!-- Campo para o código do motor associado ao sensor -->
         </div>
 
         <div>
-            <label for="id_func" class="control-label">Código do funcionário associado</label>
-            <input type="number" id="id_func" name="id_func" value="@Model.id_func" required /> <!-- Campo para a data de cadastro -->
+            <label for="id_func" class="control-label">Código do Usuário Responsável</label>
+            <input type="number" id="id_func" name="id_func" value="@Model.id_func" required /> <!-- Campo para o código do usuário responsável -->
         </div>
 
         <div>
-            <label for="id_empr" class="control-label">Código da empresa associada</label>
-            <input type="number" id="id_empr" name="fk_cd_empr" value="@Model.id_empr" required /> <!-- Campo para a data de cadastro -->
+            <label for="id_empr" class="control-label">Código da Empresa</label>
+            <input type="number" id="id_empr" name="id_empr" value="@Model.id_empr" required /> <!-- Campo para o código da empresa associada -->
         </div>
 
         <div>
-            <input type="submit" value="Salvar Dados" /> <!-- Botão para submeter o formulário -->
+            <input type="submit" value="Salvar Dados" /> <!-- Botão para enviar os dados do formulário -->
         </div>
 
         <div>
-            <h2><a href="/Sensor">Página Inicial</a></h2> <!-- Link para a página inicial -->
+            <h2><a href="/Sensor">Página Inicial</a></h2> <!-- Link de navegação para a página inicial dos sensores -->
         </div>
     </form>
 </body>
