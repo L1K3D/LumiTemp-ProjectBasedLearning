@@ -11,19 +11,6 @@
     <title>Tela de Empresa Parceira</title> <!-- Título da página -->
     <link rel="stylesheet" href="~/css/estilos.css" /> <!-- Link para o CSS -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> <!-- Importa a biblioteca jQuery -->
-    <script>
-        // Função para extrair dados
-        function extrairDados() {
-            window.location.href = '@Url.Action("ExtrairDados", "EmpresaParceira")'; // Redireciona para a ação de extração de dados
-        }
-
-        // Função para apagar uma empresa parceira
-        function apagarEmpresaParceira(id) {
-            if (confirm('Confirma a exclusão do registro?')) { // Confirmação da exclusão
-                window.location.href = '@Url.Action("Delete", "EmpresaParceira")?id=' + id; // Redireciona para a ação de deletar
-            }
-        }
-    </script>
 </head>
 
 <body>
@@ -70,15 +57,15 @@
                     {
                         <tr>
                             <td>
-                                <a href="/EmpresaParceira/Edit?id=@empresa.cd_empr" class="btn btn-warning">Editar</a> <!-- Botão para editar a empresa -->
-                                <a href="javascript:void(0);" onclick="apagarEmpresaParceira(@empresa.cd_empr)" class="btn btn-danger">Apagar</a> <!-- Botão para apagar a empresa -->
+                                <a href="/EmpresaParceira/Edit?id=@empresa.id" class="btn btn-warning">Editar</a> <!-- Botão para editar a empresa -->
+                                <a href="javascript:void(0);" onclick="apagarEmpresaParceira(@empresa.id)" class="btn btn-danger">Apagar</a> <!-- Botão para apagar a empresa -->
                             </td>
-                            <td>@empresa.cd_empr</td> <!-- Código da empresa -->
+                            <td>@empresa.id</td> <!-- Código da empresa -->
                             <td>@empresa.nm_empr</td> <!-- Nome da empresa -->
                             <td>@empresa.cep_empr</td> <!-- CEP da empresa -->
                             <td>@empresa.cnpj_empr</td> <!-- CNPJ da empresa -->
                             <td>@empresa.telf_cont_empr</td> <!-- Telefone para contato -->
-                            <td>@empresa.fk_cd_func</td> <!-- ID do usuário associado -->
+                            <td>@empresa.id_func</td> <!-- ID do usuário associado -->
                         </tr>
                     }
                 }
@@ -90,6 +77,16 @@
                 }
             </tbody>
         </table>
+        <script>
+            function apagarEmpresaParceira(id) {
+                if (confirm('Confirma a exclusão do registro?'))
+                    location.href = 'EmpresaParceira/Delete?id=' + id;
+            }
+
+            function extrairDados() {
+                window.location.href = '@Url.Action("ExtrairDados", "EmpresaParceira")'; // Redireciona para a ação de extração de dados
+            }
+        </script>
     </main>
 </body>
 </html>

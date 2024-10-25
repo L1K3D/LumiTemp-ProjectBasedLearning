@@ -6,7 +6,7 @@ namespace LumiTempMVC.Models // Declaração do namespace para organizar o códi
     public class SensorViewModel
     {
         // Propriedade para armazenar o código do sensor (ID)
-        public int cd_sens { get; set; }
+        public int id { get; set; }
 
         // Propriedade para armazenar a descrição do tipo de sensor
         public string ds_tipo_sens { get; set; }
@@ -17,19 +17,15 @@ namespace LumiTempMVC.Models // Declaração do namespace para organizar o códi
 
         // Propriedade para armazenar o valor da temperatura alvo configurada
         // É nullable para permitir que não haja um valor definido
-        public int vl_temp_alvo { get; set; }
-
-        // Propriedade para armazenar o valor da umidade alvo configurada
-        // É nullable para permitir que não haja um valor definido
-        public int vl_umid_alvo { get; set; }
+        public decimal vl_temp_alvo { get; set; }
 
         // Propriedade para armazenar o código do motor associado ao sensor
         public int cd_motor { get; set; }
 
         // Propriedade para armazenar o número do usuário (ID) que está associado ao sensor
-        public int fk_cd_func { get; set; }
+        public int id_func { get; set; }
 
         // Propriedade para armazenar o código da empresa associada ao sensor
-        public int fk_cd_empr { get; set; }
+        public int id_empr { get; set; }
     }
 }

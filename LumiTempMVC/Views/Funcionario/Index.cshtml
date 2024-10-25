@@ -11,19 +11,6 @@
     <title>Tela Funcionário</title> <!-- Título da página -->
     <link rel="stylesheet" href="~/css/estilos.css" /> <!-- Link para o CSS -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> <!-- Importa a biblioteca jQuery -->
-    <script>
-        // Função para extrair dados
-        function extrairDados() {
-            window.location.href = '@Url.Action("ExtrairDados", "Funcionario")'; // Redireciona para a ação de extração de dados
-        }
-
-        // Função para apagar um funcionário
-        function apagarFuncionario(id) {
-            if (confirm('Confirma a exclusão do registro?')) { // Confirmação da exclusão
-                window.location.href = '@Url.Action("Delete", "Funcionario")?id=' + id; // Redireciona para a ação de deletar
-            }
-        }
-    </script>
 </head>
 
 <body>
@@ -67,10 +54,10 @@
                     {
                         <tr>
                             <td>
-                                <a href="/Funcionario/Edit?id=@funcionario.cd_func" class="btn btn-warning">Editar</a> <!-- Botão para editar o funcionário -->
-                                <a href="javascript:void(0);" onclick="apagarFuncionario(@funcionario.cd_func)" class="btn btn-danger">Apagar</a> <!-- Botão para apagar o funcionário -->
+                                <a href="/Funcionario/Edit?id=@funcionario.id" class="btn btn-warning">Editar</a> <!-- Botão para editar o funcionário -->
+                                <a href="javascript:void(0);" onclick="apagarFuncionario(@funcionario.id)" class="btn btn-danger">Apagar</a> <!-- Botão para apagar o funcionário -->
                             </td>
-                            <td>@funcionario.cd_func</td> <!-- Número do usuário -->
+                            <td>@funcionario.id</td> <!-- Número do usuário -->
                             <td>@funcionario.login_func</td> <!-- Login do usuário -->
                             <td>@funcionario.dt_cadr</td> <!-- Data de cadastro do usuário -->
                         </tr>
@@ -84,6 +71,16 @@
                 }
             </tbody>
         </table>
+        <script>
+            function apagarFuncionario(id) {
+                if (confirm('Confirma a exclusão do registro?'))
+                    location.href = 'Funcionario/Delete?id=' + id;
+            }
+
+            function extrairDados() {
+                window.location.href = '@Url.Action("ExtrairDados", "Funcionario")'; // Redireciona para a ação de extração de dados
+            }
+        </script>
     </main>
 </body>
 </html>

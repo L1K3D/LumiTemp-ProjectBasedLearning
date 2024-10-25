@@ -23,16 +23,17 @@ namespace LumiTempMVC.Controllers
         {
             try
             {
-                SensorViewModel sensor = new SensorViewModel(); // Cria um novo objeto SensorViewModel
-                SensorDAO dao = new SensorDAO(); // Instancia o DAO para operações de banco de dados
-                sensor.cd_sens = dao.ProximoId(); // Atribui o próximo ID disponível ao novo sensor
-
-                return View("Form", sensor); // Retorna a View do formulário para preenchimento dos dados do sensor
+                SensorDAO dao = new SensorDAO();
+                SensorViewModel sensor = new SensorViewModel
+                {
+                    id = dao.ProximoId(), // Gera o próximo ID disponível
+                    dt_vend = DateTime.Now // Define a data de cadastro atual
+                };
+                return View("Form", sensor);
             }
             catch (Exception erro)
             {
-                // Em caso de erro, redireciona para a página de erro, passando a mensagem de erro
-                return RedirectToAction("Error", new ErrorViewModel(erro.ToString()));
+                return View("Error", new ErrorViewModel { Erro = erro.ToString() });
             }
         }
 
@@ -49,7 +50,7 @@ namespace LumiTempMVC.Controllers
             try
             {
                 SensorDAO dao = new SensorDAO();
-                if (sensor.cd_sens == 0 || dao.Consulta(sensor.cd_sens) == null)
+                if (sensor.id == 0 || dao.Consulta(sensor.id) == null)
                 {
                     // Se for um novo funcionário, insere
                     dao.Inserir(sensor);
@@ -65,42 +66,42 @@ namespace LumiTempMVC.Controllers
             catch (Exception erro)
             {
                 // Em caso de erro, retorna a View de erro
-                return View("Error", new ErrorViewModel { Erro = erro.ToString() });
+                return View("Error", new ErrorViewModel(erro.ToString()));  
             }
         }
 
         // Método para editar os dados de um sensor existente
-        public IActionResult Edit(int cd_sens)
+        public IActionResult Edit(int id)
         {
             try
             {
-                SensorDAO dao = new SensorDAO(); // Instancia o DAO para consulta no banco de dados
-                SensorViewModel sensor = dao.Consulta(cd_sens); // Busca o sensor pelo ID
+                SensorDAO dao = new SensorDAO();
+                var sensor = dao.Consulta(id);
                 if (sensor == null)
-                    return RedirectToAction("Index"); // Se o sensor não existir, redireciona para a lista
-                else
-                    return View("Form", sensor); // Se existir, retorna a View do formulário com os dados preenchidos
+                {
+                    return RedirectToAction("Index");
+                }
+                return View("Form", sensor);
             }
             catch (Exception erro)
             {
-                // Em caso de erro, retorna a View de erro com a mensagem detalhada
-                return View("Error", new ErrorViewModel(erro.ToString()));
+                return View("Error", new ErrorViewModel { Erro = erro.ToString() });
             }
         }
 
         // Método para excluir um sensor pelo seu ID
-        public IActionResult Delete(int cd_sens)
+        public IActionResult Delete(int id)
         {
             try
             {
                 SensorDAO dao = new SensorDAO(); // Instancia o DAO para a exclusão
-                dao.Excluir(cd_sens); // Exclui o sensor do banco de dados
+                dao.Excluir(id); // Exclui o sensor do banco de dados
                 return RedirectToAction("Index"); // Após a exclusão, redireciona para a lista de sensores
             }
             catch (Exception erro)
             {
                 // Em caso de erro, retorna a View de erro com a mensagem detalhada
-                return View("Error", new ErrorViewModel(erro.ToString()));
+                return View("Error", new ErrorViewModel { Erro = erro.ToString() });
             }
         }
 
@@ -117,7 +118,7 @@ namespace LumiTempMVC.Controllers
 
                 foreach (var sensor in lista)
                 {
-                    sb.AppendLine($"{sensor.cd_sens}, {sensor.ds_tipo_sens}, {sensor.dt_vend}, {sensor.vl_temp_alvo}, {sensor.cd_motor}, {sensor.fk_cd_func}, {sensor.fk_cd_empr}"); // Adiciona cada funcionario ao arquivo
+                    sb.AppendLine($"{sensor.id}, {sensor.ds_tipo_sens}, {sensor.dt_vend}, {sensor.vl_temp_alvo}, {sensor.cd_motor}, {sensor.id_func}, {sensor.id_empr}"); // Adiciona cada funcionario ao arquivo
                 }
 
                 // Definindo o nome do arquivo

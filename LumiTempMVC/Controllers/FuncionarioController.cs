@@ -25,7 +25,7 @@ namespace LumiTempMVC.Controllers
                 FuncionarioDAO dao = new FuncionarioDAO();
                 FuncionarioViewModel funcionario = new FuncionarioViewModel
                 {
-                    cd_func = dao.ProximoId(), // Gera o próximo ID disponível
+                    id = dao.ProximoId(), // Gera o próximo ID disponível
                     dt_cadr = DateTime.Now // Define a data de cadastro atual
                 };
                 return View("Form", funcionario);
@@ -49,7 +49,7 @@ namespace LumiTempMVC.Controllers
             try
             {
                 FuncionarioDAO dao = new FuncionarioDAO();
-                if (funcionario.cd_func == 0 || dao.Consulta(funcionario.cd_func) == null)
+                if (funcionario.id == 0 || dao.Consulta(funcionario.id) == null)
                 {
                     // Se for um novo funcionário, insere
                     dao.Inserir(funcionario);
@@ -70,12 +70,12 @@ namespace LumiTempMVC.Controllers
         }
 
         // Método para editar um funcionário existente
-        public IActionResult Edit(int cd_func)
+        public IActionResult Edit(int id)
         {
             try
             {
                 FuncionarioDAO dao = new FuncionarioDAO();
-                var funcionario = dao.Consulta(cd_func);
+                var funcionario = dao.Consulta(id);
                 if (funcionario == null)
                 {
                     return RedirectToAction("Index");
@@ -89,12 +89,12 @@ namespace LumiTempMVC.Controllers
         }
 
         // Método para excluir um funcionário
-        public IActionResult Delete(int cd_func)
+        public IActionResult Delete(int id)
         {
             try
             {
                 FuncionarioDAO dao = new FuncionarioDAO();
-                dao.Excluir(cd_func);
+                dao.Excluir(id);
                 return RedirectToAction("Index");
             }
             catch (Exception erro)
@@ -116,7 +116,7 @@ namespace LumiTempMVC.Controllers
 
                 foreach (var funcionario in lista)
                 {
-                    sb.AppendLine($"{funcionario.cd_func}, {funcionario.login_func}, {funcionario.dt_cadr}"); // Adiciona cada funcionario ao arquivo
+                    sb.AppendLine($"{funcionario.id}, {funcionario.login_func}, {funcionario.dt_cadr}"); // Adiciona cada funcionario ao arquivo
                 }
 
                 // Definindo o nome do arquivo

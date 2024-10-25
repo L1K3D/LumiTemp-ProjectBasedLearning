@@ -42,7 +42,7 @@ DROP TABLE cadr_sens;
 -- Cria a tabela de cadastro de sensores
 CREATE TABLE cadr_sens (
     ID INT PRIMARY KEY,  -- Código do sensor, chave primária com incremento automático
-    DS_TIPO_SENS VARCHAR(30),                -- Descrição do tipo de sensor (máximo 30 caracteres)
+    DS_TIPO_SENS VARCHAR(MAX),                -- Descrição do tipo de sensor (máximo 30 caracteres)
     DT_VEND DATE,               -- Data de venda do sensor, campo obrigatório
     VL_TEMP_ALVO DECIMAL(5, 2),              -- Valor de temperatura alvo com 5 dígitos e 2 casas decimais
     CD_MOTOR INT,                            -- Código do motor relacionado ao sensor

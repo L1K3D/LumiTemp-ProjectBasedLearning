@@ -8,6 +8,7 @@
 <head>
     <meta charset="utf-8" /> <!-- Define a codificação de caracteres -->
     <link rel="stylesheet" type="text/css" href="~/css/estilos.css" /> <!-- Link para o CSS -->
+    <title>Cadastro de Sensores</title>
 </head>
 
 <body>
@@ -17,8 +18,8 @@
         <br />
 
         <div>
-            <label for="cd_sens" class="control-label">Código do Sensor</label>
-            <input type="number" id="cd_sens" name="cd_sens" value="@Model.cd_sens" required /> <!-- Campo para o código do funcionário -->
+            <label for="id" class="control-label">Código do Sensor</label>
+            <input type="number" id="id" name="id" value="@Model.id" required /> <!-- Campo para o código do funcionário -->
         </div>
 
         <div>
@@ -34,11 +35,6 @@
         <div>
             <label for="vl_temp_alvo" class="control-label">Valor da Temperatura configurada</label>
             <input type="number" id="vl_temp_alvo" name="vl_temp_alvo" value="@Model.vl_temp_alvo" required /> <!-- Campo para a data de cadastro -->
-        </div
-
-        <div>
-            <label for="vl_umid_alvo" class="control-label">Valor da Umidade configurada</label>
-            <input type="number" id="vl_umid_alvo" name="vl_umid_alvo" value="@Model.vl_umid_alvo" required /> <!-- Campo para a data de cadastro -->
         </div>
 
         <div>
@@ -47,13 +43,13 @@
         </div>
 
         <div>
-            <label for="fk_cd_func" class="control-label">Código do funcionário associado</label>
-            <input type="number" id="fk_cd_func" name="fk_cd_func" value="@Model.fk_cd_func" required /> <!-- Campo para a data de cadastro -->
+            <label for="id_func" class="control-label">Código do funcionário associado</label>
+            <input type="number" id="id_func" name="id_func" value="@Model.id_func" required /> <!-- Campo para a data de cadastro -->
         </div>
 
         <div>
-            <label for="fk_cd_empr" class="control-label">Código da empresa associada</label>
-            <input type="number" id="fk_cd_empr" name="fk_cd_empr" value="@Model.fk_cd_empr" required /> <!-- Campo para a data de cadastro -->
+            <label for="id_empr" class="control-label">Código da empresa associada</label>
+            <input type="number" id="id_empr" name="fk_cd_empr" value="@Model.id_empr" required /> <!-- Campo para a data de cadastro -->
         </div>
 
         <div>

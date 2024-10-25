@@ -54,7 +54,7 @@ CREATE PROCEDURE spAlteraSensor
     -- Declaração dos parâmetros que serão utilizados
     @ID INT,                               -- ID do sensor
     @DS_TIPO_SENS VARCHAR(30),             -- Descrição do tipo de sensor
-    @DT_VEND DATETIME NOT NULL,            -- Data de venda do sensor
+    @DT_VEND DATE,            -- Data de venda do sensor
     @VL_TEMP_ALVO DECIMAL(5, 2),           -- Valor da temperatura alvo
     @CD_MOTOR INT,                         -- Código do motor associado ao sensor
     @ID_FUNC INT,                          -- ID do funcionário responsável (chave estrangeira)

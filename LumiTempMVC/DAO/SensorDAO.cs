@@ -12,17 +12,15 @@ namespace LumiTempMVC.DAO
         private SqlParameter[] CriaParametros(SensorViewModel sensor)
         {
             // Criação de um array de parâmetros SQL com o tamanho adequado
-            SqlParameter[] parametros = new SqlParameter[8];
+            SqlParameter[] parametros = new SqlParameter[7];
             // Atribuição de cada propriedade do modelo aos parâmetros correspondentes
-            parametros[0] = new SqlParameter("CD_SENS", sensor.cd_sens);
+            parametros[0] = new SqlParameter("ID", sensor.id);
             parametros[1] = new SqlParameter("DS_TIPO_SENS", sensor.ds_tipo_sens);
             parametros[2] = new SqlParameter("DT_VEND", sensor.dt_vend);
             parametros[3] = new SqlParameter("VL_TEMP_ALVO", sensor.vl_temp_alvo);
-            parametros[4] = new SqlParameter("VL_UMID_ALVO", sensor.vl_umid_alvo);
-            parametros[5] = new SqlParameter("CD_MOTOR", sensor.cd_motor);
-            parametros[6] = new SqlParameter("FK_CD_FUNC", sensor.fk_cd_func);
-            parametros[7] = new SqlParameter("FK_CD_EMPR", sensor.fk_cd_empr);
-
+            parametros[4] = new SqlParameter("CD_MOTOR", sensor.cd_motor);
+            parametros[5] = new SqlParameter("ID_FUNC", sensor.id_func);
+            parametros[6] = new SqlParameter("ID_EMPR", sensor.id_empr);
             return parametros; // Retorna o array de parâmetros
         }
 
@@ -30,8 +28,8 @@ namespace LumiTempMVC.DAO
         public void Inserir(SensorViewModel sensor)
         {
             // Comando SQL para inserção
-            string sql = "INSERT INTO cadr_sens (CD_SENS, DS_TIPO_SENS, DT_VEND, VL_TEMP_ALVO, VL_UMID_ALVO, CD_MOTOR, FK_CD_FUNC, FK_CD_EMPR) " +
-                         "VALUES (@CD_SENS, @DS_TIPO_SENS, @DT_VEND, @VL_TEMP_ALVO, @VL_UMID_ALVO, @CD_MOTOR, @FK_CD_FUNC, @FK_CD_EMPR)";
+            string sql = "INSERT INTO cadr_sens (ID, DS_TIPO_SENS, DT_VEND, VL_TEMP_ALVO, CD_MOTOR, ID_FUNC, ID_EMPR)" +
+                         "VALUES (@ID, @DS_TIPO_SENS, @DT_VEND, @VL_TEMP_ALVO, @CD_MOTOR, @ID_FUNC, @ID_EMPR)";
             // Executa o comando SQL utilizando a função HelperDAO
             HelperDAO.ExecutaSQL(sql, CriaParametros(sensor));
         }
@@ -45,29 +43,28 @@ namespace LumiTempMVC.DAO
                 "DS_TIPO_SENS=@DS_TIPO_SENS, " +
                 "DT_VEND=@DT_VEND, " +
                 "VL_TEMP_ALVO=@VL_TEMP_ALVO, " +
-                "VL_UMID_ALVO=@VL_UMID_ALVO, " +
                 "CD_MOTOR=@CD_MOTOR, " +
-                "FK_CD_FUNC=@FK_CD_FUNC, " +
-                "FK_CD_EMPR=@FK_CD_EMPR " +
-                "WHERE CD_SENS=@CD_SENS";
+                "ID_FUNC=@ID_FUNC, " +
+                "ID_EMPR=@ID_EMPR " +
+                "WHERE ID = @ID";
             // Executa o comando SQL utilizando a função HelperDAO
             HelperDAO.ExecutaSQL(sql, CriaParametros(sensor));
         }
 
         // Método para excluir um sensor pelo seu código
-        public void Excluir(int cd_sens)
+        public void Excluir(int id)
         {
             // Comando SQL para exclusão
-            string sql = "DELETE cadr_sens WHERE CD_SENS = " + cd_sens;
+            string sql = "DELETE cadr_sens WHERE ID =" + id;
             // Executa o comando SQL
             HelperDAO.ExecutaSQL(sql, null);
         }
 
         // Método para consultar um sensor pelo seu código
-        public SensorViewModel Consulta(int cd_sens)
+        public SensorViewModel Consulta(int id)
         {
             // Comando SQL para consulta
-            string sql = "SELECT * FROM cadr_sens WHERE id = " + cd_sens;
+            string sql = "SELECT * FROM cadr_sens WHERE ID =" + id;
             // Executa a consulta e armazena o resultado em uma DataTable
             DataTable tabela = HelperDAO.ExecutaSelect(sql, null);
             // Verifica se a consulta retornou resultados
@@ -83,14 +80,13 @@ namespace LumiTempMVC.DAO
             // Criação de um novo objeto SensorViewModel
             SensorViewModel sensor = new SensorViewModel();
             // Atribuição de cada coluna do DataRow às propriedades do modelo
-            sensor.cd_sens = Convert.ToInt32(registro["CD_SENS"]);
+            sensor.id = Convert.ToInt32(registro["ID"]);
             sensor.ds_tipo_sens = Convert.ToString(registro["DS_TIPO_SENS"]);
             sensor.dt_vend = Convert.ToDateTime(registro["DT_VEND"]);
-            sensor.vl_temp_alvo = Convert.ToInt32(registro["VL_TEMP_ALVO"]);
-            sensor.vl_umid_alvo = Convert.ToInt32(registro["VL_UMID_ALVO"]);
+            sensor.vl_temp_alvo = Convert.ToDecimal(registro["VL_TEMP_ALVO"]);
             sensor.cd_motor = Convert.ToInt32(registro["CD_MOTOR"]);
-            sensor.fk_cd_func = Convert.ToInt32(registro["FK_CD_FUNC"]);
-            sensor.fk_cd_empr = Convert.ToInt32(registro["FK_CD_EMPR"]);
+            sensor.id_func = Convert.ToInt32(registro["ID_FUNC"]);
+            sensor.id_empr = Convert.ToInt32(registro["ID_EMPR"]);
 
             return sensor; // Retorna o objeto SensorViewModel preenchido
         }
@@ -126,7 +122,7 @@ namespace LumiTempMVC.DAO
         {
             List<SensorViewModel> lista = new List<SensorViewModel>();
             // Comando SQL para selecionar todos os sensores ordenados
-            string sql = "SELECT * FROM cadr_sens ORDER BY cd_sens";
+            string sql = "SELECT * FROM cadr_sens ORDER BY ID";
             DataTable tabela = HelperDAO.ExecutaSelect(sql, null);
 
             // Percorre cada registro e monta a lista de sensores
@@ -139,7 +135,7 @@ namespace LumiTempMVC.DAO
         public int ProximoId()
         {
             // Comando SQL para encontrar o maior ID atual e adicionar 1
-            string sql = "SELECT ISNULL(MAX(cd_sens) +1, 1) AS 'MAIOR' FROM cadr_sens";
+            string sql = "SELECT ISNULL(MAX(ID) +1, 1) AS 'MAIOR' FROM cadr_sens";
             DataTable tabela = HelperDAO.ExecutaSelect(sql, null);
             return Convert.ToInt32(tabela.Rows[0]["MAIOR"]); // Retorna o próximo ID
         }

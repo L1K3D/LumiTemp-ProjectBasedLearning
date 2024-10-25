@@ -14,7 +14,7 @@ namespace LumiTempMVC.DAO // Declaração do namespace para organizar o código 
             // Inicializa o array de parâmetros
             SqlParameter[] parametros = new SqlParameter[4]; // Corrigido para 4 parâmetros
             // Adiciona cada parâmetro ao array
-            parametros[0] = new SqlParameter("CD_FUNC", funcionario.cd_func);
+            parametros[0] = new SqlParameter("ID", funcionario.id);
             parametros[1] = new SqlParameter("LOGIN_FUNC", funcionario.login_func);
             parametros[2] = new SqlParameter("SENHA_FUNC", funcionario.senha_func);
             parametros[3] = new SqlParameter("DT_CADR", funcionario.dt_cadr); // Corrigido para usar a data de cadastro
@@ -25,8 +25,8 @@ namespace LumiTempMVC.DAO // Declaração do namespace para organizar o código 
         public void Inserir(FuncionarioViewModel funcionario)
         {
             // Define a string SQL para a inserção
-            string sql = "INSERT INTO cadr_func (CD_FUNC, LOGIN_FUNC, SENHA_FUNC, DT_CADR) " +
-                         "VALUES (@CD_FUNC, @LOGIN_FUNC, @SENHA_FUNC, @DT_CADR)";
+            string sql = "INSERT INTO cadr_func (ID, LOGIN_FUNC, SENHA_FUNC, DT_CADR) " +
+                         "VALUES (@ID, @LOGIN_FUNC, @SENHA_FUNC, @DT_CADR)";
             // Executa o comando SQL usando a classe HelperDAO
             HelperDAO.ExecutaSQL(sql, CriaParametros(funcionario));
         }
@@ -40,16 +40,16 @@ namespace LumiTempMVC.DAO // Declaração do namespace para organizar o código 
                 "LOGIN_FUNC=@LOGIN_FUNC, " +
                 "SENHA_FUNC=@SENHA_FUNC, " +
                 "DT_CADR=@DT_CADR " +
-                "WHERE CD_FUNC=@CD_FUNC";
+                "WHERE ID=@ID";
             // Executa o comando SQL
             HelperDAO.ExecutaSQL(sql, CriaParametros(funcionario));
         }
 
         // Método para excluir um funcionário com base no ID
-        public void Excluir(int cd_func)
+        public void Excluir(int id)
         {
             // Define a string SQL para a exclusão
-            string sql = "DELETE cadr_func WHERE CD_FUNC = " + cd_func;
+            string sql = "DELETE cadr_func WHERE ID =" + id;
             // Executa o comando SQL (não precisa de parâmetros)
             HelperDAO.ExecutaSQL(sql, null);
         }
@@ -59,7 +59,7 @@ namespace LumiTempMVC.DAO // Declaração do namespace para organizar o código 
         {
             FuncionarioViewModel funcionario = new FuncionarioViewModel();
             // Preenche as propriedades do modelo com os dados do DataRow
-            funcionario.cd_func = Convert.ToInt32(registro["CD_FUNC"]);
+            funcionario.id = Convert.ToInt32(registro["ID"]);
             funcionario.login_func = Convert.ToString(registro["LOGIN_FUNC"]);
             funcionario.senha_func = Convert.ToString(registro["SENHA_FUNC"]); // Corrigido para "SENHA_FUNC"
             funcionario.dt_cadr = Convert.ToDateTime(registro["DT_CADR"]);
@@ -67,10 +67,10 @@ namespace LumiTempMVC.DAO // Declaração do namespace para organizar o código 
         }
 
         // Método para consultar um funcionário com base no ID
-        public FuncionarioViewModel Consulta(int cd_func)
+        public FuncionarioViewModel Consulta(int id)
         {
             // Define a string SQL para a consulta
-            string sql = "SELECT * FROM cadr_func WHERE CD_FUNC = " + cd_func;
+            string sql = "SELECT * FROM cadr_func WHERE ID =" + id;
             // Executa a consulta e armazena o resultado em um DataTable
             DataTable tabela = HelperDAO.ExecutaSelect(sql, null);
             // Verifica se algum registro foi encontrado
@@ -110,7 +110,7 @@ namespace LumiTempMVC.DAO // Declaração do namespace para organizar o código 
         {
             List<FuncionarioViewModel> lista = new List<FuncionarioViewModel>(); // Cria uma lista para armazenar os funcionários
             // Define a string SQL para buscar todos os funcionários ordenados
-            string sql = "SELECT * FROM cadr_func ORDER BY CD_FUNC";
+            string sql = "SELECT * FROM cadr_func ORDER BY ID";
             DataTable tabela = HelperDAO.ExecutaSelect(sql, null); // Executa a consulta
 
             // Percorre cada registro da tabela e monta os modelos
@@ -124,7 +124,7 @@ namespace LumiTempMVC.DAO // Declaração do namespace para organizar o código 
         public int ProximoId()
         {
             // Define a string SQL para buscar o próximo ID
-            string sql = "SELECT ISNULL(MAX(cd_func) + 1, 1) AS 'MAIOR' FROM cadr_func";
+            string sql = "SELECT ISNULL(MAX(ID) + 1, 1) AS 'MAIOR' FROM cadr_func";
             DataTable tabela = HelperDAO.ExecutaSelect(sql, null); // Executa a consulta
             // Retorna o próximo ID (ou 1 se não houver registros)
             return Convert.ToInt32(tabela.Rows[0]["MAIOR"]);

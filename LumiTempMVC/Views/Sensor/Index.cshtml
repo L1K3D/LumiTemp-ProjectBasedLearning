@@ -2,26 +2,15 @@
 @{
     ViewData["Title"] = "Sensor"; // Define o título da página
 }
+
+<!DOCTYPE html>
+<html lang="pt-br">
 <head>
     <meta charset="utf-8" /> <!-- Define a codificação de caracteres -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /> <!-- Configura a visualização em dispositivos móveis -->
     <title>Tela de Sensores</title> <!-- Título da aba do navegador -->
     <link rel="stylesheet" href="~/css/estilos.css" /> <!-- Link para o arquivo CSS -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> <!-- Inclui a biblioteca jQuery -->
-    <script>
-        // Função para extrair dados, redirecionando para a ação no controlador
-        function extrairDados() {
-            window.location.href = '@Url.Action("ExtrairDados", "Sensor")'; // Redireciona para a ação ExtrairDados
-        }
-    </script>
-    <script>
-        // Função para confirmar a exclusão de um sensor
-        function apagarSensor(id) {
-            if (confirm('Confirma a exclusão do registro?')) { // Confirma a ação
-                location.href = '@Url.Action("Delete", "Sensor")?id=' + id; // Redireciona para a ação Delete com o ID do sensor
-            }
-        }
-    </script>
 </head>
 
 <body>
@@ -59,7 +48,6 @@
                 <th>Descrição do Tipo de Sensor</th>
                 <th>Data da Venda</th>
                 <th>Valor da Temperatura Alvo Configurada</th>
-                <th>Valor da Umidade Alvo Configurada</th>
                 <th>Código do Motor Associado ao Sensor</th>
                 <th>Código do Funcionário Associado ao Motor</th>
                 <th>Código da Empresa Associada ao Sensor</th>
@@ -73,17 +61,16 @@
                     <tr>
                         <td>
                             <!-- Botões para editar e apagar o registro do sensor -->
-                            <a href="/Sensor/Edit?id=@sensor.cd_sens" class="btn btn-warning">Editar</a>
-                            <a href="javascript:void(0);" onclick="apagarSensor(@sensor.cd_sens)" class="btn btn-danger">Apagar</a>
+                            <a href="/Sensor/Edit?id=@sensor.id" class="btn btn-warning">Editar</a>
+                            <a href="javascript:void(0);" onclick="apagarSensor(@sensor.id)" class="btn btn-danger">Apagar</a>
                         </td>
-                        <td>@sensor.cd_sens</td> <!-- Código do sensor -->
+                        <td>@sensor.id</td> <!-- Código do sensor -->
                         <td>@sensor.ds_tipo_sens</td> <!-- Descrição do tipo de sensor -->
                         <td>@sensor.dt_vend</td> <!-- Data da venda -->
                         <td>@sensor.vl_temp_alvo</td> <!-- Valor da temperatura alvo -->
-                        <td>@sensor.vl_umid_alvo</td> <!-- Valor da umidade alvo -->
                         <td>@sensor.cd_motor</td> <!-- Código do motor associado -->
-                        <td>@sensor.fk_cd_func</td> <!-- Código do funcionário associado -->
-                        <td>@sensor.fk_cd_empr</td> <!-- Código da empresa associada -->
+                        <td>@sensor.id_func</td> <!-- Código do funcionário associado -->
+                        <td>@sensor.id_empr</td> <!-- Código da empresa associada -->
                     </tr>
                 }
             }
@@ -95,4 +82,14 @@
             }
         </tbody>
     </table>
+    <script>
+        function apagarSensor(id) {
+            if (confirm('Confirma a exclusão do registro?'))
+                location.href = 'Sensor/Delete?id=' + id;
+        }
+
+        function extrairDados() {
+            window.location.href = '@Url.Action("ExtrairDados", "Sensor")'; // Redireciona para a ação de extração de dados
+        }
+    </script>
 </body>

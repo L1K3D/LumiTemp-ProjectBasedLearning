@@ -24,16 +24,21 @@ namespace LumiTempMVC.Controllers
         {
             try
             {
-                EmpresaParceiraViewModel empresa = new EmpresaParceiraViewModel(); // Cria um novo objeto EmpresaParceiraViewModel
-                EmpresaParceiraDAO dao = new EmpresaParceiraDAO(); // Instancia o DAO para operações de banco de dados
-                empresa.cd_empr = dao.ProximoId(); // Atribui o próximo ID disponível para a nova empresa
+                EmpresaParceiraDAO dao = new EmpresaParceiraDAO();
+                EmpresaParceiraViewModel empresa = new EmpresaParceiraViewModel
+                {
 
-                return View("Form", empresa); // Retorna a View do formulário para preenchimento dos dados
+                    id = dao.ProximoId()
+
+                };
+
+                return View("Form", empresa);
+
             }
             catch (Exception erro)
             {
                 // Em caso de erro, redireciona para a página de erro, passando a mensagem de erro
-                return RedirectToAction("Error", new ErrorViewModel(erro.ToString()));
+                return View("Error", new ErrorViewModel { Erro = erro.ToString() });
             }
         }
 
@@ -49,7 +54,7 @@ namespace LumiTempMVC.Controllers
             try
             {
                 EmpresaParceiraDAO dao = new EmpresaParceiraDAO();
-                if (empresa.cd_empr == 0 || dao.Consulta(empresa.cd_empr) == null)
+                if (empresa.id == 0 || dao.Consulta(empresa.id) == null)
                 {
                     // Se for um novo funcionário, insere
                     dao.Inserir(empresa);
@@ -70,37 +75,37 @@ namespace LumiTempMVC.Controllers
         }
 
         // Método para editar os dados de uma empresa parceira existente
-        public IActionResult Edit(int cd_empr)
+        public IActionResult Edit(int id)
         {
             try
             {
-                EmpresaParceiraDAO dao = new EmpresaParceiraDAO(); // Instancia o DAO para consulta no banco de dados
-                EmpresaParceiraViewModel empresa = dao.Consulta(cd_empr); // Busca a empresa pelo ID
+                EmpresaParceiraDAO dao = new EmpresaParceiraDAO();
+                var empresa = dao.Consulta(id);
                 if (empresa == null)
-                    return RedirectToAction("Index"); // Se a empresa não existir, redireciona para a lista
-                else
-                    return View("Form", empresa); // Se existir, retorna a View de formulário com os dados preenchidos
+                {
+                    return RedirectToAction("Index");
+                }
+                return View("Form", empresa);
             }
             catch (Exception erro)
             {
-                // Em caso de erro, retorna a View de erro com a mensagem detalhada
-                return View("Error", new ErrorViewModel(erro.ToString()));
+                return View("Error", new ErrorViewModel { Erro = erro.ToString() });
             }
         }
 
         // Método para excluir uma empresa parceira pelo seu ID
-        public IActionResult Delete(int cd_empr)
+        public IActionResult Delete(int id)
         {
             try
             {
                 EmpresaParceiraDAO dao = new EmpresaParceiraDAO(); // Instancia o DAO para a exclusão
-                dao.Excluir(cd_empr); // Exclui a empresa parceira do banco de dados
+                dao.Excluir(id); // Exclui a empresa parceira do banco de dados
                 return RedirectToAction("Index"); // Após a exclusão, redireciona para a lista de empresas
             }
             catch (Exception erro)
             {
                 // Em caso de erro, retorna a View de erro com a mensagem detalhada
-                return View("Error", new ErrorViewModel(erro.ToString()));
+                return View("Error", new ErrorViewModel { Erro = erro.ToString() });
             }
         }
 
@@ -117,7 +122,7 @@ namespace LumiTempMVC.Controllers
 
                 foreach (var empresa in lista)
                 {
-                    sb.AppendLine($"{empresa.cep_empr}, {empresa.nm_empr}, {empresa.cep_empr}, {empresa.cnpj_empr}, {empresa.telf_cont_empr}, {empresa.fk_cd_func}"); // Adiciona cada funcionario ao arquivo
+                    sb.AppendLine($"{empresa.id}, {empresa.nm_empr}, {empresa.cep_empr}, {empresa.cnpj_empr}, {empresa.telf_cont_empr}, {empresa.id_func}"); // Adiciona cada funcionario ao arquivo
                 }
 
                 // Definindo o nome do arquivo

@@ -4,7 +4,7 @@
     public class EmpresaParceiraViewModel
     {
         // Propriedade para armazenar o código da empresa (ID)
-        public int cd_empr { get; set; }
+        public int id { get; set; }
 
         // Propriedade para armazenar o nome da empresa
         public string nm_empr { get; set; }
@@ -19,6 +19,6 @@
         public string telf_cont_empr { get; set; }
 
         // Propriedade para armazenar o número do usuário (ID) associado à empresa
-        public int fk_cd_func { get; set; }
+        public int id_func { get; set; }
     }
 }

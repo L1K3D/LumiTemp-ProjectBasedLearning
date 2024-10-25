@@ -1,12 +1,212 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "C:\\Users\\enzob\\Documents\\lumi\\LumiTemp-ProjectBasedLearning\\LumiTempMVC\\",
-  "Documents": [],
+  "WorkspaceRootPath": "C:\\Users\\Heitor\\Documents\\Program\\LumiTemp-ProjectBasedLearning\\LumiTempMVC\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{284BEE7B-16A5-4990-8919-25DFDA38DC62}|LumiTempMVC.csproj|c:\\users\\heitor\\documents\\program\\lumitemp-projectbasedlearning\\lumitempmvc\\dao\\empresaparceiradao.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{284BEE7B-16A5-4990-8919-25DFDA38DC62}|LumiTempMVC.csproj|solutionrelative:dao\\empresaparceiradao.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{284BEE7B-16A5-4990-8919-25DFDA38DC62}|LumiTempMVC.csproj|c:\\users\\heitor\\documents\\program\\lumitemp-projectbasedlearning\\lumitempmvc\\controllers\\sobrecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{284BEE7B-16A5-4990-8919-25DFDA38DC62}|LumiTempMVC.csproj|solutionrelative:controllers\\sobrecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{284BEE7B-16A5-4990-8919-25DFDA38DC62}|LumiTempMVC.csproj|c:\\users\\heitor\\documents\\program\\lumitemp-projectbasedlearning\\lumitempmvc\\controllers\\empresaparceiracontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{284BEE7B-16A5-4990-8919-25DFDA38DC62}|LumiTempMVC.csproj|solutionrelative:controllers\\empresaparceiracontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{284BEE7B-16A5-4990-8919-25DFDA38DC62}|LumiTempMVC.csproj|c:\\users\\heitor\\documents\\program\\lumitemp-projectbasedlearning\\lumitempmvc\\dao\\funcionariodao.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{284BEE7B-16A5-4990-8919-25DFDA38DC62}|LumiTempMVC.csproj|solutionrelative:dao\\funcionariodao.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{284BEE7B-16A5-4990-8919-25DFDA38DC62}|LumiTempMVC.csproj|c:\\users\\heitor\\documents\\program\\lumitemp-projectbasedlearning\\lumitempmvc\\models\\sensorviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{284BEE7B-16A5-4990-8919-25DFDA38DC62}|LumiTempMVC.csproj|solutionrelative:models\\sensorviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{284BEE7B-16A5-4990-8919-25DFDA38DC62}|LumiTempMVC.csproj|c:\\users\\heitor\\documents\\program\\lumitemp-projectbasedlearning\\lumitempmvc\\views\\sensor\\form.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{284BEE7B-16A5-4990-8919-25DFDA38DC62}|LumiTempMVC.csproj|solutionrelative:views\\sensor\\form.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{284BEE7B-16A5-4990-8919-25DFDA38DC62}|LumiTempMVC.csproj|c:\\users\\heitor\\documents\\program\\lumitemp-projectbasedlearning\\lumitempmvc\\views\\funcionario\\form.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{284BEE7B-16A5-4990-8919-25DFDA38DC62}|LumiTempMVC.csproj|solutionrelative:views\\funcionario\\form.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{284BEE7B-16A5-4990-8919-25DFDA38DC62}|LumiTempMVC.csproj|c:\\users\\heitor\\documents\\program\\lumitemp-projectbasedlearning\\lumitempmvc\\views\\sensor\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{284BEE7B-16A5-4990-8919-25DFDA38DC62}|LumiTempMVC.csproj|solutionrelative:views\\sensor\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{284BEE7B-16A5-4990-8919-25DFDA38DC62}|LumiTempMVC.csproj|c:\\users\\heitor\\documents\\program\\lumitemp-projectbasedlearning\\lumitempmvc\\views\\funcionario\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{284BEE7B-16A5-4990-8919-25DFDA38DC62}|LumiTempMVC.csproj|solutionrelative:views\\funcionario\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Program Files\\dotnet\\sdk\\8.0.200\\Sdks\\Microsoft.NET.Sdk\\targets\\Microsoft.NET.EolTargetFrameworks.targets||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{284BEE7B-16A5-4990-8919-25DFDA38DC62}|LumiTempMVC.csproj|c:\\users\\heitor\\documents\\program\\lumitemp-projectbasedlearning\\lumitempmvc\\controllers\\funcionariocontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{284BEE7B-16A5-4990-8919-25DFDA38DC62}|LumiTempMVC.csproj|solutionrelative:controllers\\funcionariocontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
   "DocumentGroupContainers": [
     {
       "Orientation": 0,
       "VerticalTabListWidth": 112,
-      "DocumentGroups": []
+      "DocumentGroups": [
+        {
+          "DockedWidth": 212,
+          "SelectedChildIndex": 0,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "EmpresaParceiraDAO.cs",
+              "DocumentMoniker": "C:\\Users\\Heitor\\Documents\\Program\\LumiTemp-ProjectBasedLearning\\LumiTempMVC\\DAO\\EmpresaParceiraDAO.cs",
+              "RelativeDocumentMoniker": "DAO\\EmpresaParceiraDAO.cs",
+              "ToolTip": "C:\\Users\\Heitor\\Documents\\Program\\LumiTemp-ProjectBasedLearning\\LumiTempMVC\\DAO\\EmpresaParceiraDAO.cs",
+              "RelativeToolTip": "DAO\\EmpresaParceiraDAO.cs",
+              "ViewState": "AQIAABAAAAAAAAAAAAAgwAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-10-25T05:59:31.505Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "Form.cshtml",
+              "DocumentMoniker": "C:\\Users\\Heitor\\Documents\\Program\\LumiTemp-ProjectBasedLearning\\LumiTempMVC\\Views\\Funcionario\\Form.cshtml",
+              "RelativeDocumentMoniker": "Views\\Funcionario\\Form.cshtml",
+              "ToolTip": "C:\\Users\\Heitor\\Documents\\Program\\LumiTemp-ProjectBasedLearning\\LumiTempMVC\\Views\\Funcionario\\Form.cshtml",
+              "RelativeToolTip": "Views\\Funcionario\\Form.cshtml",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2024-10-25T05:27:47.574Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "FuncionarioDAO.cs",
+              "DocumentMoniker": "C:\\Users\\Heitor\\Documents\\Program\\LumiTemp-ProjectBasedLearning\\LumiTempMVC\\DAO\\FuncionarioDAO.cs",
+              "RelativeDocumentMoniker": "DAO\\FuncionarioDAO.cs",
+              "ToolTip": "C:\\Users\\Heitor\\Documents\\Program\\LumiTemp-ProjectBasedLearning\\LumiTempMVC\\DAO\\FuncionarioDAO.cs",
+              "RelativeToolTip": "DAO\\FuncionarioDAO.cs",
+              "ViewState": "AQIAAGIAAAAAAAAAAAAuwAcAAAABAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-10-25T05:23:07.414Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "Index.cshtml",
+              "DocumentMoniker": "C:\\Users\\Heitor\\Documents\\Program\\LumiTemp-ProjectBasedLearning\\LumiTempMVC\\Views\\Funcionario\\Index.cshtml",
+              "RelativeDocumentMoniker": "Views\\Funcionario\\Index.cshtml",
+              "ToolTip": "C:\\Users\\Heitor\\Documents\\Program\\LumiTemp-ProjectBasedLearning\\LumiTempMVC\\Views\\Funcionario\\Index.cshtml",
+              "RelativeToolTip": "Views\\Funcionario\\Index.cshtml",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2024-10-25T05:29:05.803Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "EmpresaParceiraController.cs",
+              "DocumentMoniker": "C:\\Users\\Heitor\\Documents\\Program\\LumiTemp-ProjectBasedLearning\\LumiTempMVC\\Controllers\\EmpresaParceiraController.cs",
+              "RelativeDocumentMoniker": "Controllers\\EmpresaParceiraController.cs",
+              "ToolTip": "C:\\Users\\Heitor\\Documents\\Program\\LumiTemp-ProjectBasedLearning\\LumiTempMVC\\Controllers\\EmpresaParceiraController.cs",
+              "RelativeToolTip": "Controllers\\EmpresaParceiraController.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAQAAAAWAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-10-25T05:34:44.533Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "FuncionarioController.cs",
+              "DocumentMoniker": "C:\\Users\\Heitor\\Documents\\Program\\LumiTemp-ProjectBasedLearning\\LumiTempMVC\\Controllers\\FuncionarioController.cs",
+              "RelativeDocumentMoniker": "Controllers\\FuncionarioController.cs",
+              "ToolTip": "C:\\Users\\Heitor\\Documents\\Program\\LumiTemp-ProjectBasedLearning\\LumiTempMVC\\Controllers\\FuncionarioController.cs",
+              "RelativeToolTip": "Controllers\\FuncionarioController.cs",
+              "ViewState": "AQIAAFkAAAAAAAAAAAAIwGUAAAAUAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-10-25T05:26:04.4Z",
+              "EditorCaption": ""
+            }
+          ]
+        },
+        {
+          "DockedWidth": 223,
+          "SelectedChildIndex": 0,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "SobreController.cs",
+              "DocumentMoniker": "C:\\Users\\Heitor\\Documents\\Program\\LumiTemp-ProjectBasedLearning\\LumiTempMVC\\Controllers\\SobreController.cs",
+              "RelativeDocumentMoniker": "Controllers\\SobreController.cs",
+              "ToolTip": "C:\\Users\\Heitor\\Documents\\Program\\LumiTemp-ProjectBasedLearning\\LumiTempMVC\\Controllers\\SobreController.cs",
+              "RelativeToolTip": "Controllers\\SobreController.cs",
+              "ViewState": "AQIAAAsAAAAAAAAAAAAmwBIAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-10-25T05:53:47.428Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "Index.cshtml",
+              "DocumentMoniker": "C:\\Users\\Heitor\\Documents\\Program\\LumiTemp-ProjectBasedLearning\\LumiTempMVC\\Views\\Sensor\\Index.cshtml",
+              "RelativeDocumentMoniker": "Views\\Sensor\\Index.cshtml",
+              "ToolTip": "C:\\Users\\Heitor\\Documents\\Program\\LumiTemp-ProjectBasedLearning\\LumiTempMVC\\Views\\Sensor\\Index.cshtml",
+              "RelativeToolTip": "Views\\Sensor\\Index.cshtml",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAFsAAABHAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2024-10-25T05:29:10.815Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "Form.cshtml",
+              "DocumentMoniker": "C:\\Users\\Heitor\\Documents\\Program\\LumiTemp-ProjectBasedLearning\\LumiTempMVC\\Views\\Sensor\\Form.cshtml",
+              "RelativeDocumentMoniker": "Views\\Sensor\\Form.cshtml",
+              "ToolTip": "C:\\Users\\Heitor\\Documents\\Program\\LumiTemp-ProjectBasedLearning\\LumiTempMVC\\Views\\Sensor\\Form.cshtml",
+              "RelativeToolTip": "Views\\Sensor\\Form.cshtml",
+              "ViewState": "AQIAABsAAAAAAAAAAAAAACQAAAAfAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2024-10-25T05:27:43.427Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "SensorViewModel.cs",
+              "DocumentMoniker": "C:\\Users\\Heitor\\Documents\\Program\\LumiTemp-ProjectBasedLearning\\LumiTempMVC\\Models\\SensorViewModel.cs",
+              "RelativeDocumentMoniker": "Models\\SensorViewModel.cs",
+              "ToolTip": "C:\\Users\\Heitor\\Documents\\Program\\LumiTemp-ProjectBasedLearning\\LumiTempMVC\\Models\\SensorViewModel.cs",
+              "RelativeToolTip": "Models\\SensorViewModel.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAB4AAAABAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-10-25T05:25:14.858Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "Microsoft.NET.EolTargetFrameworks.targets",
+              "DocumentMoniker": "C:\\Program Files\\dotnet\\sdk\\8.0.200\\Sdks\\Microsoft.NET.Sdk\\targets\\Microsoft.NET.EolTargetFrameworks.targets",
+              "RelativeDocumentMoniker": "..\\..\\..\\..\\..\\..\\Program Files\\dotnet\\sdk\\8.0.200\\Sdks\\Microsoft.NET.Sdk\\targets\\Microsoft.NET.EolTargetFrameworks.targets",
+              "ToolTip": "C:\\Program Files\\dotnet\\sdk\\8.0.200\\Sdks\\Microsoft.NET.Sdk\\targets\\Microsoft.NET.EolTargetFrameworks.targets",
+              "RelativeToolTip": "..\\..\\..\\..\\..\\..\\Program Files\\dotnet\\sdk\\8.0.200\\Sdks\\Microsoft.NET.Sdk\\targets\\Microsoft.NET.EolTargetFrameworks.targets",
+              "ViewState": "AQIAAAoAAAAAAAAAAAAlwB8AAAAEAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003801|",
+              "WhenOpened": "2024-10-25T05:28:35.109Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
     }
   ]
 }
