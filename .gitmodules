@@ -1,0 +1,3 @@
+[submodule "Fiware"]
+	path = Fiware
+	url = https://github.com/fabiocabrini/fiware.git
