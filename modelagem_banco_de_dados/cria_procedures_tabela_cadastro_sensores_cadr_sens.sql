@@ -17,10 +17,10 @@ USE b_lumitemp_main_db
 -- Exclui as procedures se já existirem para recriá-las
 DROP PROCEDURE spIncluiSensor;
 DROP PROCEDURE spAlteraSensor;
-DROP PROCEDURE spExcluiSensor;
+/*DROP PROCEDURE spExcluiSensor;
 DROP PROCEDURE spConsultaSensor;
 DROP PROCEDURE spListagemSensor;
-DROP PROCEDURE spProximoId;
+DROP PROCEDURE spProximoId;*/
 
 ---------------------------------------------------------------------
 
@@ -77,7 +77,7 @@ GO
 ---------------------------------------------------------------------
 
 -- Criação da procedure spExcluiSensor para excluir um sensor
-CREATE PROCEDURE spExcluiSensor
+/*CREATE PROCEDURE spExcluiSensor
 (
     -- Declaração do parâmetro que será utilizado
     @ID INT                                -- ID do sensor a ser excluído
@@ -128,4 +128,4 @@ BEGIN
     -- Executa uma consulta dinâmica para encontrar o maior ID + 1 na tabela especificada
     EXEC ('SELECT ISNULL(MAX(ID) + 1, 1) AS MAIOR FROM ' + @tabela)
 END
-GO
+GO*/

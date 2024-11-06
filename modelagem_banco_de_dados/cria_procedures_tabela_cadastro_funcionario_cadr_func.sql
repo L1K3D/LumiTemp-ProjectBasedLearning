@@ -67,7 +67,7 @@ GO
 ---------------------------------------------------------------------
 
 -- Criação da procedure spExcluiFuncionario para excluir um funcionário
-CREATE PROCEDURE spExcluiFuncionario
+/*CREATE PROCEDURE spExcluiFuncionario
 (
     -- Declaração do parâmetro que será utilizado
     @ID INT                                -- ID do funcionário a ser excluído
@@ -118,4 +118,4 @@ BEGIN
     -- Executa uma consulta dinâmica para encontrar o maior ID + 1 na tabela especificada
     EXEC ('SELECT ISNULL(MAX(ID) + 1, 1) AS MAIOR FROM ' + @tabela)
 END
-GO
+GO*/

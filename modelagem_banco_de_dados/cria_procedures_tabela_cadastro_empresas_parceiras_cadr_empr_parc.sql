@@ -73,7 +73,7 @@ GO
 ---------------------------------------------------------------------
 
 -- Criação da procedure spExcluiEmpresa para excluir uma empresa
-CREATE PROCEDURE spExcluiEmpresa
+/*CREATE PROCEDURE spExcluiEmpresa
 (
     -- Declaração do parâmetro que será utilizado
     @ID INT                                -- ID da empresa a ser excluída
@@ -124,4 +124,4 @@ BEGIN
     -- Executa uma consulta dinâmica para encontrar o maior ID + 1 na tabela especificada
     EXEC ('SELECT ISNULL(MAX(ID) + 1, 1) AS MAIOR FROM ' + @tabela)
 END
-GO
+GO*/
