@@ -4,6 +4,8 @@ using System;
 using LumiTempMVC.DAO;
 using System.Collections.Generic;
 using System.Text;
+using Microsoft.AspNetCore.Http;
+using System.IO;
 
 namespace LumiTempMVC.Controllers
 {
@@ -131,6 +133,24 @@ namespace LumiTempMVC.Controllers
                 return RedirectToAction("Error", new ErrorViewModel(erro.ToString()));
             }
         }
+
+        /// <summary>
+        /// Converte a imagem recebida no form em um vetor de bytes
+        /// </summary>
+        /// <param name="file"></param>
+        /// <returns></returns>
+        public byte[] ConvertImageToByte(IFormFile file)
+        {
+            if (file != null)
+                using (var ms = new MemoryStream())
+                {
+                    file.CopyTo(ms);
+                    return ms.ToArray();
+                }
+            else
+                return null;
+        }
+
 
     }
 }
