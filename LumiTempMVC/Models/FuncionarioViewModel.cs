@@ -3,10 +3,10 @@
 namespace LumiTempMVC.Models // Declaração do namespace para organizar o código dos modelos
 {
     // Classe FuncionarioViewModel que representa os dados de um funcionário
-    public class FuncionarioViewModel
+    public class FuncionarioViewModel : PadraoViewModel 
     {
         // Propriedade para armazenar o número do usuário (ID)
-        public int id { get; set; }
+        //public int id { get; set; }
 
         // Propriedade para armazenar o login do usuário
         public string login_func { get; set; }

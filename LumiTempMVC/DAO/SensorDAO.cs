@@ -6,6 +6,59 @@ using LumiTempMVC.Models;
 
 namespace LumiTempMVC.DAO
 {
+    public class SensorDAO : PadraoDAO<SensorViewModel>
+    {
+        // Método para criar os parâmetros SQL a partir de um objeto SensorViewModel
+        protected override SqlParameter[] CriaParametros(SensorViewModel sensor)
+        {
+            
+            SqlParameter[] parametros = new SqlParameter[7];     
+            parametros[0] = new SqlParameter("ID", sensor.id);
+            parametros[1] = new SqlParameter("DS_TIPO_SENS", sensor.ds_tipo_sens);
+            parametros[2] = new SqlParameter("DT_VEND", sensor.dt_vend);
+            parametros[3] = new SqlParameter("VL_TEMP_ALVO", sensor.vl_temp_alvo);
+            parametros[4] = new SqlParameter("CD_MOTOR", sensor.cd_motor);
+            parametros[5] = new SqlParameter("ID_FUNC", sensor.id_func);
+            parametros[6] = new SqlParameter("ID_EMPR", sensor.id_empr);
+
+            return parametros;
+        }
+
+        // Método auxiliar para montar o modelo SensorViewModel a partir de um DataRow
+        protected override SensorViewModel MontaModel(DataRow registro)
+        {
+            SensorViewModel sensor = new SensorViewModel
+            {
+                id = Convert.ToInt32(registro["ID"]),
+                ds_tipo_sens = registro["DS_TIPO_SENS"].ToString(),
+                dt_vend = Convert.ToDateTime(registro["DT_VEND"]),
+                vl_temp_alvo = Convert.ToDouble(registro["VL_TEMP_ALVO"]),
+                cd_motor = Convert.ToInt32(registro["CD_MOTOR"]),
+                id_func = Convert.ToInt32(registro["ID_FUNC"]),
+                id_empr = Convert.ToInt32(registro["ID_EMPR"])
+            };
+
+            return sensor;
+        }
+
+        // Método para definir a tabela e stored procedure de listagem
+        protected override void SetTabela()
+        {
+            Tabela = "cadr_sens";
+            NomeSpListagem = "spListagemSensor";
+        }
+    }
+}
+
+
+/*using System.Collections.Generic;
+using System.Data.SqlClient;
+using System.Data;
+using System;
+using LumiTempMVC.Models;
+
+namespace LumiTempMVC.DAO
+{
     public class SensorDAO
     {
         // Método para criar os parâmetros SQL a partir de um objeto SensorViewModel
@@ -140,4 +193,4 @@ namespace LumiTempMVC.DAO
             return Convert.ToInt32(tabela.Rows[0]["MAIOR"]); // Retorna o próximo ID
         }
     }
-}
+}*/

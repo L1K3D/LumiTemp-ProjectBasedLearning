@@ -3,10 +3,10 @@
 namespace LumiTempMVC.Models // Declaração do namespace para organizar o código dos modelos
 {
     // Classe SensorViewModel que representa os dados de um sensor
-    public class SensorViewModel
+    public class SensorViewModel : PadraoViewModel
     {
         // Propriedade para armazenar o código do sensor (ID)
-        public int id { get; set; }
+        //public int id { get; set; }
 
         // Propriedade para armazenar a descrição do tipo de sensor
         public string ds_tipo_sens { get; set; }

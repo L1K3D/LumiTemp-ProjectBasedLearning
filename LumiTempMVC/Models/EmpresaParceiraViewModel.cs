@@ -1,10 +1,12 @@
-﻿namespace LumiTempMVC.Models // Declaração do namespace para organizar o código dos modelos
+﻿using System;
+
+namespace LumiTempMVC.Models // Declaração do namespace para organizar o código dos modelos
 {
     // Classe EmpresaParceiraViewModel que representa os dados de uma empresa parceira
-    public class EmpresaParceiraViewModel
+    public class EmpresaParceiraViewModel : PadraoViewModel
     {
         // Propriedade para armazenar o código da empresa (ID)
-        public int id { get; set; }
+        //public int id { get; set; }
 
         // Propriedade para armazenar o nome da empresa
         public string nm_empr { get; set; }

@@ -1,4 +1,53 @@
-﻿using LumiTempMVC.Models; // Importa o namespace que contém os modelos
+﻿using LumiTempMVC.Models;
+using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Data.SqlClient;
+
+namespace LumiTempMVC.DAO
+{
+    public class FuncionarioDAO : PadraoDAO<FuncionarioViewModel> 
+    {
+        // Método para criar os parâmetros SQL a partir de um objeto FuncionarioViewModel
+        protected override SqlParameter[] CriaParametros(FuncionarioViewModel funcionario)
+        {
+            SqlParameter[] parametros = new SqlParameter[4];
+            parametros[0] = new SqlParameter("ID", funcionario.id);
+            parametros[1] = new SqlParameter("LOGIN_FUNC", funcionario.login_func);
+            parametros[2] = new SqlParameter("SENHA_FUNC", funcionario.senha_func);
+            parametros[3] = new SqlParameter("DT_CADR", funcionario.dt_cadr);
+
+            return parametros;
+        }
+
+        // Método auxiliar para montar o modelo FuncionarioViewModel a partir de um DataRow
+        protected override FuncionarioViewModel MontaModel(DataRow registro)
+        {
+            FuncionarioViewModel funcionario = new FuncionarioViewModel
+            {
+                id = Convert.ToInt32(registro["ID"]),
+                login_func = registro["LOGIN_FUNC"].ToString(),
+                senha_func = registro["SENHA_FUNC"].ToString(),
+                dt_cadr = Convert.ToDateTime(registro["DT_CADR"])
+            };
+
+            return funcionario;
+        }
+
+        // Método para definir a tabela e stored procedure de listagem
+        protected override void SetTabela()
+        {
+            Tabela = "cadr_func";
+            NomeSpListagem = "spListagemFuncionario";
+        }
+
+    }
+
+}
+
+
+
+/*using LumiTempMVC.Models; // Importa o namespace que contém os modelos
 using System; // Importa o namespace para tipos básicos
 using System.Collections.Generic; // Importa o namespace para trabalhar com listas genéricas
 using System.Data; // Importa o namespace para trabalhar com DataTables
@@ -130,4 +179,4 @@ namespace LumiTempMVC.DAO // Declaração do namespace para organizar o código 
             return Convert.ToInt32(tabela.Rows[0]["MAIOR"]);
         }
     }
-}
+}*/

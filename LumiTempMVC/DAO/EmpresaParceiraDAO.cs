@@ -6,7 +6,61 @@ using LumiTempMVC.Models;
 
 namespace LumiTempMVC.DAO
 {
-    public class EmpresaParceiraDAO
+    public class EmpresaParceiraDAO : PadraoDAO<EmpresaParceiraViewModel>
+    {
+        // Método para criar os parâmetros SQL a partir de um objeto EmpresaParceiraViewModel
+        protected override SqlParameter[] CriaParametros(EmpresaParceiraViewModel empresa)
+        {
+            SqlParameter[] parametros = new SqlParameter[6];
+            parametros[0] = new SqlParameter("ID", empresa.id);
+            parametros[1] = new SqlParameter("NM_EMPR", empresa.nm_empr);
+            parametros[2] = new SqlParameter("CEP_EMPR", empresa.cep_empr);
+            parametros[3] = new SqlParameter("CNPJ_EMPR", empresa.cnpj_empr);
+            parametros[4] = new SqlParameter("TELF_CONT_EMPR", empresa.telf_cont_empr);
+            parametros[5] = new SqlParameter("ID_FUNC", empresa.id_func);
+
+            return parametros;
+        }
+
+        // Método auxiliar para montar o modelo EmpresaParceiraViewModel a partir de uma linha da tabela
+        protected override EmpresaParceiraViewModel MontaModel(DataRow registro)
+        {
+            EmpresaParceiraViewModel empresa = new EmpresaParceiraViewModel
+            {
+                id = Convert.ToInt32(registro["ID"]),
+                nm_empr = registro["NM_EMPR"].ToString(),
+                cep_empr = registro["CEP_EMPR"].ToString(),
+                cnpj_empr = registro["CNPJ_EMPR"].ToString(),
+                telf_cont_empr = registro["TELF_CONT_EMPR"].ToString(),
+                id_func = Convert.ToInt32(registro["ID_FUNC"])
+            };
+
+            return empresa;
+        }
+
+        // Método para definir a tabela e stored procedure de listagem
+        protected override void SetTabela()
+        {
+            Tabela = "cadr_empr_parc";
+            NomeSpListagem = "spListagemEmpresa"; 
+        }
+
+    }
+
+}
+
+
+
+
+/*using System.Collections.Generic;
+using System.Data.SqlClient;
+using System.Data;
+using System;
+using LumiTempMVC.Models;
+
+namespace LumiTempMVC.DAO
+{
+    public class EmpresaParceiraDAO 
     {
         // Método para criar os parâmetros SQL a partir de um objeto EmpresaParceiraViewModel
         private SqlParameter[] CriaParametros(EmpresaParceiraViewModel empresa)
@@ -126,5 +180,4 @@ namespace LumiTempMVC.DAO
             DataTable tabela = HelperDAO.ExecutaSelect(sql, null); // Executa a consulta
             return Convert.ToInt32(tabela.Rows[0]["MAIOR"]); // Retorna o próximo ID
         }
-    }
-}
+}*/
