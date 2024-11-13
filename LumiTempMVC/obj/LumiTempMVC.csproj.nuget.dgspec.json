@@ -1,23 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\PLAY\\Desktop\\PBL\\LumiTemp-ProjectBasedLearning\\LumiTempMVC\\LumiTempMVC.csproj": {}
+    "C:\\Users\\paula\\Documents\\LumiTemp-ProjectBasedLearning\\LumiTempMVC\\LumiTempMVC.csproj": {}
   },
   "projects": {
-    "C:\\Users\\PLAY\\Desktop\\PBL\\LumiTemp-ProjectBasedLearning\\LumiTempMVC\\LumiTempMVC.csproj": {
+    "C:\\Users\\paula\\Documents\\LumiTemp-ProjectBasedLearning\\LumiTempMVC\\LumiTempMVC.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\PLAY\\Desktop\\PBL\\LumiTemp-ProjectBasedLearning\\LumiTempMVC\\LumiTempMVC.csproj",
+        "projectUniqueName": "C:\\Users\\paula\\Documents\\LumiTemp-ProjectBasedLearning\\LumiTempMVC\\LumiTempMVC.csproj",
         "projectName": "LumiTempMVC",
-        "projectPath": "C:\\Users\\PLAY\\Desktop\\PBL\\LumiTemp-ProjectBasedLearning\\LumiTempMVC\\LumiTempMVC.csproj",
-        "packagesPath": "C:\\Users\\PLAY\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\PLAY\\Desktop\\PBL\\LumiTemp-ProjectBasedLearning\\LumiTempMVC\\obj\\",
+        "projectPath": "C:\\Users\\paula\\Documents\\LumiTemp-ProjectBasedLearning\\LumiTempMVC\\LumiTempMVC.csproj",
+        "packagesPath": "C:\\Users\\paula\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\paula\\Documents\\LumiTemp-ProjectBasedLearning\\LumiTempMVC\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\PLAY\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\paula\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -39,6 +39,11 @@
           "warnAsError": [
             "NU1605"
           ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
         }
       },
       "frameworks": {
@@ -72,7 +77,7 @@
             },
             {
               "name": "Microsoft.NETCore.App.Host.win-x64",
-              "version": "[3.1.29, 3.1.29]"
+              "version": "[3.1.32, 3.1.32]"
             },
             {
               "name": "Microsoft.NETCore.App.Ref",
@@ -91,7 +96,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.401\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.400\\RuntimeIdentifierGraph.json"
         }
       }
     }

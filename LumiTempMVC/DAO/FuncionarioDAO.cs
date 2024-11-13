@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 
-namespace LumiTempMVC.DAO
+/*namespace LumiTempMVC.DAO
 {
     public class FuncionarioDAO : PadraoDAO<FuncionarioViewModel> 
     {
@@ -43,11 +43,11 @@ namespace LumiTempMVC.DAO
 
     }
 
-}
+}*/
 
 
 
-/*using LumiTempMVC.Models; // Importa o namespace que contém os modelos
+using LumiTempMVC.Models; // Importa o namespace que contém os modelos
 using System; // Importa o namespace para tipos básicos
 using System.Collections.Generic; // Importa o namespace para trabalhar com listas genéricas
 using System.Data; // Importa o namespace para trabalhar com DataTables
@@ -178,5 +178,14 @@ namespace LumiTempMVC.DAO // Declaração do namespace para organizar o código 
             // Retorna o próximo ID (ou 1 se não houver registros)
             return Convert.ToInt32(tabela.Rows[0]["MAIOR"]);
         }
+        //Método para listar caixa combo
+        public List<FuncionarioViewModel> ListaFuncionarios()
+        {
+            List<FuncionarioViewModel> lista = new List<FuncionarioViewModel>();
+            DataTable tabela = HelperDAO.ExecutaSelect("select * from cadr_func", null);
+            foreach (DataRow registro in tabela.Rows)
+                lista.Add(MontaModelFuncionario(registro));
+            return lista;
+        }
     }
-}*/
+}

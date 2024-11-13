@@ -1,3 +1,5 @@
 is_global = true
 build_property.RootNamespace = LumiTempMVC
-build_property.ProjectDir = C:\Users\PLAY\Desktop\PBL\LumiTemp-ProjectBasedLearning\LumiTempMVC\
+build_property.ProjectDir = C:\Users\paula\Documents\LumiTemp-ProjectBasedLearning\LumiTempMVC\
+build_property.EnableComHosting = 
+build_property.EnableGeneratedComInterfaceComImportInterop = 

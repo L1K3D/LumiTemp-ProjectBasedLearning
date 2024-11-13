@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System;
 using LumiTempMVC.DAO;
 using System.Text;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace LumiTempMVC.Controllers
 {
@@ -31,7 +32,7 @@ namespace LumiTempMVC.Controllers
                     id = dao.ProximoId()
 
                 };
-
+                PreparaListaFuncionariosParaCombo();
                 return View("Form", empresa);
 
             }
@@ -40,37 +41,34 @@ namespace LumiTempMVC.Controllers
                 // Em caso de erro, redireciona para a página de erro, passando a mensagem de erro
                 return View("Error", new ErrorViewModel { Erro = erro.ToString() });
             }
+
         }
 
         [HttpPost]
-        public IActionResult Salvar(EmpresaParceiraViewModel empresa)
+        public IActionResult Salvar(EmpresaParceiraViewModel aluno, string Operacao)
         {
-            if (!ModelState.IsValid)
-            {
-                // Se o modelo não for válido, retorna o formulário com os dados para correção
-                return View("Form", empresa);
-            }
-
             try
             {
-                EmpresaParceiraDAO dao = new EmpresaParceiraDAO();
-                if (empresa.id == 0 || dao.Consulta(empresa.id) == null)
+                ValidaDados(aluno, Operacao);
+                if (ModelState.IsValid == false)
                 {
-                    // Se for um novo funcionário, insere
-                    dao.Inserir(empresa);
+                    ViewBag.Operacao = Operacao;
+                    PreparaListaFuncionariosParaCombo();
+                    return View("Form", aluno);
                 }
                 else
                 {
-                    // Se já existir, faz a atualização
-                    dao.Alterar(empresa);
+                    EmpresaParceiraDAO dao = new EmpresaParceiraDAO();
+                    if (Operacao == "I")
+                        dao.Inserir(aluno);
+                    else
+                        dao.Alterar(aluno);
+                    return RedirectToAction("index");
                 }
-
-                return RedirectToAction("Index");
             }
             catch (Exception erro)
             {
-                // Em caso de erro, retorna a View de erro
-                return View("Error", new ErrorViewModel { Erro = erro.ToString() });
+                return View("Error", new ErrorViewModel(erro.ToString()));
             }
         }
 
@@ -81,6 +79,7 @@ namespace LumiTempMVC.Controllers
             {
                 EmpresaParceiraDAO dao = new EmpresaParceiraDAO();
                 var empresa = dao.Consulta(id);
+                PreparaListaFuncionariosParaCombo();
                 if (empresa == null)
                 {
                     return RedirectToAction("Index");
@@ -137,6 +136,51 @@ namespace LumiTempMVC.Controllers
                 return RedirectToAction("Error", new ErrorViewModel(erro.ToString()));
             }
         }
+        private void ValidaDados(EmpresaParceiraViewModel empresa, string operacao)
+        {
+            ModelState.Clear();
+            EmpresaParceiraDAO dao = new EmpresaParceiraDAO();
 
+            // Validação do ID
+            if (empresa.id <= 0)
+                ModelState.AddModelError("Id", "Id inválido!");
+            else
+            {
+                if (operacao == "I" && dao.Consulta(empresa.id) != null)
+                    ModelState.AddModelError("Id", "Código já está em uso.");
+                if (operacao == "A" && dao.Consulta(empresa.id) == null)
+                    ModelState.AddModelError("Id", "Empresa não existe.");
+            }
+
+            // Validação do Nome
+            if (string.IsNullOrEmpty(empresa.nm_empr))
+                ModelState.AddModelError("Nome", "Preencha o nome.");
+
+            // Validação do CNPJ
+            if (string.IsNullOrEmpty(empresa.cnpj_empr) || empresa.cnpj_empr.Length != 14)
+                ModelState.AddModelError("CNPJ", "CNPJ inválido.");
+
+            // Validação do CEP
+            if (string.IsNullOrEmpty(empresa.cep_empr))
+                ModelState.AddModelError("CEP", "Preencha o CEP.");
+
+            // Validação do Telefone
+            if (string.IsNullOrEmpty(empresa.telf_cont_empr))
+                ModelState.AddModelError("Telefone", "Preencha o telefone.");
+        }
+        private void PreparaListaFuncionariosParaCombo()
+        {
+            FuncionarioDAO funcionarioDao = new FuncionarioDAO();
+            var funcionarios = funcionarioDao.ListaFuncionarios();
+            List<SelectListItem> listaFuncionarios = new List<SelectListItem>();
+
+            listaFuncionarios.Add(new SelectListItem("Selecione Login de um funcionário...", "0"));
+            foreach (var funcionario in funcionarios)
+            {
+                SelectListItem item = new SelectListItem(funcionario.login_func, funcionario.id.ToString());
+                listaFuncionarios.Add(item);
+            }
+            ViewBag.Funcionarios = listaFuncionarios;
+        }
     }
 }

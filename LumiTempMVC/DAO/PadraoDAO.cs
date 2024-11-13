@@ -1,4 +1,4 @@
-﻿using LumiTempMVC.Models;
+﻿/*using LumiTempMVC.Models;
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Data;
@@ -63,7 +63,10 @@ namespace LumiTempMVC.DAO
             var p = new SqlParameter[]
             {
                  new SqlParameter("tabela", Tabela),
-                 new SqlParameter("Ordem", "1") // 1 é o primeiro campo da tabela
+                 new SqlParameter("Ordem", "1") // 1 é o primeiro 
+
+
+da tabela
             };
             var tabela = HelperDAO.ExecutaSelect(NomeSpListagem, p);
             List<T> lista = new List<T>();
@@ -74,3 +77,4 @@ namespace LumiTempMVC.DAO
         }
     }
 }
+*/

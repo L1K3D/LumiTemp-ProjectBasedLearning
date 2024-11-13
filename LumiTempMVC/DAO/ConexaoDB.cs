@@ -12,7 +12,7 @@ namespace LumiTempMVC.DAO
             // - Initial Catalog: nome do banco de dados
             // - user id: usuário para autenticação
             // - password: senha do usuário
-            string strCon = "Data Source=LOCALHOST; Initial Catalog=b_lumitemp_main_db; user id=sa; password=123456";
+            string strCon = "Data Source=DESKTOP-47NVA44\\MSSQLSERVER2; Initial Catalog=b_lumitemp_main_db; user id=sa; password=123456";
 
             // Cria uma nova instância de SqlConnection usando a string de conexão
             SqlConnection conexao = new SqlConnection(strCon);

@@ -18,7 +18,16 @@
 
         <div>
             <label for="id" class="control-label">Código do Sensor</label>
-            <input type="number" id="id" name="id" value="@Model.id" required /> <!-- Campo para o código do sensor -->
+            <!--<input type="number" id="id" name="id" value="@Model.id" required /> <!-- Campo para o código do sensor -->
+            @if (ViewBag.Operacao == "I")
+            {
+                <input asp-for="id" class="form-control" />
+            }
+            else
+            {
+                <input asp-for="id" class="form-control" readonly />
+            }
+            <span asp-validation-for="id" class="text-danger"></span>
         </div>
 
         <div>
@@ -43,12 +52,14 @@
 
         <div>
             <label for="id_func" class="control-label">Código do Usuário Responsável</label>
-            <input type="number" id="id_func" name="id_func" value="@Model.id_func" required /> <!-- Campo para o código do usuário responsável -->
+            <select asp-for="id_func" asp-items="ViewBag.funcionarios" class="form-control"> </select>  /> <!-- 
+
+            para o código do usuário responsável -->
         </div>
 
         <div>
             <label for="id_empr" class="control-label">Código da Empresa</label>
-            <input type="number" id="id_empr" name="id_empr" value="@Model.id_empr" required /> <!-- Campo para o código da empresa associada -->
+            <select asp-for="id_empr" asp-items="ViewBag.Empresas" class="form-control"> </select> <!-- Campo para o código da empresa associada -->
         </div>
 
         <div>

@@ -4,7 +4,7 @@ using System.Data;
 using System;
 using LumiTempMVC.Models;
 
-namespace LumiTempMVC.DAO
+/*namespace LumiTempMVC.DAO
 {
     public class SensorDAO : PadraoDAO<SensorViewModel>
     {
@@ -48,10 +48,10 @@ namespace LumiTempMVC.DAO
             NomeSpListagem = "spListagemSensor";
         }
     }
-}
+}*/
 
 
-/*using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Data;
 using System;
@@ -193,4 +193,4 @@ namespace LumiTempMVC.DAO
             return Convert.ToInt32(tabela.Rows[0]["MAIOR"]); // Retorna o próximo ID
         }
     }
-}*/
+}

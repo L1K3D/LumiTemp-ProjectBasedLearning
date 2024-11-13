@@ -22,7 +22,8 @@ header {
     position: fixed; /* Mantém o cabeçalho fixo no topo */
     top: 0; /* Posiciona no topo */
     left: 0; /* Alinha à esquerda */
-    z-index: 1000; /* Garante que o cabeçalho esteja acima de outros elementos */
+    z-index: 1000; /* Garante que o cabeçalho 
+        ja acima de outros elementos */
 }
 
 /* Estilo do menu de navegação */
@@ -115,3 +116,5 @@ th, td { /* Estilo comum para cabeçalhos e células da tabela */
 h1 {
     color: white; /* Cor do título principal */
 }
+
+div

@@ -1,4 +1,5 @@
-﻿using System; // Importa o namespace necessário para trabalhar com tipos básicos, como DateTime e Nullable
+﻿using System;
+using System.Collections.Generic; // Importa o namespace necessário para trabalhar com tipos básicos, como DateTime e Nullable
 
 namespace LumiTempMVC.Models // Declaração do namespace para organizar o código dos modelos
 {
@@ -10,7 +11,7 @@ namespace LumiTempMVC.Models // Declaração do namespace para organizar o códi
 
         // Propriedade para armazenar a descrição do tipo de sensor
         public string ds_tipo_sens { get; set; }
-
+        
         // Propriedade para armazenar a data de venda do sensor
         // É nullable para permitir que não haja um valor definido
         public DateTime dt_vend { get; set; }

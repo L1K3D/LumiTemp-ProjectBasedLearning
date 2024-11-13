@@ -4,7 +4,7 @@ using System.Data;
 using System;
 using LumiTempMVC.Models;
 
-namespace LumiTempMVC.DAO
+/*namespace LumiTempMVC.DAO
 {
     public class EmpresaParceiraDAO : PadraoDAO<EmpresaParceiraViewModel>
     {
@@ -25,15 +25,13 @@ namespace LumiTempMVC.DAO
         // Método auxiliar para montar o modelo EmpresaParceiraViewModel a partir de uma linha da tabela
         protected override EmpresaParceiraViewModel MontaModel(DataRow registro)
         {
-            EmpresaParceiraViewModel empresa = new EmpresaParceiraViewModel
-            {
-                id = Convert.ToInt32(registro["ID"]),
-                nm_empr = registro["NM_EMPR"].ToString(),
-                cep_empr = registro["CEP_EMPR"].ToString(),
-                cnpj_empr = registro["CNPJ_EMPR"].ToString(),
-                telf_cont_empr = registro["TELF_CONT_EMPR"].ToString(),
-                id_func = Convert.ToInt32(registro["ID_FUNC"])
-            };
+            EmpresaParceiraViewModel empresa = new EmpresaParceiraViewModel();
+            empresa.id = Convert.ToInt32(registro["ID"]);
+            empresa.nm_empr = registro["NM_EMPR"].ToString();
+            empresa.cep_empr = registro["CEP_EMPR"].ToString();
+            empresa.cnpj_empr = registro["CNPJ_EMPR"].ToString();
+            empresa.telf_cont_empr = registro["TELF_CONT_EMPR"].ToString();
+            empresa.id_func = Convert.ToInt32(registro["ID_FUNC"]);
 
             return empresa;
         }
@@ -48,19 +46,12 @@ namespace LumiTempMVC.DAO
     }
 
 }
+*/
 
-
-
-
-/*using System.Collections.Generic;
-using System.Data.SqlClient;
-using System.Data;
-using System;
-using LumiTempMVC.Models;
 
 namespace LumiTempMVC.DAO
 {
-    public class EmpresaParceiraDAO 
+    public class EmpresaParceiraDAO
     {
         // Método para criar os parâmetros SQL a partir de um objeto EmpresaParceiraViewModel
         private SqlParameter[] CriaParametros(EmpresaParceiraViewModel empresa)
@@ -96,7 +87,7 @@ namespace LumiTempMVC.DAO
                 "CEP_EMPR=@CEP_EMPR, " +
                 "CNPJ_EMPR=@CNPJ_EMPR, " +
                 "TELF_CONT_EMPR=@TELF_CONT_EMPR, " +  // Atualiza o telefone de contato
-                "ID_FUNC=@ID_FUNC " +          // Atualiza o código do funcionário associado
+                "ID_FUNC=@ID_FUNC " +          //   Atualiza o código do funcionário associado
                 "WHERE ID = @ID";          // Condição para identificar a empresa a ser alterada
             HelperDAO.ExecutaSQL(sql, CriaParametros(empresa)); // Executa a query
         }
@@ -180,4 +171,14 @@ namespace LumiTempMVC.DAO
             DataTable tabela = HelperDAO.ExecutaSelect(sql, null); // Executa a consulta
             return Convert.ToInt32(tabela.Rows[0]["MAIOR"]); // Retorna o próximo ID
         }
-}*/
+        //Método para listar caixa combo
+        public List<EmpresaParceiraViewModel> ListaEmpresasParceiras()
+        {
+            List<EmpresaParceiraViewModel> lista = new List<EmpresaParceiraViewModel>();
+            DataTable tabela = HelperDAO.ExecutaSelect("select * from cadr_empr_parc", null);
+            foreach (DataRow registro in tabela.Rows)
+                lista.Add(MontaModelEmpresa(registro));
+            return lista;
+        }
+    }
+}

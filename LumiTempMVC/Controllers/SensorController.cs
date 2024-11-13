@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System;
 using LumiTempMVC.DAO;
 using System.Text;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace LumiTempMVC.Controllers
 {
@@ -29,6 +30,8 @@ namespace LumiTempMVC.Controllers
                     id = dao.ProximoId(), // Gera o próximo ID disponível
                     dt_vend = DateTime.Now // Define a data de cadastro atual
                 };
+                PreparaListaEmpresasParceirasParaCombo();
+                PreparaListaFuncionariosParaCombo();
                 return View("Form", sensor);
             }
             catch (Exception erro)
@@ -60,7 +63,8 @@ namespace LumiTempMVC.Controllers
                     // Se já existir, faz a atualização
                     dao.Alterar(sensor);
                 }
-
+                PreparaListaEmpresasParceirasParaCombo();
+                PreparaListaFuncionariosParaCombo();
                 return RedirectToAction("Index");
             }
             catch (Exception erro)
@@ -77,6 +81,8 @@ namespace LumiTempMVC.Controllers
             {
                 SensorDAO dao = new SensorDAO();
                 var sensor = dao.Consulta(id);
+                PreparaListaEmpresasParceirasParaCombo();
+                PreparaListaFuncionariosParaCombo();
                 if (sensor == null)
                 {
                     return RedirectToAction("Index");
@@ -133,6 +139,34 @@ namespace LumiTempMVC.Controllers
                 return RedirectToAction("Error", new ErrorViewModel(erro.ToString()));
             }
         }
+        private void PreparaListaFuncionariosParaCombo()
+        {
+            FuncionarioDAO funcionarioDao = new FuncionarioDAO();
+            var funcionarios = funcionarioDao.ListaFuncionarios();
+            List<SelectListItem> listaFuncionarios = new List<SelectListItem>();
 
+            listaFuncionarios.Add(new SelectListItem("Selecione Login de um funcionário...", "0"));
+            foreach (var funcionario in funcionarios)
+            {
+                SelectListItem item = new SelectListItem(funcionario.login_func, funcionario.id.ToString());
+                listaFuncionarios.Add(item);
+            }
+            ViewBag.Funcionarios = listaFuncionarios;
+        }
+        private void PreparaListaEmpresasParceirasParaCombo()
+        {
+            EmpresaParceiraDAO empresaDao = new EmpresaParceiraDAO();
+            var empresas = empresaDao.ListaEmpresasParceiras();
+            List<SelectListItem> listaEmpresas = new List<SelectListItem>();
+
+            listaEmpresas.Add(new SelectListItem("Selecione uma empresa...", "0"));
+            foreach (var empresa in empresas)
+            {
+                SelectListItem item = new SelectListItem(empresa.nm_empr, empresa.id.ToString());
+                listaEmpresas.Add(item);
+            }
+            ViewBag.Empresas = listaEmpresas;
+        }
+        
     }
 }

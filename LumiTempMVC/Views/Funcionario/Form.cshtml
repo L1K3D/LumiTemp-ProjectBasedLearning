@@ -18,7 +18,17 @@
 
         <div>
             <label for="id" class="control-label">Código do Funcionário</label>
-            <input type="number" id="id" name="id" value="@Model.id" required /> <!-- Campo para o código do funcionário -->
+            <!--<input type="number" id="id" name="id" value="@Model.id" required /> <!-- Campo para o código do funcionário -->
+            @if (ViewBag.Operacao == "I")
+            {
+                <input asp-for="id" class="form-control" />
+            }
+            else
+            {
+                <input asp-for="id" class="form-control" readonly />
+            }
+            <span asp-validation-for="id" class="text-danger"></span>
+            <br />
         </div>
 
         <div>
