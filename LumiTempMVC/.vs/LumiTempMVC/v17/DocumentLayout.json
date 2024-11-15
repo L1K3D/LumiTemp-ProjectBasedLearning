@@ -1,88 +1,12 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "C:\\Users\\paula\\Documents\\LumiTemp-ProjectBasedLearning\\LumiTempMVC\\",
-  "Documents": [
-    {
-      "AbsoluteMoniker": "D:0:0:{284BEE7B-16A5-4990-8919-25DFDA38DC62}|LumiTempMVC.csproj|c:\\users\\paula\\documents\\lumitemp-projectbasedlearning\\lumitempmvc\\views\\empresaparceira\\form.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{284BEE7B-16A5-4990-8919-25DFDA38DC62}|LumiTempMVC.csproj|solutionrelative:views\\empresaparceira\\form.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{284BEE7B-16A5-4990-8919-25DFDA38DC62}|LumiTempMVC.csproj|c:\\users\\paula\\documents\\lumitemp-projectbasedlearning\\lumitempmvc\\controllers\\empresaparceiracontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{284BEE7B-16A5-4990-8919-25DFDA38DC62}|LumiTempMVC.csproj|solutionrelative:controllers\\empresaparceiracontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{284BEE7B-16A5-4990-8919-25DFDA38DC62}|LumiTempMVC.csproj|c:\\users\\paula\\documents\\lumitemp-projectbasedlearning\\lumitempmvc\\views\\funcionario\\form.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{284BEE7B-16A5-4990-8919-25DFDA38DC62}|LumiTempMVC.csproj|solutionrelative:views\\funcionario\\form.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{284BEE7B-16A5-4990-8919-25DFDA38DC62}|LumiTempMVC.csproj|c:\\users\\paula\\documents\\lumitemp-projectbasedlearning\\lumitempmvc\\wwwroot\\css\\estilos.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}",
-      "RelativeMoniker": "D:0:0:{284BEE7B-16A5-4990-8919-25DFDA38DC62}|LumiTempMVC.csproj|solutionrelative:wwwroot\\css\\estilos.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}"
-    }
-  ],
+  "WorkspaceRootPath": "C:\\Users\\enzob\\Desktop\\Nova pasta\\LumiTemp-ProjectBasedLearning\\LumiTempMVC\\",
+  "Documents": [],
   "DocumentGroupContainers": [
     {
       "Orientation": 0,
-      "VerticalTabListWidth": 112,
-      "DocumentGroups": [
-        {
-          "DockedWidth": 212,
-          "SelectedChildIndex": 0,
-          "Children": [
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "Form.cshtml",
-              "DocumentMoniker": "C:\\Users\\paula\\Documents\\LumiTemp-ProjectBasedLearning\\LumiTempMVC\\Views\\EmpresaParceira\\Form.cshtml",
-              "RelativeDocumentMoniker": "Views\\EmpresaParceira\\Form.cshtml",
-              "ToolTip": "C:\\Users\\paula\\Documents\\LumiTemp-ProjectBasedLearning\\LumiTempMVC\\Views\\EmpresaParceira\\Form.cshtml",
-              "RelativeToolTip": "Views\\EmpresaParceira\\Form.cshtml",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABYAAABTAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2024-11-12T23:13:19.386Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "estilos.css",
-              "DocumentMoniker": "C:\\Users\\paula\\Documents\\LumiTemp-ProjectBasedLearning\\LumiTempMVC\\wwwroot\\css\\estilos.css",
-              "RelativeDocumentMoniker": "wwwroot\\css\\estilos.css",
-              "ToolTip": "C:\\Users\\paula\\Documents\\LumiTemp-ProjectBasedLearning\\LumiTempMVC\\wwwroot\\css\\estilos.css",
-              "RelativeToolTip": "wwwroot\\css\\estilos.css",
-              "ViewState": "AgIAAGMAAAAAAAAAAAAAAHcAAAADAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003000|",
-              "WhenOpened": "2024-11-12T23:23:15.165Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "EmpresaParceiraController.cs",
-              "DocumentMoniker": "C:\\Users\\paula\\Documents\\LumiTemp-ProjectBasedLearning\\LumiTempMVC\\Controllers\\EmpresaParceiraController.cs",
-              "RelativeDocumentMoniker": "Controllers\\EmpresaParceiraController.cs",
-              "ToolTip": "C:\\Users\\paula\\Documents\\LumiTemp-ProjectBasedLearning\\LumiTempMVC\\Controllers\\EmpresaParceiraController.cs",
-              "RelativeToolTip": "Controllers\\EmpresaParceiraController.cs",
-              "ViewState": "AgIAAC0AAAAAAAAAAAAhwDYAAAAkAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-11-12T23:08:12.419Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "Form.cshtml",
-              "DocumentMoniker": "C:\\Users\\paula\\Documents\\LumiTemp-ProjectBasedLearning\\LumiTempMVC\\Views\\Funcionario\\Form.cshtml",
-              "RelativeDocumentMoniker": "Views\\Funcionario\\Form.cshtml",
-              "ToolTip": "C:\\Users\\paula\\Documents\\LumiTemp-ProjectBasedLearning\\LumiTempMVC\\Views\\Funcionario\\Form.cshtml",
-              "RelativeToolTip": "Views\\Funcionario\\Form.cshtml",
-              "ViewState": "AgIAACQAAAAAAAAAAAAAADEAAAAuAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2024-11-12T23:47:26.052Z",
-              "EditorCaption": ""
-            }
-          ]
-        }
-      ]
+      "VerticalTabListWidth": 248,
+      "DocumentGroups": []
     }
   ]
 }

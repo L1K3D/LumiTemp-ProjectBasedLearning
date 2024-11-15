@@ -32,22 +32,23 @@
 
         <div>
             <label for="ds_tipo_sens" class="control-label">Descrição do Tipo de Sensor</label>
-            <input type="text" id="ds_tipo_sens" name="ds_tipo_sens" value="@Model.ds_tipo_sens" required /> <!-- Campo para a descrição do tipo de sensor -->
+            <input type="text" id="ds_tipo_sens" name="ds_tipo_sens" value="@Model.ds_tipo_sens"  /> <!-- Campo para a descrição do tipo de sensor -->
+            <span asp-validation-for="ds_tipo_sens" class="text-danger"></span>
         </div>
 
         <div>
             <label for="dt_vend" class="control-label">Data de Venda do Sensor</label>
-            <input type="date" id="dt_vend" name="dt_vend" value="@Model.dt_vend.ToString("yyyy-MM-dd")" required /> <!-- Campo para a data de venda do sensor -->
+            <input type="date" id="dt_vend" name="dt_vend" value="@Model.dt_vend.ToString("yyyy-MM-dd")"  /> <!-- Campo para a data de venda do sensor -->
         </div>
 
         <div>
             <label for="vl_temp_alvo" class="control-label">Temperatura Alvo Configurada</label>
-            <input type="text" id="vl_temp_alvo" name="vl_temp_alvo" value="@Model.vl_temp_alvo" required /> <!-- Campo para a temperatura alvo configurada -->
+            <input type="text" id="vl_temp_alvo" name="vl_temp_alvo" value="@Model.vl_temp_alvo"  /> <!-- Campo para a temperatura alvo configurada -->
         </div>
 
         <div>
             <label for="cd_motor" class="control-label">Código do Motor Vinculado</label>
-            <input type="number" id="cd_motor" name="cd_motor" value="@Model.cd_motor" required /> <!-- Campo para o código do motor associado ao sensor -->
+            <input type="number" id="cd_motor" name="cd_motor" value="@Model.cd_motor"  /> <!-- Campo para o código do motor associado ao sensor -->
         </div>
 
         <div>

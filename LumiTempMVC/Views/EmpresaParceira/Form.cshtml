@@ -3,6 +3,15 @@
     Layout = "~/Views/Shared/_Layout.cshtml"; // Define o layout compartilhado da página
 }
 
+@if (ViewBag.Operacao == "A")
+{
+    <h2>Alteração de Empresa</h2>
+}
+else
+{
+    <h2>Inclusão de Empresa</h2>
+}
+
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -16,93 +25,82 @@
         <div class="col-md-4">
             <form asp-action="Salvar" method="post">
                 <input type="hidden" name="Operacao" value="@ViewBag.Operacao" />
+
+                <div class="form-group">
+                    @if (ViewBag.Operacao == "A")
+                    {
+                        <label class="control-label">Código</label>
+                        <input asp-for="id" class="form-control disabled" readonly />
+                        <span asp-validation-for="id" class="text-danger"></span>
+                    }
+                </div>
+
                 <!-- Ação que será chamada ao submeter o formulário -->
                 <h2>Cadastro da Empresa Parceira</h2> <!-- Título do formulário -->
 
-                <div>
+                <div class="form-group">
                     <label for="id" class="control-label">Código da Empresa</label>
                     <!--<input type="number" id="id" name="id" value="@Model.id" required /> <!-- Campo para o código da empresa -->
                     @if (ViewBag.Operacao == "I")
                     {
-                        <input asp-for="id" class="form-control" />
+                        <input type="number" name="Id" value="@Model.id" class="form-control"/>
                     }
                     else
                     {
-                        <input asp-for="id" class="form-control" readonly />
+                        <input type="number" name="Id" value="@Model.id" class="form-control disabled" readonly/>
                     }
                     <span asp-validation-for="id" class="text-danger"></span>
                     <br />
                 </div>
 
-                <div>
+                <div class="form-group">
                     <label for="nm_empr" class="control-label">Nome da Empresa</label>
                     <input type="text" id="nm_empr" name="nm_empr" value="@Model.nm_empr" /> <!-- Campo para o código da empresa -->
                     <span asp-validation-for="nm_empr" class="text-danger"></span>
-                    &nbsp;
-                    &nbsp;
-                    &nbsp;
-                    &nbsp;
-                    &nbsp;
-                    &nbsp;
                 </div>
 
-                <div>
+                <div class="form-group">
                     <label for="cep_empr" class="control-label">CEP da Empresa</label>
                     <input type="text" id="cep_empr" name="cep_empr" value="@Model.cep_empr" /> <!-- Campo para o CEP -->
                     <span asp-validation-for="cep_empr" class="text-danger"></span>
-                    &nbsp;
-                    &nbsp;
-                    &nbsp;
-                    &nbsp;
-                    &nbsp;
-                    &nbsp;
                 </div>
 
-                <div>
+                <div class="form-group">
                     <label for="cnpj_empr" class="control-label">CNPJ da Empresa</label>
                     <input type="text" id="cnpj_empr" name="cnpj_empr" value="@Model.cnpj_empr" /> <!-- Campo para o CNPJ -->
                     <span asp-validation-for="cnpj_empr" class="text-danger"></span>
-                    &nbsp;
-                    &nbsp;
-                    &nbsp;
-                    &nbsp;
-                    &nbsp;
-                    &nbsp;
                 </div>
 
-                <div>
+                <div class="form-group">
                     <label for="telf_cont_empr" class="control-label">Telefone de Contato da Empresa</label>
                     <input type="text" id="telf_cont_empr" name="telf_cont_empr" value="@Model.telf_cont_empr" /> <!-- Campo para telefone -->
                     <span asp-validation-for="telf_cont_empr" class="text-danger"></span>
-                    &nbsp;
-                    &nbsp;
-                    &nbsp;
-                    &nbsp;
-                    &nbsp;
-                    &nbsp;
                 </div>
 
-                <div>
+                <div class="form-group">
                     <label for="id_func" class="control-label">Código do Usuário Associado à Empresa</label>
                     <select asp-for="id_func" asp-items="ViewBag.funcionarios" class="form-control"> </select> <!-- Campo para código do usuário -->
                     <span asp-validation-for="id_func" class="text-danger"></span>
-                    &nbsp;
-                    &nbsp;
-                    &nbsp;
-                    &nbsp;
-                    &nbsp;
-                    &nbsp;
                 </div>
 
-                <div>
-                    <input type="submit" value="Salvar Dados" /> <!-- Botão para submeter o formulário -->
+                <div class="form-group">
+                    <input type="submit" value="Salvar Dados" class="btn btn-white" /> <!-- Botão para submeter o formulário -->
                 </div>
 
-                <div>
-                    <h2><a href="/EmpresaParceira">Página Inicial</a></h2> <!-- Link para a página inicial -->
+                <div class="form-group">
+                    <h2><a href="/EmpresaParceira" >Página Inicial</a></h2> <!-- Link para a página inicial -->
                 </div>
             </form>
         </div>
     </div>
+
+    <div>
+        <a asp-action="Index">Voltar para a listagem</a>
+    </div>
+
+    @section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    }
+
 </body>
 </html>

@@ -20,6 +20,7 @@ namespace LumiTempMVC.Controllers
         // Exibe o formulário de criação de um novo funcionário
         public IActionResult Create()
         {
+            ViewBag.Operacao = "I";
             try
             {
                 FuncionarioDAO dao = new FuncionarioDAO();
@@ -38,34 +39,42 @@ namespace LumiTempMVC.Controllers
 
         // Método para salvar o funcionário (novo ou existente)
         [HttpPost]
-        public IActionResult Salvar(FuncionarioViewModel funcionario)
+        public IActionResult Salvar(FuncionarioViewModel funcionario, string operacao)
         {
-            if (!ModelState.IsValid)
-            {
-                // Se o modelo não for válido, retorna o formulário com os dados para correção
-                return View("Form", funcionario);
-            }
-
             try
             {
                 FuncionarioDAO dao = new FuncionarioDAO();
-                if (funcionario.id == 0 || dao.Consulta(funcionario.id) == null)
+                ModelState.Clear();
+                ValidaDados(funcionario, operacao);
+
+                if (funcionario.id <= 0)
+                    ModelState.AddModelError("id", "Campo Obrigatório");
+                if (string.IsNullOrEmpty(funcionario.login_func))
+                    ModelState.AddModelError("login_func", "Campo Obrigatório");
+                if (string.IsNullOrEmpty(funcionario.senha_func))
+                    ModelState.AddModelError("senha_func", "Campo Obrigatório");
+                if (funcionario.dt_cadr == DateTime.MinValue)
+                    ModelState.AddModelError("dt_cadr", "Campo Obrigatório");
+
+                if (ModelState.IsValid)
                 {
-                    // Se for um novo funcionário, insere
-                    dao.Inserir(funcionario);
+                    if (operacao == "I")
+                        dao.Inserir(funcionario);
+                    else
+                        dao.Alterar(funcionario);
+                    return RedirectToAction("Index");
                 }
                 else
                 {
-                    // Se já existir, faz a atualização
-                    dao.Alterar(funcionario);
-                }
 
-                return RedirectToAction("Index");
+
+                    ViewBag.Operacao = operacao;
+                    return View("form", funcionario);
+                }
             }
-            catch (Exception erro)
+            catch (Exception ex) 
             {
-                // Em caso de erro, retorna a View de erro
-                return View("Error", new ErrorViewModel { Erro = erro.ToString() });
+                return View("Error", new ErrorViewModel (ex.ToString()));
             }
         }
 
@@ -130,6 +139,42 @@ namespace LumiTempMVC.Controllers
                 // Em caso de erro, redireciona para a página de erro com a mensagem de erro
                 return RedirectToAction("Error", new ErrorViewModel(erro.ToString()));
             }
+        }
+
+        public void ValidaDados(FuncionarioViewModel funcionario, string operacao)
+        {
+            FuncionarioDAO dao = new FuncionarioDAO();
+
+            // Validação do ID
+            if (funcionario.id <= 0)
+            {
+                ModelState.AddModelError("id", "Id inválido!");
+            }
+            else
+            {
+                try
+                {
+                    if (operacao == "I" && dao.Consulta(funcionario.id) != null)
+                        ModelState.AddModelError("id", "Código já está em uso.");
+                    if (operacao == "A" && dao.Consulta(funcionario.id) == null)
+                        ModelState.AddModelError("id", "Empresa não existe.");
+                }
+                catch (Exception ex)
+                {
+                    ModelState.AddModelError("id", $"Erro ao validar ID: {ex.Message}");
+                }
+            }
+
+            // Validação do Nome
+            if (string.IsNullOrEmpty(funcionario.login_func))
+                ModelState.AddModelError("login_func", "Preencha o Login.");
+
+            // Validação do CNPJ: 14 dígitos
+            if (string.IsNullOrEmpty(funcionario.senha_func))
+            {
+                ModelState.AddModelError("senha_func", "Preencha a senha.");
+            }
+
         }
 
     }
