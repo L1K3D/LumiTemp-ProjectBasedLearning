@@ -1,75 +1,114 @@
 ﻿@model SensorViewModel
 @{
-    Layout = "~/Views/Shared/_Layout.cshtml"; // Define o layout padrão da página
+    Layout = "~/Views/Shared/_Layout.cshtml"; // Define o layout compartilhado da página
+}
+
+@if (ViewBag.Operacao == "A")
+{
+    <h2>Alteração de Sensor</h2>
+}
+else
+{
+    <h2>Inclusão de Sensor</h2>
 }
 
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-    <meta charset="utf-8" /> <!-- Configura a codificação de caracteres para UTF-8 -->
-    <link rel="stylesheet" type="text/css" href="~/css/estilos.css" /> <!-- Referencia o arquivo de estilos CSS -->
-    <title>Cadastro de Sensores</title> <!-- Define o título da página -->
+    <meta charset="utf-8" />
+    <link rel="stylesheet" type="text/css" href="~/css/estilos.css" /> <!-- Estilo da página -->
+    <title>Cadastro da Sensor</title> <!-- Título da página -->
 </head>
 
 <body>
-    <form asp-action="Salvar" method="post">
-        <!-- Define o método POST e a ação de envio do formulário -->
-        <h2>Cadastro de Sensores</h2> <!-- Cabeçalho do formulário -->
+    <div class="row">
+        <div class="col-md-4">
+            <form asp-action="Salvar" method="post">
+                <input type="hidden" name="Operacao" value="@ViewBag.Operacao" />
 
-        <div>
-            <label for="id" class="control-label">Código do Sensor</label>
-            <!--<input type="number" id="id" name="id" value="@Model.id" required /> <!-- Campo para o código do sensor -->
-            @if (ViewBag.Operacao == "I")
-            {
-                <input asp-for="id" class="form-control" />
-            }
-            else
-            {
-                <input asp-for="id" class="form-control" readonly />
-            }
-            <span asp-validation-for="id" class="text-danger"></span>
+                <div class="form-group">
+                    @if (ViewBag.Operacao == "A")
+                    {
+                        <label class="control-label">Código</label>
+                        <input asp-for="id" class="form-control disabled" readonly />
+                        <span asp-validation-for="id" class="text-danger"></span>
+                    }
+                </div>
+
+                <!-- Ação que será chamada ao submeter o formulário -->
+                <h2>Cadastro da Empresa Parceira</h2> <!-- Título do formulário -->
+
+                <div class="form-group">
+                    <label for="id" class="control-label">Código do Sensor</label>
+                    <!--<input type="number" id="id" name="id" value="@Model.id" required /> <!-- Campo para o código da empresa -->
+                    @if (ViewBag.Operacao == "I")
+                    {
+                        <input type="number" name="Id" value="@Model.id" class="form-control" />
+                    }
+                    else
+                    {
+                        <input type="number" name="Id" value="@Model.id" class="form-control disabled" readonly />
+                    }
+                    <span asp-validation-for="id" class="text-danger"></span>
+                    <br />
+                </div>
+
+                <div class="form-group">
+                    <label for="ds_tipo_sens" class="control-label">Descricao do sensor</label>
+                    <input type="text" id="ds_tipo_sens" name="ds_tipo_sens" value="@Model.ds_tipo_sens" /> <!-- Campo para o código da empresa -->
+                    <span asp-validation-for="ds_tipo_sens" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label for="dt_vend" class="control-label">Data de venda</label>
+                    <input type="date" id="dt_vend" name="dt_vend" value="@Model.dt_vend.ToString("yyyy-MM-dd")" /> <!-- Campo para o CEP -->
+                    <span asp-validation-for="dt_vend" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label for="vl_temp_alvo" class="control-label">Valor Alvo</label>
+                    <input type="number" id="vl_temp_alvo" name="vl_temp_alvo" value="@Model.vl_temp_alvo" /> <!-- Campo para o CNPJ -->
+                    <span asp-validation-for="vl_temp_alvo" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label for="cd_motor" class="control-label">Codigo Motor</label>
+                    <input type="number" id="cd_motor" name="cd_motor" value="@Model.cd_motor" /> <!-- Campo para telefone -->
+                    <span asp-validation-for="cd_motor" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label for="id_func" class="control-label">Código do Usuário Associado</label>
+                    <select asp-for="id_func" asp-items="ViewBag.funcionarios" class="form-control"> </select> <!-- Campo para código do usuário -->
+                    <span asp-validation-for="id_func" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label for="id_empr" class="control-label">Código da Empresa</label>
+                    <select asp-for="id_empr" asp-items="ViewBag.empresas" class="form-control"> </select> <!-- Campo para código do usuário -->
+                    <span asp-validation-for="id_empr" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <input type="submit" value="Salvar Dados" class="btn btn-white" /> <!-- Botão para submeter o formulário -->
+                </div>
+
+                <div class="form-group">
+                    <h2><a href="/Sensor">Página Inicial</a></h2> <!-- Link para a página inicial -->
+                </div>
+            </form>
         </div>
+    </div>
 
-        <div>
-            <label for="ds_tipo_sens" class="control-label">Descrição do Tipo de Sensor</label>
-            <input type="text" id="ds_tipo_sens" name="ds_tipo_sens" value="@Model.ds_tipo_sens"  /> <!-- Campo para a descrição do tipo de sensor -->
-            <span asp-validation-for="ds_tipo_sens" class="text-danger"></span>
-        </div>
+    <div>
+        <a asp-action="Index">Voltar para a listagem</a>
+    </div>
 
-        <div>
-            <label for="dt_vend" class="control-label">Data de Venda do Sensor</label>
-            <input type="date" id="dt_vend" name="dt_vend" value="@Model.dt_vend.ToString("yyyy-MM-dd")"  /> <!-- Campo para a data de venda do sensor -->
-        </div>
+    @section Scripts {
+        @{
+            await Html.RenderPartialAsync("_ValidationScriptsPartial");
+        }
+    }
 
-        <div>
-            <label for="vl_temp_alvo" class="control-label">Temperatura Alvo Configurada</label>
-            <input type="text" id="vl_temp_alvo" name="vl_temp_alvo" value="@Model.vl_temp_alvo"  /> <!-- Campo para a temperatura alvo configurada -->
-        </div>
-
-        <div>
-            <label for="cd_motor" class="control-label">Código do Motor Vinculado</label>
-            <input type="number" id="cd_motor" name="cd_motor" value="@Model.cd_motor"  /> <!-- Campo para o código do motor associado ao sensor -->
-        </div>
-
-        <div>
-            <label for="id_func" class="control-label">Código do Usuário Responsável</label>
-            <select asp-for="id_func" asp-items="ViewBag.funcionarios" class="form-control"> </select>  /> <!-- 
-
-            para o código do usuário responsável -->
-        </div>
-
-        <div>
-            <label for="id_empr" class="control-label">Código da Empresa</label>
-            <select asp-for="id_empr" asp-items="ViewBag.Empresas" class="form-control"> </select> <!-- Campo para o código da empresa associada -->
-        </div>
-
-        <div>
-            <input type="submit" value="Salvar Dados" /> <!-- Botão para enviar os dados do formulário -->
-        </div>
-
-        <div>
-            <h2><a href="/Sensor">Página Inicial</a></h2> <!-- Link de navegação para a página inicial dos sensores -->
-        </div>
-    </form>
 </body>
-</html> 
+</html>

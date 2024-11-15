@@ -13,7 +13,7 @@ namespace LumiTempMVC.Controllers
         public IActionResult Index()
         {
             FuncionarioDAO dao = new FuncionarioDAO();
-            var lista = dao.Listagem();
+            List<FuncionarioViewModel> lista = dao.Listagem();
             return View(lista);
         }
 
@@ -23,38 +23,37 @@ namespace LumiTempMVC.Controllers
             ViewBag.Operacao = "I";
             try
             {
+                FuncionarioViewModel funcionario = new FuncionarioViewModel();
                 FuncionarioDAO dao = new FuncionarioDAO();
-                FuncionarioViewModel funcionario = new FuncionarioViewModel
-                {
-                    id = dao.ProximoId(), // Gera o próximo ID disponível
-                    dt_cadr = DateTime.Now // Define a data de cadastro atual
-                };
+                funcionario.id = dao.ProximoId();
+                funcionario.dt_cadr = DateTime.Now;
                 return View("Form", funcionario);
             }
             catch (Exception erro)
             {
-                return View("Error", new ErrorViewModel { Erro = erro.ToString() });
+                return View("Error", new ErrorViewModel(erro.ToString()));
             }
         }
 
         // Método para salvar o funcionário (novo ou existente)
-        [HttpPost]
         public IActionResult Salvar(FuncionarioViewModel funcionario, string operacao)
         {
             try
             {
                 FuncionarioDAO dao = new FuncionarioDAO();
+
                 ModelState.Clear();
                 ValidaDados(funcionario, operacao);
 
                 if (funcionario.id <= 0)
-                    ModelState.AddModelError("id", "Campo Obrigatório");
+                    ModelState.AddModelError("id", "Campo obrigatório!");
                 if (string.IsNullOrEmpty(funcionario.login_func))
-                    ModelState.AddModelError("login_func", "Campo Obrigatório");
+                    ModelState.AddModelError("login_func", "Campo obrigatório!");
                 if (string.IsNullOrEmpty(funcionario.senha_func))
-                    ModelState.AddModelError("senha_func", "Campo Obrigatório");
+                    ModelState.AddModelError("senha_func", "Campo obrigatório!");
                 if (funcionario.dt_cadr == DateTime.MinValue)
-                    ModelState.AddModelError("dt_cadr", "Campo Obrigatório");
+                    ModelState.AddModelError("dt_cadr", "Campo obrigatório!");
+
 
                 if (ModelState.IsValid)
                 {
@@ -66,16 +65,15 @@ namespace LumiTempMVC.Controllers
                 }
                 else
                 {
-
-
-                    ViewBag.Operacao = operacao;
+                    ViewBag.operacao = operacao;
                     return View("form", funcionario);
                 }
             }
-            catch (Exception ex) 
+            catch (Exception erro)
             {
-                return View("Error", new ErrorViewModel (ex.ToString()));
+                return View("Error", new ErrorViewModel { Erro = erro.ToString() });
             }
+
         }
 
         // Método para editar um funcionário existente
@@ -167,13 +165,14 @@ namespace LumiTempMVC.Controllers
 
             // Validação do Nome
             if (string.IsNullOrEmpty(funcionario.login_func))
-                ModelState.AddModelError("login_func", "Preencha o Login.");
+                ModelState.AddModelError("login_func", "Preencha o login");
 
             // Validação do CNPJ: 14 dígitos
             if (string.IsNullOrEmpty(funcionario.senha_func))
-            {
                 ModelState.AddModelError("senha_func", "Preencha a senha.");
-            }
+
+            if (funcionario.dt_cadr == DateTime.MinValue)
+                ModelState.AddModelError("dt_cadr", "Preencha uma data");
 
         }
 

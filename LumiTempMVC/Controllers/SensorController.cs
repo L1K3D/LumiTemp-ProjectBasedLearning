@@ -24,12 +24,10 @@ namespace LumiTempMVC.Controllers
         {
             try
             {
+                SensorViewModel sensor = new SensorViewModel();
                 SensorDAO dao = new SensorDAO();
-                SensorViewModel sensor = new SensorViewModel
-                {
-                    id = dao.ProximoId(), // Gera o próximo ID disponível
-                    dt_vend = DateTime.Now // Define a data de cadastro atual
-                };
+                sensor.id = dao.ProximoId();
+                sensor.dt_vend = DateTime.Now;
                 PreparaListaEmpresasParceirasParaCombo();
                 PreparaListaFuncionariosParaCombo();
                 return View("Form", sensor);
@@ -40,38 +38,53 @@ namespace LumiTempMVC.Controllers
             }
         }
 
-        // Método para salvar o sensor (novo ou existente)
-        [HttpPost]
-        public IActionResult Salvar(SensorViewModel sensor)
+        public IActionResult Salvar(SensorViewModel sensor, string operacao)
         {
-            if (!ModelState.IsValid)
-            {
-                // Se o modelo não for válido, retorna o formulário com os dados para correção
-                return View("Form", sensor);
-            }
-
             try
             {
                 SensorDAO dao = new SensorDAO();
-                if (sensor.id == 0 || dao.Consulta(sensor.id) == null)
+
+                PreparaListaEmpresasParceirasParaCombo();
+                PreparaListaFuncionariosParaCombo();
+
+                ModelState.Clear();
+                ValidaDados(sensor, operacao);
+
+                if (sensor.id <= 0)
+                    ModelState.AddModelError("id", "Campo obrigatório!");
+                if (string.IsNullOrEmpty(sensor.ds_tipo_sens))
+                    ModelState.AddModelError("ds_tipo_sens", "Campo obrigatório!");
+                if (sensor.dt_vend == DateTime.MinValue)
+                    ModelState.AddModelError("dt_vend", "Campo obrigatório!");
+                if (sensor.vl_temp_alvo <= 0.00)
+                    ModelState.AddModelError("vl_temp_alvo", "Campo obrigatório!");
+                if (sensor.cd_motor <= 0)
+                    ModelState.AddModelError("cd_motor", "Campo obrigatório!");
+                if (sensor.id_func <= 0)
+                    ModelState.AddModelError("id_func", "Campo obrigatório!");
+                if (sensor.id_empr <= 0)
+                    ModelState.AddModelError("id_empr", "Campo obrigatório!");
+
+
+                if (ModelState.IsValid)
                 {
-                    // Se for um novo funcionário, insere
-                    dao.Inserir(sensor);
+                    if (operacao != "I")
+                        dao.Inserir(sensor);
+                    else
+                        dao.Alterar(sensor);
+                    return RedirectToAction("Index");
                 }
                 else
                 {
-                    // Se já existir, faz a atualização
-                    dao.Alterar(sensor);
+                    ViewBag.operacao = operacao;
+                    return View("form", sensor);
                 }
-                PreparaListaEmpresasParceirasParaCombo();
-                PreparaListaFuncionariosParaCombo();
-                return RedirectToAction("Index");
             }
             catch (Exception erro)
             {
-                // Em caso de erro, retorna a View de erro
-                return View("Error", new ErrorViewModel(erro.ToString()));  
+                return View("Error", new ErrorViewModel { Erro = erro.ToString() });
             }
+
         }
 
         // Método para editar os dados de um sensor existente
@@ -167,6 +180,46 @@ namespace LumiTempMVC.Controllers
             }
             ViewBag.Empresas = listaEmpresas;
         }
-        
+
+        public void ValidaDados(SensorViewModel sensor, string operacao)
+        {
+            SensorDAO dao = new SensorDAO();
+
+            // Validação do ID
+            if (sensor.id <= 0)
+            {
+                ModelState.AddModelError("id", "Id inválido!");
+            }
+            else
+            {
+                try
+                {
+                    if (operacao == "I" && dao.Consulta(sensor.id) != null)
+                        ModelState.AddModelError("id", "Código já está em uso.");
+                    if (operacao == "A" && dao.Consulta(sensor.id) == null)
+                        ModelState.AddModelError("id", "Empresa não existe.");
+                }
+                catch (Exception ex)
+                {
+                    ModelState.AddModelError("id", $"Erro ao validar ID: {ex.Message}");
+                }
+            }
+
+            // Validação do Nome
+            if (string.IsNullOrEmpty(sensor.ds_tipo_sens))
+                ModelState.AddModelError("ds_tipo_sens", "Preencha a descrição do sensor");
+
+            if (sensor.dt_vend == DateTime.MinValue)
+                ModelState.AddModelError("dt_vend", "Preencha uma data correta");
+
+            if (sensor.vl_temp_alvo <= 0.00)
+                ModelState.AddModelError("vl_temp_alvo", "Preencha o valor alvo");
+
+            if (sensor.cd_motor <= 0)
+                ModelState.AddModelError("cd_motor", "Preencha o código de um motor");
+
+        }
+
     }
+
 }

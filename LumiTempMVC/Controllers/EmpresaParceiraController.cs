@@ -68,6 +68,8 @@ namespace LumiTempMVC.Controllers
 
                 ModelState.Clear();
                 ValidaDados(f, operacao);
+
+                PreparaListaFuncionariosParaCombo();
                 
                 if (f.id <= 0)
                     ModelState.AddModelError("id", "Campo obrigatório!");
