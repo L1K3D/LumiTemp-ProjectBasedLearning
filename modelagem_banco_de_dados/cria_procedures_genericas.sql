@@ -1,19 +1,19 @@
 -- Seleciona o banco de dados b_lumitemp_main_db
-USE b_lumitemp_main_db;
+USE b_lumitemp_main_db
 
 GO
 
-DROP PROCEDURE spDelete;
-DROP PROCEDURE spConsulta;
-DROP PROCEDURE spListagem;
-DROP PROCEDURE spProximoId;
+DROP PROCEDURE spDelete
+DROP PROCEDURE spConsulta
+DROP PROCEDURE spListagem
+DROP PROCEDURE spProximoId
 
 GO
 
 -- Procedimento para deletar um registro baseado no ID
 CREATE PROCEDURE spDelete
 (
- @ID INT ,
+ @ID INT,
  @tabela VARCHAR(MAX)
 )
 AS

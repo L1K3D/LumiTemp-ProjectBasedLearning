@@ -1,191 +1,48 @@
-﻿using LumiTempMVC.Models;
-using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Data.SqlClient;
+﻿using LumiTempMVC.Models; // Importa o namespace com os modelos.
+using System.Data.SqlClient; // Biblioteca para manipulação de SQL Server.
+using System.Data; // Biblioteca para trabalhar com tabelas e dados estruturados.
+using System; // Biblioteca para funcionalidades básicas.
 
-/*namespace LumiTempMVC.DAO
+namespace LumiTempMVC.DAO
 {
-    public class FuncionarioDAO : PadraoDAO<FuncionarioViewModel> 
+    // Classe específica para manipular os dados da tabela de funcionários.
+    // Herda de PadraoDAO, uma classe genérica que fornece funcionalidades padrão para DAO.
+    public class FuncionarioDAO : PadraoDAO<FuncionarioViewModel>
     {
-        // Método para criar os parâmetros SQL a partir de um objeto FuncionarioViewModel
-        protected override SqlParameter[] CriaParametros(FuncionarioViewModel funcionario)
+        // Implementa o método abstrato para criar os parâmetros necessários para a execução de stored procedures.
+        protected override SqlParameter[] CriaParametros(FuncionarioViewModel model)
         {
-            SqlParameter[] parametros = new SqlParameter[4];
-            parametros[0] = new SqlParameter("ID", funcionario.id);
-            parametros[1] = new SqlParameter("LOGIN_FUNC", funcionario.login_func);
-            parametros[2] = new SqlParameter("SENHA_FUNC", funcionario.senha_func);
-            parametros[3] = new SqlParameter("DT_CADR", funcionario.dt_cadr);
+            // Define um array de parâmetros para armazenar os dados do modelo.
+            SqlParameter[] parametros = new SqlParameter[4]; // Corrigido para refletir 4 parâmetros.
 
-            return parametros;
+            // Preenche cada posição do array com um novo parâmetro SQL, mapeando os campos do modelo.
+            parametros[0] = new SqlParameter("ID", model.id); // ID do funcionário.
+            parametros[1] = new SqlParameter("LOGIN_FUNC", model.login_func); // Login do funcionário.
+            parametros[2] = new SqlParameter("SENHA_FUNC", model.senha_func); // Senha do funcionário.
+            parametros[3] = new SqlParameter("DT_CADR", model.dt_cadr); // Data de cadastro do funcionário.
+
+            return parametros; // Retorna o array de parâmetros preenchido.
         }
 
-        // Método auxiliar para montar o modelo FuncionarioViewModel a partir de um DataRow
+        // Implementa o método abstrato para criar um modelo a partir de uma linha de dados (DataRow).
         protected override FuncionarioViewModel MontaModel(DataRow registro)
         {
-            FuncionarioViewModel funcionario = new FuncionarioViewModel
-            {
-                id = Convert.ToInt32(registro["ID"]),
-                login_func = registro["LOGIN_FUNC"].ToString(),
-                senha_func = registro["SENHA_FUNC"].ToString(),
-                dt_cadr = Convert.ToDateTime(registro["DT_CADR"])
-            };
+            // Cria uma nova instância do modelo FuncionarioViewModel.
+            FuncionarioViewModel funcionario = new FuncionarioViewModel();
 
-            return funcionario;
+            // Preenche as propriedades do modelo com os valores correspondentes do DataRow.
+            funcionario.id = Convert.ToInt32(registro["ID"]); // Converte e atribui o ID.
+            funcionario.login_func = Convert.ToString(registro["LOGIN_FUNC"]); // Converte e atribui o login.
+            funcionario.senha_func = Convert.ToString(registro["SENHA_FUNC"]); // Converte e atribui a senha.
+            funcionario.dt_cadr = Convert.ToDateTime(registro["DT_CADR"]); // Converte e atribui a data de cadastro.
+
+            return funcionario; // Retorna o modelo preenchido.
         }
 
-        // Método para definir a tabela e stored procedure de listagem
+        // Implementa o método abstrato para definir o nome da tabela que será usada nas operações do DAO.
         protected override void SetTabela()
         {
-            Tabela = "cadr_func";
-            NomeSpListagem = "spListagemFuncionario";
-        }
-
-    }
-
-}*/
-
-
-
-using LumiTempMVC.Models; // Importa o namespace que contém os modelos
-using System; // Importa o namespace para tipos básicos
-using System.Collections.Generic; // Importa o namespace para trabalhar com listas genéricas
-using System.Data; // Importa o namespace para trabalhar com DataTables
-using System.Data.SqlClient; // Importa o namespace para trabalhar com SQL Server
-
-namespace LumiTempMVC.DAO // Declaração do namespace para organizar o código de acesso a dados
-{
-    public class FuncionarioDAO // Classe responsável por operações de acesso a dados para funcionários
-    {
-        // Método privado que cria um array de parâmetros para comandos SQL
-        private SqlParameter[] CriaParametros(FuncionarioViewModel funcionario)
-        {
-            // Inicializa o array de parâmetros
-            SqlParameter[] parametros = new SqlParameter[4]; // Corrigido para 4 parâmetros
-            // Adiciona cada parâmetro ao array
-            parametros[0] = new SqlParameter("ID", funcionario.id);
-            parametros[1] = new SqlParameter("LOGIN_FUNC", funcionario.login_func);
-            parametros[2] = new SqlParameter("SENHA_FUNC", funcionario.senha_func);
-            parametros[3] = new SqlParameter("DT_CADR", funcionario.dt_cadr); // Corrigido para usar a data de cadastro
-            return parametros; // Retorna o array de parâmetros
-        }
-
-        // Método para inserir um novo funcionário no banco de dados
-        public void Inserir(FuncionarioViewModel funcionario)
-        {
-            // Define a string SQL para a inserção
-            string sql = "INSERT INTO cadr_func (ID, LOGIN_FUNC, SENHA_FUNC, DT_CADR) " +
-                         "VALUES (@ID, @LOGIN_FUNC, @SENHA_FUNC, @DT_CADR)";
-            // Executa o comando SQL usando a classe HelperDAO
-            HelperDAO.ExecutaSQL(sql, CriaParametros(funcionario));
-        }
-
-        // Método para alterar as informações de um funcionário existente
-        public void Alterar(FuncionarioViewModel funcionario)
-        {
-            // Define a string SQL para a atualização
-            string sql =
-                "UPDATE cadr_func SET " +
-                "LOGIN_FUNC=@LOGIN_FUNC, " +
-                "SENHA_FUNC=@SENHA_FUNC, " +
-                "DT_CADR=@DT_CADR " +
-                "WHERE ID=@ID";
-            // Executa o comando SQL
-            HelperDAO.ExecutaSQL(sql, CriaParametros(funcionario));
-        }
-
-        // Método para excluir um funcionário com base no ID
-        public void Excluir(int id)
-        {
-            // Define a string SQL para a exclusão
-            string sql = "DELETE cadr_func WHERE ID =" + id;
-            // Executa o comando SQL (não precisa de parâmetros)
-            HelperDAO.ExecutaSQL(sql, null);
-        }
-
-        // Método estático que monta um objeto FuncionarioViewModel a partir de um DataRow
-        public static FuncionarioViewModel MontaModelFuncionario(DataRow registro)
-        {
-            FuncionarioViewModel funcionario = new FuncionarioViewModel();
-            // Preenche as propriedades do modelo com os dados do DataRow
-            funcionario.id = Convert.ToInt32(registro["ID"]);
-            funcionario.login_func = Convert.ToString(registro["LOGIN_FUNC"]);
-            funcionario.senha_func = Convert.ToString(registro["SENHA_FUNC"]); // Corrigido para "SENHA_FUNC"
-            funcionario.dt_cadr = Convert.ToDateTime(registro["DT_CADR"]);
-            return funcionario; // Retorna o modelo preenchido
-        }
-
-        // Método para consultar um funcionário com base no ID
-        public FuncionarioViewModel Consulta(int id)
-        {
-            // Define a string SQL para a consulta
-            string sql = "SELECT * FROM cadr_func WHERE ID =" + id;
-            // Executa a consulta e armazena o resultado em um DataTable
-            DataTable tabela = HelperDAO.ExecutaSelect(sql, null);
-            // Verifica se algum registro foi encontrado
-            if (tabela.Rows.Count == 0)
-                return null; // Retorna nulo se não encontrar registros
-            else
-                return MontaModelFuncionario(tabela.Rows[0]); // Monta e retorna o funcionário encontrado
-        }
-
-        // Método para consultar todos os funcionários
-        public List<FuncionarioViewModel> ConsultaTodos()
-        {
-            List<FuncionarioViewModel> funcionarios = new List<FuncionarioViewModel>(); // Cria uma lista para armazenar os funcionários
-
-            using (SqlConnection cx = ConexaoDB.GetConexao()) // Usa a conexão com o banco de dados
-            {
-                // Define a string SQL para buscar todos os funcionários
-                string sql = "SELECT * FROM cadr_func";
-                using (SqlDataAdapter adapter = new SqlDataAdapter(sql, cx)) // Cria um SqlDataAdapter
-                {
-                    DataTable tabela = new DataTable(); // Cria um DataTable para armazenar os dados
-                    adapter.Fill(tabela); // Preenche o DataTable com os dados retornados
-
-                    // Percorre cada registro da tabela e monta os modelos
-                    foreach (DataRow registro in tabela.Rows)
-                    {
-                        funcionarios.Add(MontaModelFuncionario(registro)); // Adiciona o funcionário à lista
-                    }
-                }
-            }
-
-            return funcionarios; // Retorna a lista de funcionários
-        }
-
-        // Método para listar todos os funcionários em ordem
-        public List<FuncionarioViewModel> Listagem()
-        {
-            List<FuncionarioViewModel> lista = new List<FuncionarioViewModel>(); // Cria uma lista para armazenar os funcionários
-            // Define a string SQL para buscar todos os funcionários ordenados
-            string sql = "SELECT * FROM cadr_func ORDER BY ID";
-            DataTable tabela = HelperDAO.ExecutaSelect(sql, null); // Executa a consulta
-
-            // Percorre cada registro da tabela e monta os modelos
-            foreach (DataRow registro in tabela.Rows)
-                lista.Add(MontaModelFuncionario(registro)); // Adiciona o funcionário à lista
-
-            return lista; // Retorna a lista de funcionários
-        }
-
-        // Método para obter o próximo ID disponível para um novo funcionário
-        public int ProximoId()
-        {
-            // Define a string SQL para buscar o próximo ID
-            string sql = "SELECT ISNULL(MAX(ID) + 1, 1) AS 'MAIOR' FROM cadr_func";
-            DataTable tabela = HelperDAO.ExecutaSelect(sql, null); // Executa a consulta
-            // Retorna o próximo ID (ou 1 se não houver registros)
-            return Convert.ToInt32(tabela.Rows[0]["MAIOR"]);
-        }
-        //Método para listar caixa combo
-        public List<FuncionarioViewModel> ListaFuncionarios()
-        {
-            List<FuncionarioViewModel> lista = new List<FuncionarioViewModel>();
-            DataTable tabela = HelperDAO.ExecutaSelect("select * from cadr_func", null);
-            foreach (DataRow registro in tabela.Rows)
-                lista.Add(MontaModelFuncionario(registro));
-            return lista;
+            Tabela = "cadr_func"; // Define o nome da tabela como "funcionarios".
         }
     }
 }

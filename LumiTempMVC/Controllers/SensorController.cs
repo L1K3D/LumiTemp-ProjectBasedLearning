@@ -69,9 +69,9 @@ namespace LumiTempMVC.Controllers
                 if (ModelState.IsValid)
                 {
                     if (operacao != "I")
-                        dao.Inserir(sensor);
+                        dao.Insert(sensor);
                     else
-                        dao.Alterar(sensor);
+                        dao.Update(sensor);
                     return RedirectToAction("Index");
                 }
                 else
@@ -114,7 +114,7 @@ namespace LumiTempMVC.Controllers
             try
             {
                 SensorDAO dao = new SensorDAO(); // Instancia o DAO para a exclusão
-                dao.Excluir(id); // Exclui o sensor do banco de dados
+                dao.Delete(id); // Exclui o sensor do banco de dados
                 return RedirectToAction("Index"); // Após a exclusão, redireciona para a lista de sensores
             }
             catch (Exception erro)
@@ -155,7 +155,7 @@ namespace LumiTempMVC.Controllers
         private void PreparaListaFuncionariosParaCombo()
         {
             FuncionarioDAO funcionarioDao = new FuncionarioDAO();
-            var funcionarios = funcionarioDao.ListaFuncionarios();
+            var funcionarios = funcionarioDao.Listagem();
             List<SelectListItem> listaFuncionarios = new List<SelectListItem>();
 
             listaFuncionarios.Add(new SelectListItem("Selecione Login de um funcionário...", "0"));
@@ -169,7 +169,7 @@ namespace LumiTempMVC.Controllers
         private void PreparaListaEmpresasParceirasParaCombo()
         {
             EmpresaParceiraDAO empresaDao = new EmpresaParceiraDAO();
-            var empresas = empresaDao.ListaEmpresasParceiras();
+            var empresas = empresaDao.Listagem();
             List<SelectListItem> listaEmpresas = new List<SelectListItem>();
 
             listaEmpresas.Add(new SelectListItem("Selecione uma empresa...", "0"));

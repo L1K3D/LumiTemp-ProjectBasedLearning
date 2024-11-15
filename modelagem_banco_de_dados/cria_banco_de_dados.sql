@@ -1,10 +1,10 @@
 -- Cria o banco de dados principal para gerenciamento de luminosidade e temperatura
-CREATE DATABASE b_lumitemp_main_db;
+CREATE DATABASE b_lumitemp_main_db
 
 GO
 
 -- Define o banco de dados a ser utilizado como o contexto atual
-USE b_lumitemp_main_db;
+USE b_lumitemp_main_db
 
 GO
 
@@ -34,7 +34,7 @@ CREATE TABLE cadr_empr_parc (
     NM_EMPR VARCHAR(30),                     -- Nome da empresa parceira (máximo 30 caracteres)
     CEP_EMPR VARCHAR(8),                     -- CEP da empresa parceira (8 caracteres)
     CNPJ_EMPR VARCHAR(15),                   -- CNPJ da empresa parceira (15 caracteres)
-    TELF_CONT_EMPR VARCHAR(10),              -- Telefone de contato da empresa parceira (10 caracteres)
+    TELF_CONT_EMPR VARCHAR(11),              -- Telefone de contato da empresa parceira (11 caracteres)
     ID_FUNC INT,                             -- Código do funcionário responsável (chave estrangeira)
     CONSTRAINT FK_CD_FUNC FOREIGN KEY (ID_FUNC)  
         REFERENCES cadr_func(ID)        -- Chave estrangeira referenciando 'CD_FUNC' da tabela 'cadr_func'
@@ -45,7 +45,7 @@ GO
 ---------------------------------------------------------------------
 
 -- Remove a tabela de cadastro de sensores caso ela já exista
-DROP TABLE cadr_sens;
+DROP TABLE cadr_sens
 
 -- Cria a tabela de cadastro de sensores
 CREATE TABLE cadr_sens (

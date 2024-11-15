@@ -58,9 +58,9 @@ namespace LumiTempMVC.Controllers
                 if (ModelState.IsValid)
                 {
                     if (operacao == "I")
-                        dao.Inserir(funcionario);
+                        dao.Insert(funcionario);
                     else
-                        dao.Alterar(funcionario);
+                        dao.Update(funcionario);
                     return RedirectToAction("Index");
                 }
                 else
@@ -101,7 +101,7 @@ namespace LumiTempMVC.Controllers
             try
             {
                 FuncionarioDAO dao = new FuncionarioDAO();
-                dao.Excluir(id);
+                dao.Delete(id);
                 return RedirectToAction("Index");
             }
             catch (Exception erro)

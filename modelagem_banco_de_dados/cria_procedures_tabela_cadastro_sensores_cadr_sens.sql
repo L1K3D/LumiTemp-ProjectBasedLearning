@@ -12,20 +12,20 @@ facilitando o gerenciamento eficiente dos sensores no sistema.*/
 -- Define o banco de dados a ser utilizado
 USE b_lumitemp_main_db
 
+GO
+
 ---------------------------------------------------------------------
 
 -- Exclui as procedures se já existirem para recriá-las
-DROP PROCEDURE spIncluiSensor;
-DROP PROCEDURE spAlteraSensor;
-/*DROP PROCEDURE spExcluiSensor;
-DROP PROCEDURE spConsultaSensor;
-DROP PROCEDURE spListagemSensor;
-DROP PROCEDURE spProximoId;*/
+DROP PROCEDURE spInsert_cadr_sens
+DROP PROCEDURE spUpdate_cadr_sens
+
+GO
 
 ---------------------------------------------------------------------
 
 -- Criação da procedure spIncluiFuncionario para inserir um novo funcionário
-CREATE PROCEDURE spIncluiSensor
+CREATE PROCEDURE spInsert_cadr_sens
 (
     -- Declaração dos parâmetros que serão utilizados
     @ID INT,                               -- ID do sensor
@@ -49,7 +49,7 @@ GO
 ---------------------------------------------------------------------
 
 -- Criação da procedure spAlteraSensor para alterar os dados de um sensor existente
-CREATE PROCEDURE spAlteraSensor
+CREATE PROCEDURE spUpdate_cadr_sens
 (
     -- Declaração dos parâmetros que serão utilizados
     @ID INT,                               -- ID do sensor
@@ -73,59 +73,3 @@ BEGIN
     WHERE ID = @ID                       -- Condição para identificar o sensor a ser atualizado
 END
 GO
-
----------------------------------------------------------------------
-
--- Criação da procedure spExcluiSensor para excluir um sensor
-/*CREATE PROCEDURE spExcluiSensor
-(
-    -- Declaração do parâmetro que será utilizado
-    @ID INT                                -- ID do sensor a ser excluído
-)
-AS
-BEGIN
-    -- Exclui o registro do sensor com base no ID informado
-    DELETE cadr_sens WHERE ID = @ID
-END
-GO
-
----------------------------------------------------------------------
-
--- Criação da procedure spConsultaSensor para consultar os dados de um sensor específico
-CREATE PROCEDURE spConsultaSensor
-(
-    -- Declaração do parâmetro que será utilizado
-    @ID INT                                -- ID do sensor a ser consultado
-) 
-AS
-BEGIN
-    -- Seleciona todos os dados do sensor com o ID informado
-    SELECT * FROM cadr_sens WHERE ID = @ID
-END
-GO
-
----------------------------------------------------------------------
-
--- Criação da procedure spListagemSensor para listar todos os sensores
-CREATE PROCEDURE spListagemSensor
-AS
-BEGIN
-    -- Seleciona todos os registros da tabela 'cadr_sens'
-    SELECT * FROM cadr_sens
-END
-GO
-
----------------------------------------------------------------------
-
--- Criação da procedure spProximoId para obter o próximo ID disponível em uma tabela
-CREATE PROCEDURE spProximoId
-(
-    -- Declaração do parâmetro que será utilizado
-    @tabela VARCHAR(MAX)                   -- Nome da tabela onde será pesquisado o próximo ID
-)
-AS
-BEGIN
-    -- Executa uma consulta dinâmica para encontrar o maior ID + 1 na tabela especificada
-    EXEC ('SELECT ISNULL(MAX(ID) + 1, 1) AS MAIOR FROM ' + @tabela)
-END
-GO*/
