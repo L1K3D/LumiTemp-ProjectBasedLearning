@@ -9,118 +9,21 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 namespace LumiTempMVC.Controllers
 {
     // Controlador responsável por gerenciar as operações relacionadas às empresas parceiras
-    public class EmpresaParceiraController : Controller
+    public class EmpresaParceiraController : PadraoController<EmpresaParceiraViewModel>
     {
         // Método para exibir a página inicial do controlador de Empresa Parceira
         // Recupera uma lista de todas as empresas parceiras cadastradas
-        public IActionResult Index()
+        public EmpresaParceiraController()
         {
-            EmpresaParceiraDAO dao = new EmpresaParceiraDAO(); // Instancia o DAO para acessar os dados
-            List<EmpresaParceiraViewModel> lista = dao.Listagem(); // Busca a lista de empresas parceiras
-            return View(lista); // Retorna a View passando a lista de empresas
-        }
 
-        // Método para criar uma nova empresa parceira
-        public IActionResult Create(int id)
-        {
-            ViewBag.Operacao = "I";
-            try
-            {
-                EmpresaParceiraViewModel empresa = new EmpresaParceiraViewModel();
-                EmpresaParceiraDAO dao = new EmpresaParceiraDAO();
-                empresa.id = dao.ProximoId();
-                PreparaListaFuncionariosParaCombo();
-                return View("Form", empresa);
-            }
-            catch (Exception erro)
-            {
-                return View("Error", new ErrorViewModel(erro.ToString()));
-            }
-        }
+            DAO = new EmpresaParceiraDAO();
+            GeraProximoId = true;
+            NomeViewForm = "Form";
+            NomeViewIndex = "Index";
+            NecessitaCaixaComboEmpresas = false;
+            NecessitaCaixaComboFuncionarios = true;
+            PossuiCampoData = false;
 
-        // Método para editar os dados de uma empresa parceira existente
-        public IActionResult Edit(int id)
-        {
-            try
-            {
-                EmpresaParceiraDAO dao = new EmpresaParceiraDAO();
-                var empresa = dao.Consulta(id);
-                ViewBag.Operacao = "A";
-                PreparaListaFuncionariosParaCombo();
-                if (empresa == null)
-                {
-                    return RedirectToAction("Index");
-                }
-                return View("Form", empresa);
-            }
-            catch (Exception erro)
-            {
-                return View("Error", new ErrorViewModel { Erro = erro.ToString() });
-            }
-        }
-
-
-        public IActionResult Salvar(EmpresaParceiraViewModel f, string operacao)
-        {
-            try
-            {
-                EmpresaParceiraDAO dao = new EmpresaParceiraDAO();
-
-                ModelState.Clear();
-                ValidaDados(f, operacao);
-
-                PreparaListaFuncionariosParaCombo();
-                
-                if (f.id <= 0)
-                    ModelState.AddModelError("id", "Campo obrigatório!");
-                if (string.IsNullOrEmpty(f.nm_empr))
-                    ModelState.AddModelError("nm_empr", "Campo obrigatório!");
-                if (string.IsNullOrEmpty(f.cep_empr))
-                    ModelState.AddModelError("cep_empr", "Campo obrigatório!");
-                if (string.IsNullOrEmpty(f.cnpj_empr))
-                    ModelState.AddModelError("cnpj_empr", "Campo obrigatório!");
-                if (string.IsNullOrEmpty(f.telf_cont_empr))
-                    ModelState.AddModelError("telf_cont_empr", "Campo obrigatório!");
-                if (f.id_func <= 0)
-                    ModelState.AddModelError("id_func", "Campo obrigatório!");
-
-
-                if (ModelState.IsValid)
-                {
-                    if (operacao == "I")
-                        dao.Insert(f);
-                    else
-                        dao.Update(f);
-                    return RedirectToAction("Index");
-                }
-                else
-                {
-                    ViewBag.operacao = operacao;
-                    return View("form", f);
-                }
-            }
-            catch (Exception erro)
-            {
-                return View("Error", new ErrorViewModel { Erro = erro.ToString() });
-            }
-
-        }
-
-
-        // Método para excluir uma empresa parceira pelo seu ID
-        public IActionResult Delete(int id)
-        {
-            try
-            {
-                EmpresaParceiraDAO dao = new EmpresaParceiraDAO(); // Instancia o DAO para a exclusão
-                dao.Delete(id); // Exclui a empresa parceira do banco de dados
-                return RedirectToAction("Index"); // Após a exclusão, redireciona para a lista de empresas
-            }
-            catch (Exception erro)
-            {
-                // Em caso de erro, retorna a View de erro com a mensagem detalhada
-                return View("Error", new ErrorViewModel { Erro = erro.ToString() });
-            }
         }
 
         public IActionResult ExtrairDados()
@@ -151,29 +54,8 @@ namespace LumiTempMVC.Controllers
                 return RedirectToAction("Error", new ErrorViewModel(erro.ToString()));
             }
         }
-        public void ValidaDados(EmpresaParceiraViewModel empresa, string operacao)
+        protected override void ValidaDados(EmpresaParceiraViewModel empresa, string operacao)
         {
-            EmpresaParceiraDAO dao = new EmpresaParceiraDAO();
-
-            // Validação do ID
-            if (empresa.id <= 0)
-            {
-                ModelState.AddModelError("id", "Id inválido!");
-            }
-            else
-            {
-                try
-                {
-                    if (operacao == "I" && dao.Consulta(empresa.id) != null)
-                        ModelState.AddModelError("id", "Código já está em uso.");
-                    if (operacao == "A" && dao.Consulta(empresa.id) == null)
-                        ModelState.AddModelError("id", "Empresa não existe.");
-                }
-                catch (Exception ex)
-                {
-                    ModelState.AddModelError("id", $"Erro ao validar ID: {ex.Message}");
-                }
-            }
 
             // Validação do Nome
             if (string.IsNullOrEmpty(empresa.nm_empr))
@@ -251,20 +133,5 @@ namespace LumiTempMVC.Controllers
             return cnpj.EndsWith(digito);
         }
 
-
-        private void PreparaListaFuncionariosParaCombo()
-        {
-            FuncionarioDAO funcionarioDao = new FuncionarioDAO();
-            var funcionarios = funcionarioDao.Listagem();
-            List<SelectListItem> listaFuncionarios = new List<SelectListItem>();
-
-            listaFuncionarios.Add(new SelectListItem("Selecione Login de um funcionário...", "0"));
-            foreach (var funcionario in funcionarios)
-            {
-                SelectListItem item = new SelectListItem(funcionario.login_func, funcionario.id.ToString());
-                listaFuncionarios.Add(item);
-            }
-            ViewBag.Funcionarios = listaFuncionarios;
-        }
     }
 }

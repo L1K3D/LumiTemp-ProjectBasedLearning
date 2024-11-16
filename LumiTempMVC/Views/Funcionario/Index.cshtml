@@ -1,6 +1,6 @@
 ﻿@model List<FuncionarioViewModel>
 @{
-    ViewData["Title"] = "Funcionário"; // Define o título da página
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <!DOCTYPE html>
@@ -32,7 +32,7 @@
         </div>
 
         <div>
-            <a href="/Funcionario/create" class="btn btn-primary">Novo Registro</a> <!-- Botão para criar um novo registro -->
+            <a href="/funcionario/create" class="btn btn-primary">Novo Registro</a> <!-- Botão para criar um novo registro -->
             <a href="/home" class="btn btn-light">Página Inicial</a> <!-- Botão para voltar à página inicial -->
             <button class="btn btn-success" onclick="extrairDados()">Extrair Dados</button> <!-- Botão para extrair dados -->
         </div>
