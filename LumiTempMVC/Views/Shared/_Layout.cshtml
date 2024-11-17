@@ -34,6 +34,28 @@
             @RenderBody()
         </main>
     </div>
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <ul class="nav navbar-nav">
+                <li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
+                @if (ViewBag.Logado == true)
+                {
+                    <li><a asp-area="" asp-controller="EmpresaParceira" asp-action="Index">Empresa Parceira</a></li>
+                    <li><a asp-area="" asp-controller="Funcionario" asp-action="Index">Funcionario</a></li>
+                    <li><a asp-area="" asp-controller="Sensor" asp-action="Index">Sensor</a></li>
+                    <li><a asp-area="" asp-controller="Dashboard" asp-action="Index">Dashboard</a></li>
+                    <li><a asp-area="" asp-controller="Login" asp-action="LogOff">Logoff</a></li>
+                    <li><a asp-area="" asp-controller="Sobre" asp-action="Index">Sobre</a></li>
+                }
+                else
+                {
+                    <li><a asp-area="" asp-controller="Funcionario" asp-action="Index">Criar Cadastro de Funcionario</a></li>
+                    <li><a asp-area="" asp-controller="Sobre" asp-action="Index">Sobre</a></li>
+                    <li><a asp-area="" asp-controller="Login" asp-action="Index">Login</a></li>
+                }
+            </ul>
+        </div>
+    </nav>
 
 @*     <footer class="border-top footer text-muted">
         <div class="container">

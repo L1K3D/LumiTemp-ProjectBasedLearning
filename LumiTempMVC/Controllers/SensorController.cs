@@ -5,6 +5,7 @@ using System;
 using LumiTempMVC.DAO;
 using System.Text;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.AspNetCore.Http;
 
 namespace LumiTempMVC.Controllers
 {
@@ -22,6 +23,7 @@ namespace LumiTempMVC.Controllers
             NecessitaCaixaComboEmpresas = true;
             NecessitaCaixaComboFuncionarios = true;
             PossuiCampoData = true;
+            ExigeAutenticacao = true;
 
         }
 

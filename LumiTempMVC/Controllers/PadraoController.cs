@@ -4,6 +4,8 @@ using Microsoft.AspNetCore.Mvc; // Namespace para criação de Controllers no AS
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
 using System.Collections.Generic; // Namespace padrão do .NET, usado aqui para tratar exceções
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc.Filters;
 
 namespace LumiTempMVC.Controllers
 {
@@ -27,6 +29,8 @@ namespace LumiTempMVC.Controllers
         protected bool NecessitaCaixaComboEmpresas { get; set; }
 
         protected bool PossuiCampoData { get; set; }
+
+        protected bool ExigeAutenticacao { get; set; } = true;
 
         // Método para exibir a lista de registros
         public virtual IActionResult Index()
@@ -217,6 +221,17 @@ namespace LumiTempMVC.Controllers
             SensorViewModel sensor = new SensorViewModel();
             sensor.dt_vend = DateTime.Now;
 
+        }
+
+        public override void OnActionExecuting(ActionExecutingContext context)
+        {
+            if (ExigeAutenticacao && !HelperControllers.VerificaUserLogado(HttpContext.Session))
+                context.Result = RedirectToAction("Index", "Login");
+            else
+            {
+                ViewBag.Logado = true;
+                base.OnActionExecuting(context);
+            }
         }
 
     }

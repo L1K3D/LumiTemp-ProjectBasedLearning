@@ -2,12 +2,14 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System.Diagnostics;
+using Microsoft.AspNetCore.Http;
 
 namespace LumiTempMVC.Controllers
 {
     // Controller responsável pelas ações da página "Sobre" da aplicação.
     public class SobreController : Controller
     {
+
         // Injeção de dependência do serviço de logging para registrar informações e erros.
         private readonly ILogger<SobreController> _logger;
 
