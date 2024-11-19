@@ -23,6 +23,7 @@ header {
     top: 0; /* Posiciona no topo */
     left: 0; /* Alinha à esquerda */
     z-index: 1000; /* Garante que o cabeçalho esteja acima de outros elementos */
+
 }
 
 /* Estilo do menu de navegação */
@@ -31,6 +32,7 @@ nav.menu-opcoes {
     display: flex; /* Flexbox para alinhar os itens */
     justify-content: space-around; /* Espaçamento igual entre os itens */
     padding: 10px 0; /* Espaçamento vertical do menu */
+    color: white;
 }
 
 .menu-opcoes ul {
@@ -38,6 +40,7 @@ nav.menu-opcoes {
     margin: 0; /* Remove margem */
     padding: 0; /* Remove preenchimento */
     display: flex; /* Alinha os itens horizontalmente */
+    color: white;
 }
 
 .menu-opcoes li {
@@ -46,8 +49,9 @@ nav.menu-opcoes {
 
 .menu-opcoes a {
     text-decoration: none; /* Remove o sublinhado dos links */
-    color: #0366d6; /* Cor do texto dos links */
+    color: white; /* Cor do texto dos links */
     font-size: 1.1rem; /* Usa rem para garantir que o tamanho da fonte seja relativo ao corpo */
+
 }
 
 /* Estilo do conteúdo principal */

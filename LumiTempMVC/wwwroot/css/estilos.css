@@ -12,11 +12,13 @@ body {
     height: 100vh; /* Altura da tela completa */
 }
 
+body {
+    overflow: auto; /* Adiciona barra de rolagem automaticamente, se necessário */
+}
+
 /* Estilo do cabeçalho */
 header {
     width: 100%; /* Cabeçalho ocupa toda a largura */
-    padding: 0; /* Remove preenchimento interno */
-    margin: 0; /* Remove margens externas */
     background-color: #003366; /* Azul mais escuro para o cabeçalho */
     text-align: center; /* Centraliza o texto no cabeçalho */
     position: fixed; /* Mantém o cabeçalho fixo no topo */
@@ -38,28 +40,32 @@ nav.menu-opcoes {
     list-style: none; /* Remove marcadores da lista */
     margin: 0; /* Remove margem */
     padding: 0; /* Remove preenchimento */
-    display: flex; /* Alinha os itens horizontalmente */
+    display: flex; /* Alinha os itens horizontalmente*/
 }
 
 .menu-opcoes li {
-    margin: 0 15px; /* Espaçamento horizontal entre os itens do menu */
+    margin: 0 15px; /*Espaçamento horizontal entre os itens do menu */
+    color: white;
 }
 
 .menu-opcoes a {
-    text-decoration: none; /* Remove o sublinhado dos links */
-    color: #0366d6; /* Cor do texto dos links */
+    text-decoration: none; /*Remove o sublinhado dos links */
+    color: white; /*Cor do texto dos links */
 }
 
-/* Estilo do painel de login */
+
+
+/*/* Estilo do painel de login */
 #painel-login {
     display: flex; /* Flexbox para centralizar o painel */
     align-items: center; /* Centraliza verticalmente */
     justify-content: center; /* Centraliza horizontalmente */
     flex-grow: 1; /* Faz o painel ocupar o espaço restante da tela */
+    background-color: #240e67; /* Fundo claro para o painel de login */
 }
 
 .container-login {
-    background-color: #CDCDCD; /* Fundo claro para o painel de login */
+    background-color: #240e67; /* Fundo claro para o painel de login */
     padding: 30px; /* Espaçamento interno do painel */
     border-radius: 10px; /* Bordas arredondadas */
     width: 300px; /* Largura fixa do painel */
@@ -67,6 +73,9 @@ nav.menu-opcoes {
     margin-top: 100px; /* Espaço acima do painel para não encostar no cabeçalho */
 }
 
+    .container-login label {
+        color: black;
+    }
 /* Estilos do formulário */
 label {
     display: block; /* Faz os labels ocuparem toda a linha */
@@ -117,4 +126,11 @@ h1 {
     color: white; /* Cor do título principal */
 }
 
-div
+.container {
+    display: inline-block;
+    margin-top: 15px;
+}
+
+h2, a {
+    color: white;
+}

@@ -1171,23 +1171,23 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Heitor\\.nuget\\packages\\": {},
+    "C:\\Users\\enzob\\.nuget\\packages\\": {},
     "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Heitor\\Documents\\Program\\LumiTemp-ProjectBasedLearning\\LumiTempMVC\\LumiTempMVC.csproj",
+      "projectUniqueName": "C:\\Users\\enzob\\Desktop\\Nova pasta\\LumiTemp-ProjectBasedLearning\\LumiTempMVC\\LumiTempMVC.csproj",
       "projectName": "LumiTempMVC",
-      "projectPath": "C:\\Users\\Heitor\\Documents\\Program\\LumiTemp-ProjectBasedLearning\\LumiTempMVC\\LumiTempMVC.csproj",
-      "packagesPath": "C:\\Users\\Heitor\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Heitor\\Documents\\Program\\LumiTemp-ProjectBasedLearning\\LumiTempMVC\\obj\\",
+      "projectPath": "C:\\Users\\enzob\\Desktop\\Nova pasta\\LumiTemp-ProjectBasedLearning\\LumiTempMVC\\LumiTempMVC.csproj",
+      "packagesPath": "C:\\Users\\enzob\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\enzob\\Desktop\\Nova pasta\\LumiTemp-ProjectBasedLearning\\LumiTempMVC\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
       ],
       "configFilePaths": [
-        "C:\\Users\\Heitor\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\enzob\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
@@ -1248,7 +1248,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.200\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.400\\RuntimeIdentifierGraph.json"
       }
     }
   }

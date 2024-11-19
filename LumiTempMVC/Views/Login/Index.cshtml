@@ -2,18 +2,21 @@
     ViewData["Title"] = "Login";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<h2>Login</h2>
-<div class="row">
-    <div class="col-lg-3">
-        <form action="/login/Fazlogin" method="post">
-            <label for="usuario" class="control-label">Usuário</label>
-            <input type="text" name="usuario" class="form-control" required placeholder='Usuário...' />
-            <label for="senha" class="control-label">Senha</label>
-            <input type="password" name="senha" class="form-control" required placeholder='Senha...' />
-            <br />
-            <input type="submit" value="Login" class="btn btn-success" />
-            <br />
-            <span class="text-danger"> @ViewBag.Erro</span>
-        </form>
-    </div>
-</div>
+
+<body>
+    <section id="painel-login">
+        <div class="container-login">
+            <h2>Login</h2>
+            <form action="/login/Fazlogin" method="post">
+                <label for="usuario" class="control-label">Usuário</label>
+                <input type="text" name="usuario" class="form-control" required placeholder='Usuário...' />
+                <label for="senha" class="control-label">Senha</label>
+                <input type="password" name="senha" class="form-control" required placeholder='Senha...' />
+                <br />
+                <input type="submit" value="Login" class="btn btn-success" />
+                <br />
+                <span class="text-danger"> @ViewBag.Erro</span>
+            </form>
+        </div>
+    </section>
+</body>

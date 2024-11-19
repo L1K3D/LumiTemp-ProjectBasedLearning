@@ -1,16 +1,175 @@
 {
   "Version": 1,
   "WorkspaceRootPath": "C:\\Users\\enzob\\Desktop\\Nova pasta\\LumiTemp-ProjectBasedLearning\\LumiTempMVC\\",
-  "Documents": [],
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{284BEE7B-16A5-4990-8919-25DFDA38DC62}|LumiTempMVC.csproj|c:\\users\\enzob\\desktop\\nova pasta\\lumitemp-projectbasedlearning\\lumitempmvc\\wwwroot\\css\\estilos.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}",
+      "RelativeMoniker": "D:0:0:{284BEE7B-16A5-4990-8919-25DFDA38DC62}|LumiTempMVC.csproj|solutionrelative:wwwroot\\css\\estilos.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{284BEE7B-16A5-4990-8919-25DFDA38DC62}|LumiTempMVC.csproj|c:\\users\\enzob\\desktop\\nova pasta\\lumitemp-projectbasedlearning\\lumitempmvc\\views\\shared\\_layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{284BEE7B-16A5-4990-8919-25DFDA38DC62}|LumiTempMVC.csproj|solutionrelative:views\\shared\\_layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{284BEE7B-16A5-4990-8919-25DFDA38DC62}|LumiTempMVC.csproj|c:\\users\\enzob\\desktop\\nova pasta\\lumitemp-projectbasedlearning\\lumitempmvc\\views\\home\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{284BEE7B-16A5-4990-8919-25DFDA38DC62}|LumiTempMVC.csproj|solutionrelative:views\\home\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{284BEE7B-16A5-4990-8919-25DFDA38DC62}|LumiTempMVC.csproj|c:\\users\\enzob\\desktop\\nova pasta\\lumitemp-projectbasedlearning\\lumitempmvc\\views\\empresaparceira\\form.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{284BEE7B-16A5-4990-8919-25DFDA38DC62}|LumiTempMVC.csproj|solutionrelative:views\\empresaparceira\\form.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{284BEE7B-16A5-4990-8919-25DFDA38DC62}|LumiTempMVC.csproj|c:\\users\\enzob\\desktop\\nova pasta\\lumitemp-projectbasedlearning\\lumitempmvc\\wwwroot\\css\\estatica.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}",
+      "RelativeMoniker": "D:0:0:{284BEE7B-16A5-4990-8919-25DFDA38DC62}|LumiTempMVC.csproj|solutionrelative:wwwroot\\css\\estatica.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{284BEE7B-16A5-4990-8919-25DFDA38DC62}|LumiTempMVC.csproj|c:\\users\\enzob\\desktop\\nova pasta\\lumitemp-projectbasedlearning\\lumitempmvc\\views\\funcionario\\form.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{284BEE7B-16A5-4990-8919-25DFDA38DC62}|LumiTempMVC.csproj|solutionrelative:views\\funcionario\\form.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{284BEE7B-16A5-4990-8919-25DFDA38DC62}|LumiTempMVC.csproj|c:\\users\\enzob\\desktop\\nova pasta\\lumitemp-projectbasedlearning\\lumitempmvc\\views\\sobre\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{284BEE7B-16A5-4990-8919-25DFDA38DC62}|LumiTempMVC.csproj|solutionrelative:views\\sobre\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{284BEE7B-16A5-4990-8919-25DFDA38DC62}|LumiTempMVC.csproj|c:\\users\\enzob\\desktop\\nova pasta\\lumitemp-projectbasedlearning\\lumitempmvc\\views\\sensor\\form.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{284BEE7B-16A5-4990-8919-25DFDA38DC62}|LumiTempMVC.csproj|solutionrelative:views\\sensor\\form.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    }
+  ],
   "DocumentGroupContainers": [
     {
       "Orientation": 0,
       "VerticalTabListWidth": 248,
       "DocumentGroups": [
         {
-          "DockedWidth": 212,
-          "SelectedChildIndex": -1,
-          "Children": []
+          "DockedWidth": 200,
+          "SelectedChildIndex": 7,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "_Layout.cshtml",
+              "DocumentMoniker": "C:\\Users\\enzob\\Desktop\\Nova pasta\\LumiTemp-ProjectBasedLearning\\LumiTempMVC\\Views\\Shared\\_Layout.cshtml",
+              "RelativeDocumentMoniker": "Views\\Shared\\_Layout.cshtml",
+              "ToolTip": "C:\\Users\\enzob\\Desktop\\Nova pasta\\LumiTemp-ProjectBasedLearning\\LumiTempMVC\\Views\\Shared\\_Layout.cshtml",
+              "RelativeToolTip": "Views\\Shared\\_Layout.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABUAAABhAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2024-11-19T14:55:32.622Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "Index.cshtml",
+              "DocumentMoniker": "C:\\Users\\enzob\\Desktop\\Nova pasta\\LumiTemp-ProjectBasedLearning\\LumiTempMVC\\Views\\Sobre\\Index.cshtml",
+              "RelativeDocumentMoniker": "Views\\Sobre\\Index.cshtml",
+              "ToolTip": "C:\\Users\\enzob\\Desktop\\Nova pasta\\LumiTemp-ProjectBasedLearning\\LumiTempMVC\\Views\\Sobre\\Index.cshtml",
+              "RelativeToolTip": "Views\\Sobre\\Index.cshtml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAGAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2024-11-19T14:52:24.067Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "Index.cshtml",
+              "DocumentMoniker": "C:\\Users\\enzob\\Desktop\\Nova pasta\\LumiTemp-ProjectBasedLearning\\LumiTempMVC\\Views\\Home\\Index.cshtml",
+              "RelativeDocumentMoniker": "Views\\Home\\Index.cshtml",
+              "ToolTip": "C:\\Users\\enzob\\Desktop\\Nova pasta\\LumiTemp-ProjectBasedLearning\\LumiTempMVC\\Views\\Home\\Index.cshtml",
+              "RelativeToolTip": "Views\\Home\\Index.cshtml",
+              "ViewState": "AgIAABgAAAAAAAAAAAAAACsAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2024-11-19T14:49:05.466Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "Form.cshtml",
+              "DocumentMoniker": "C:\\Users\\enzob\\Desktop\\Nova pasta\\LumiTemp-ProjectBasedLearning\\LumiTempMVC\\Views\\Sensor\\Form.cshtml",
+              "RelativeDocumentMoniker": "Views\\Sensor\\Form.cshtml",
+              "ToolTip": "C:\\Users\\enzob\\Desktop\\Nova pasta\\LumiTemp-ProjectBasedLearning\\LumiTempMVC\\Views\\Sensor\\Form.cshtml",
+              "RelativeToolTip": "Views\\Sensor\\Form.cshtml",
+              "ViewState": "AgIAAFoAAAAAAAAAAAAAAFwAAAA8AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2024-11-19T14:48:36.262Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "Form.cshtml",
+              "DocumentMoniker": "C:\\Users\\enzob\\Desktop\\Nova pasta\\LumiTemp-ProjectBasedLearning\\LumiTempMVC\\Views\\EmpresaParceira\\Form.cshtml",
+              "RelativeDocumentMoniker": "Views\\EmpresaParceira\\Form.cshtml",
+              "ToolTip": "C:\\Users\\enzob\\Desktop\\Nova pasta\\LumiTemp-ProjectBasedLearning\\LumiTempMVC\\Views\\EmpresaParceira\\Form.cshtml",
+              "RelativeToolTip": "Views\\EmpresaParceira\\Form.cshtml",
+              "ViewState": "AgIAABUAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2024-11-19T14:48:27.482Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "Form.cshtml",
+              "DocumentMoniker": "C:\\Users\\enzob\\Desktop\\Nova pasta\\LumiTemp-ProjectBasedLearning\\LumiTempMVC\\Views\\Funcionario\\Form.cshtml",
+              "RelativeDocumentMoniker": "Views\\Funcionario\\Form.cshtml",
+              "ToolTip": "C:\\Users\\enzob\\Desktop\\Nova pasta\\LumiTemp-ProjectBasedLearning\\LumiTempMVC\\Views\\Funcionario\\Form.cshtml",
+              "RelativeToolTip": "Views\\Funcionario\\Form.cshtml",
+              "ViewState": "AgIAAAYAAAAAAAAAAAAAABQAAAAHAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2024-11-19T14:47:44.839Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "estilos.css",
+              "DocumentMoniker": "C:\\Users\\enzob\\Desktop\\Nova pasta\\LumiTemp-ProjectBasedLearning\\LumiTempMVC\\wwwroot\\css\\estilos.css",
+              "RelativeDocumentMoniker": "wwwroot\\css\\estilos.css",
+              "ToolTip": "C:\\Users\\enzob\\Desktop\\Nova pasta\\LumiTemp-ProjectBasedLearning\\LumiTempMVC\\wwwroot\\css\\estilos.css",
+              "RelativeToolTip": "wwwroot\\css\\estilos.css",
+              "ViewState": "AgIAAFIAAAAAAAAAAAAQwGYAAABJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003000|",
+              "WhenOpened": "2024-11-19T14:30:16.652Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "FloatingWindowState": {
+        "Id": "bc39d1da-dfea-4c3b-a07a-97c93eca32e8",
+        "Display": 0,
+        "X": 26,
+        "Y": 143,
+        "Width": 1236,
+        "Height": 658,
+        "WindowState": 0
+      },
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 0,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "estatica.css",
+              "DocumentMoniker": "C:\\Users\\enzob\\Desktop\\Nova pasta\\LumiTemp-ProjectBasedLearning\\LumiTempMVC\\wwwroot\\css\\estatica.css",
+              "RelativeDocumentMoniker": "wwwroot\\css\\estatica.css",
+              "ToolTip": "C:\\Users\\enzob\\Desktop\\Nova pasta\\LumiTemp-ProjectBasedLearning\\LumiTempMVC\\wwwroot\\css\\estatica.css",
+              "RelativeToolTip": "wwwroot\\css\\estatica.css",
+              "ViewState": "AgIAABgAAAAAAAAAAAAAADUAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003000|",
+              "WhenOpened": "2024-11-19T15:05:22.722Z",
+              "EditorCaption": ""
+            }
+          ]
         }
       ]
     }
