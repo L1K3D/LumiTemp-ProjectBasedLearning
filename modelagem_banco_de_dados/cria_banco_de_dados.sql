@@ -63,3 +63,35 @@ CREATE TABLE cadr_sens (
 );
 
 ---------------------------------------------------------------------
+
+ALTER TABLE cadr_func ADD IMAGEM varbinary(max);
+GO
+ 
+ALTER procedure [dbo].[spUpdate_cadr_func]
+(
+ @ID int,
+ @LOGIN_FUNC varchar(30) ,
+ @SENHA_FUNC varchar(30),
+ @DT_CADR DATE,
+ @IMAGEM VARBINARY(MAX)
+)
+as
+begin
+ update cadr_func set LOGIN_FUNC = @LOGIN_FUNC, SENHA_FUNC = @SENHA_FUNC, DT_CADR = @DT_CADR, IMAGEM = @IMAGEM where ID = @ID
+end
+GO
+ALTER procedure [dbo].[spInsert_cadr_func]
+(
+ @ID int,
+ @LOGIN_FUNC varchar(30) ,
+ @SENHA_FUNC varchar(30),
+ @DT_CADR DATE,
+ @IMAGEM VARBINARY(MAX)
+)
+as
+begin
+ insert into cadr_func (ID, LOGIN_FUNC, SENHA_FUNC, DT_CADR, IMAGEM) values (@ID, @LOGIN_FUNC, @SENHA_FUNC, @DT_CADR, @IMAGEM)
+end
+
+
+select * from cadr_func

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Http;
+using System;
 
 namespace LumiTempMVC.Models // Declaração do namespace para organizar o código dos modelos
 {

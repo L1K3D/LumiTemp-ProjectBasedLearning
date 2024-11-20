@@ -5,6 +5,8 @@ using LumiTempMVC.DAO;
 using System.Collections.Generic;
 using System.Text;
 using Microsoft.AspNetCore.Http;
+using System.IO;
+using System.Reflection;
 
 namespace LumiTempMVC.Controllers
 {
@@ -23,7 +25,23 @@ namespace LumiTempMVC.Controllers
             NecessitaCaixaComboFuncionarios = false;
             PossuiCampoData = true;
             ExigeAutenticacao = false;
+        }
 
+        /// <summary>
+        /// Converte a imagem recebida no form em um vetor de bytes
+        /// </summary>
+        /// <param name="file"></param>
+        /// <returns></returns>
+        public byte[] ConvertImageToByte(IFormFile file)
+        {
+            if (file != null)
+                using (var ms = new MemoryStream())
+                {
+                    file.CopyTo(ms);
+                    return ms.ToArray();
+                }
+            else
+                return null;
         }
 
         public IActionResult ExtrairDados()
@@ -69,6 +87,25 @@ namespace LumiTempMVC.Controllers
             if (funcionario.dt_cadr == DateTime.MinValue)
                 ModelState.AddModelError("dt_cadr", "Preencha uma data");
 
+            //Imagem será obrigatio apenas na inclusão.
+            //Na alteração iremos considerar a que já estava salva.
+            if (funcionario.Imagem == null && operacao == "I")
+                ModelState.AddModelError("Imagem", "Escolha uma imagem.");
+            if (funcionario.Imagem != null && funcionario.Imagem.Length / 1024 / 1024 >= 2)
+                ModelState.AddModelError("Imagem", "Imagem limitada a 2 mb.");
+            if (ModelState.IsValid)
+            {
+                //na alteração, se não foi informada a imagem, iremos manter a que já estava salva.
+                if (operacao == "A" && funcionario.Imagem == null)
+                {
+                    FuncionarioViewModel cid = DAO.Consulta(funcionario.id);
+                    funcionario.ImagemEmByte = cid.ImagemEmByte;
+                }
+                else
+                {
+                    funcionario.ImagemEmByte = ConvertImageToByte(funcionario.Imagem);
+                }
+            }
         }
 
     }

@@ -1,4 +1,5 @@
-﻿using System; // Importa o namespace necessário para trabalhar com tipos básicos, como DateTime
+﻿using Microsoft.AspNetCore.Http;
+using System; // Importa o namespace necessário para trabalhar com tipos básicos, como DateTime
 
 namespace LumiTempMVC.Models // Declaração do namespace para organizar o código dos modelos
 {
@@ -16,5 +17,27 @@ namespace LumiTempMVC.Models // Declaração do namespace para organizar o códi
 
         // Propriedade para armazenar a data de cadastro do usuário
         public DateTime dt_cadr { get; set; }
+
+        /// <summary>
+        /// Imagem recebida do form pelo controller
+        /// </summary>
+        public IFormFile Imagem { get; set; }
+        /// <summary>
+        /// Imagem em bytes pronta para ser salva
+        /// </summary>
+        public byte[] ImagemEmByte { get; set; }
+        /// <summary>
+        /// Imagem usada para ser enviada ao form no formato para ser exibida
+        /// </summary>
+        public string ImagemEmBase64
+        {
+            get
+            {
+                if (ImagemEmByte != null)
+                    return Convert.ToBase64String(ImagemEmByte);
+                else
+                    return string.Empty;
+            }
+        }
     }
 }

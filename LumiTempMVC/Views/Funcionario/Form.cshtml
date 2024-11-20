@@ -23,7 +23,7 @@ else
 <body>
     <div class="row">
         <div class="col-md-4">
-            <form asp-action="Save" method="post">
+            <form asp-action="Save" enctype="multipart/form-data"><!--method="post">-->
                 <input type="hidden" name="Operacao" value="@ViewBag.Operacao" />
 
                 <div class="form-group">
@@ -72,6 +72,16 @@ else
                 </div>
 
                 <div class="form-group">
+                    <label>
+                        Imagem do Funcionário
+                    </label>
+                    <input type="file" name="Imagem" id="Imagem" onchange="exibirImagem()" class="btn btn-secondary">
+                    <img id="imgPreview" src="data:image/jpeg;base64,@Model.ImagemEmBase64" class="img-responsive"
+                         width="100">
+                    <span asp-validation-for="Imagem" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
                     <input type="submit" value="Salvar Dados" /> <!-- Botão para submeter o formulário -->
                 </div>
 
@@ -91,6 +101,16 @@ else
             await Html.RenderPartialAsync("_ValidationScriptsPartial");
         }
     }
+
+    <script>
+        function exibirImagem() {
+            var oFReader = new FileReader();
+            oFReader.readAsDataURL(document.getElementById("Imagem").files[0]);
+            oFReader.onload = function (oFREvent) {
+                document.getElementById("imgPreview").src = oFREvent.target.result;
+            };
+        }
+    </script>
 
 </body>
 </html>

@@ -12,14 +12,20 @@ namespace LumiTempMVC.DAO
         // Implementa o método abstrato para criar os parâmetros necessários para a execução de stored procedures.
         protected override SqlParameter[] CriaParametros(FuncionarioViewModel model)
         {
+            object imgByte = model.ImagemEmByte;
+            if (imgByte == null)
+                imgByte = DBNull.Value;
+
             // Define um array de parâmetros para armazenar os dados do modelo.
-            SqlParameter[] parametros = new SqlParameter[4]; // Corrigido para refletir 4 parâmetros.
+            SqlParameter[] parametros = new SqlParameter[5]; // Corrigido para refletir 5 parâmetros.
 
             // Preenche cada posição do array com um novo parâmetro SQL, mapeando os campos do modelo.
             parametros[0] = new SqlParameter("ID", model.id); // ID do funcionário.
             parametros[1] = new SqlParameter("LOGIN_FUNC", model.login_func); // Login do funcionário.
             parametros[2] = new SqlParameter("SENHA_FUNC", model.senha_func); // Senha do funcionário.
             parametros[3] = new SqlParameter("DT_CADR", model.dt_cadr); // Data de cadastro do funcionário.
+            parametros[4] = new SqlParameter("imagem", imgByte);
+
 
             return parametros; // Retorna o array de parâmetros preenchido.
         }
@@ -35,6 +41,9 @@ namespace LumiTempMVC.DAO
             funcionario.login_func = Convert.ToString(registro["LOGIN_FUNC"]); // Converte e atribui o login.
             funcionario.senha_func = Convert.ToString(registro["SENHA_FUNC"]); // Converte e atribui a senha.
             funcionario.dt_cadr = Convert.ToDateTime(registro["DT_CADR"]); // Converte e atribui a data de cadastro.
+
+            if (registro["imagem"] != DBNull.Value)
+                funcionario.ImagemEmByte = registro["imagem"] as byte[];
 
             return funcionario; // Retorna o modelo preenchido.
         }

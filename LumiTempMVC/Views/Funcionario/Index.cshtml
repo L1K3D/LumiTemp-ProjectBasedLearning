@@ -15,7 +15,8 @@
 
 <body>
     <header>
-        <nav class="menu-opcoes"> <!-- Cabeçalho com barra de opções -->
+        <nav class="menu-opcoes">
+            <!-- Cabeçalho com barra de opções -->
             <ul>
                 <li><a href="Home">Home</a></li>
                 <li><a href="Sensor">Cadastro de Sensores</a></li>
@@ -38,13 +39,15 @@
         </div>
         <br />
 
-        <table class="table table-responsive"> <!-- Tabela para exibir os funcionários -->
+        <table class="table table-responsive">
+            <!-- Tabela para exibir os funcionários -->
             <thead>
                 <tr>
                     <th>Ação</th>
                     <th>Número do Usuário</th>
                     <th>Login do Usuário</th>
                     <th>Data de Cadastro do Usuário</th>
+                    <th>Imagem Funcionário</th>
                 </tr>
             </thead>
             <tbody>
@@ -60,6 +63,9 @@
                             <td>@funcionario.id</td> <!-- Número do usuário -->
                             <td>@funcionario.login_func</td> <!-- Login do usuário -->
                             <td>@funcionario.dt_cadr</td> <!-- Data de cadastro do usuário -->
+                            <td>
+                                <img id="imgPreview" src="data:image/jpeg;base64,@funcionario.ImagemEmBase64"class="img-responsive" width="50">
+                            </td>
                         </tr>
                     }
                 }
