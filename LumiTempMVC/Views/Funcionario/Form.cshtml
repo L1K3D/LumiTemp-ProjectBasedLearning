@@ -1,101 +1,104 @@
 ﻿@model FuncionarioViewModel
-@{
-    Layout = "~/Views/Shared/_Layout.cshtml"; // Define o layout compartilhado da página
-}
 
-@if (ViewBag.Operacao == "A")
-{
-    <h2>Alteração de Funcionário</h2>
-}
-else
-{
-    <h2>Inclusão de Funcionário</h2>
+@{
+    var titulo = ViewBag.Operacao == "A" ? "Alteração de Funcionário" : "Inclusão de Funcionário";
 }
 
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
-    <meta charset="utf-8" />
-    <link rel="stylesheet" type="text/css" href="~/css/estilos.css" /> <!-- Estilo da página -->
-    <title>Cadastro de Funcionário</title> <!-- Título da página -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@titulo</title>
+    <link rel="stylesheet" href="~/css/estilos.css">
 </head>
-
 <body>
-    <div class="row">
-        <div class="col-md-4">
-            <form asp-action="Save" enctype="multipart/form-data"><!--method="post">-->
+    <main class="container">
+        <header>
+            <h1>@titulo</h1>
+        </header>
+
+        <section>
+            <form asp-action="Save" enctype="multipart/form-data" method="post" class="form-container">
+                <!-- Campo oculto para a operação -->
                 <input type="hidden" name="Operacao" value="@ViewBag.Operacao" />
 
-                <div class="form-group">
-                    @if (ViewBag.Operacao == "A")
-                    {
-                        <label class="control-label">Código</label>
-                        <input asp-for="id" class="form-control disabled" readonly />
+                <!-- Código do Funcionário (somente para Alteração) -->
+                @if (ViewBag.Operacao == "A")
+                {
+                    <fieldset>
+                        <div class="form-group">
+                            <label for="id" class="control-label">Código</label>
+                            <input asp-for="id" id="id" class="form-control" readonly />
+                            <span asp-validation-for="id" class="text-danger"></span>
+                        </div>
+                    </fieldset>
+                }
+
+                <!-- Código da Empresa -->
+                <fieldset>
+                    <div class="form-group">
+                        <label for="codigoEmpresa" class="control-label">Código da Empresa</label>
+                        <input type="number" id="codigoEmpresa" name="Id" value="@Model.id"
+                               class="form-control" @(ViewBag.Operacao == "A" ? "readonly" : "") />
                         <span asp-validation-for="id" class="text-danger"></span>
-                    }
-                </div>
+                    </div>
 
-                <!-- Ação que será chamada ao submeter o formulário -->
-                <h2>Cadastro de Funcionario</h2> <!-- Título do formulário -->
+                    <!-- Login do Funcionário -->
+                    <div class="form-group">
+                        <label for="login_func" class="control-label">Login</label>
+                        <input type="text" id="login_func" name="login_func" value="@Model.login_func"
+                               class="form-control" placeholder="Digite o login" />
+                        <span asp-validation-for="login_func" class="text-danger"></span>
+                    </div>
 
-                <div class="form-group">
-                    <label for="id" class="control-label">Código da Empresa</label>
-                    <!--<input type="number" id="id" name="id" value="@Model.id" required /> <!-- Campo para o código da empresa -->
-                    @if (ViewBag.Operacao == "I")
-                    {
-                        <input type="number" name="Id" value="@Model.id" class="form-control" />
-                    }
-                    else
-                    {
-                        <input type="number" name="Id" value="@Model.id" class="form-control disabled" readonly />
-                    }
-                    <span asp-validation-for="id" class="text-danger"></span>
-                    <br />
-                </div>
+                    <!-- Senha do Funcionário -->
+                    <div class="form-group">
+                        <label for="senha_func" class="control-label">Senha</label>
+                        <input type="password" id="senha_func" name="senha_func" value="@Model.senha_func"
+                               class="form-control" placeholder="Digite a senha" />
+                        <span asp-validation-for="senha_func" class="text-danger"></span>
+                    </div>
 
-                <div class="form-group">
-                    <label for="login_func" class="control-label">Login</label>
-                    <input type="text" id="login_func" name="login_func" value="@Model.login_func" /> <!-- Campo para o código da empresa -->
-                    <span asp-validation-for="login_func" class="text-danger"></span>
-                </div>
+                    <!-- Data de Cadastro -->
+                    <div class="form-group">
+                        <label for="dt_cadr" class="control-label">Data de Cadastro</label>
+                        <input type="date" id="dt_cadr" name="dt_cadr"
+                               value="@Model.dt_cadr.ToString("yyyy-MM-dd")" class="form-control" />
+                        <span asp-validation-for="dt_cadr" class="text-danger"></span>
+                    </div>
 
-                <div class="form-group">
-                    <label for="senha_func" class="control-label">senha</label>
-                    <input type="password" id="senha_func" name="senha_func" value="@Model.senha_func" /> <!-- Campo para o CEP -->
-                    <span asp-validation-for="senha_func" class="text-danger"></span>
-                </div>
+                    <!-- Imagem do Funcionário -->
+                    <div class="form-group">
+                        <label for="Imagem" class="control-label">Imagem do Funcionário</label>
+                        <input type="file" id="Imagem" name="Imagem" class="form-control-file" onchange="exibirImagem()" />
+                        @if (!string.IsNullOrEmpty(Model.ImagemEmBase64))
+                        {
+                            <img id="imgPreview" src="data:image/jpeg;base64,@Model.ImagemEmBase64"
+                                 class="img-preview" alt="Pré-visualização da imagem" />
+                        }
+                        else
+                        {
+                            <img id="imgPreview" src="" class="img-preview" alt="Pré-visualização da imagem" />
+                        }
+                        <span asp-validation-for="Imagem" class="text-danger"></span>
+                    </div>
+                </fieldset>
 
-                <div class="form-group">
-                    <label for="dt_cadr" class="control-label">data cadastro</label>
-                    <input type="text" id="dt_cadr" name="dt_cadr" value="@Model.dt_cadr.ToString("yyyy-MM-dd")" /> <!-- Campo para o CNPJ -->
-                    <span asp-validation-for="dt_cadr" class="text-danger"></span>
-                </div>
-
-                <div class="form-group">
-                    <label>
-                        Imagem do Funcionário
-                    </label>
-                    <input type="file" name="Imagem" id="Imagem" onchange="exibirImagem()" class="btn btn-secondary">
-                    <img id="imgPreview" src="data:image/jpeg;base64,@Model.ImagemEmBase64" class="img-responsive"
-                         width="100">
-                    <span asp-validation-for="Imagem" class="text-danger"></span>
-                </div>
-
-                <div class="form-group">
-                    <input type="submit" value="Salvar Dados" /> <!-- Botão para submeter o formulário -->
-                </div>
-
-                <div class="form-group">
-                    <h2><a href="/Home">Página Inicial</a></h2> <!-- Link para a página inicial -->
+                <!-- Botões -->
+                <div class="button-group">
+                    <button type="submit" class="btn btn-primary">Salvar Dados</button>
+                    <a href="/Funcionario" class="btn btn-secondary">Voltar para a listagem</a>
                 </div>
             </form>
-        </div>
-    </div>
+        </section>
 
-    <div>
-        <a asp-action="Index">Voltar para a listagem</a>
-    </div>
+        <footer>
+            <a asp-action="Index" class="btn btn-link">Página Inicial</a>
+        </footer>
+    </main>
 
+    <!-- Scripts -->
     @section Scripts {
         @{
             await Html.RenderPartialAsync("_ValidationScriptsPartial");
@@ -104,13 +107,15 @@ else
 
     <script>
         function exibirImagem() {
-            var oFReader = new FileReader();
-            oFReader.readAsDataURL(document.getElementById("Imagem").files[0]);
-            oFReader.onload = function (oFREvent) {
-                document.getElementById("imgPreview").src = oFREvent.target.result;
-            };
-        }
+            var fileInput = document.getElementById("Imagem");
+            if (fileInput.files && fileInput.files[0]) {
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    document.getElementById("imgPreview").src = e.target.result;
+                };
+                    reader.readAsDataURL(fileInput.files[0]);
+                    }
+                }
     </script>
-
 </body>
 </html>

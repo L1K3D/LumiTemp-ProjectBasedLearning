@@ -3,104 +3,89 @@
     Layout = "~/Views/Shared/_Layout.cshtml"; // Define o layout compartilhado da página
 }
 
-@if (ViewBag.Operacao == "A")
-{
-    <h2>Alteração de Empresa</h2>
-}
-else
-{
-    <h2>Inclusão de Empresa</h2>
-}
-
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
     <meta charset="utf-8" />
     <link rel="stylesheet" type="text/css" href="~/css/estilos.css" /> <!-- Estilo da página -->
-    <title>Cadastro da Empresa Parceira</title> <!-- Título da página -->
+    <title>@(ViewBag.Operacao == "A" ? "Alteração de Empresa" : "Inclusão de Empresa")</title> <!-- Título dinâmico -->
 </head>
 
 <body>
-    <div class="row">
-        <div class="col-md-4">
-            <form asp-action="Save" method="post">
-                <input type="hidden" name="Operacao" value="@ViewBag.Operacao" />
+    <div class="container">
+        <h2>@(ViewBag.Operacao == "A" ? "Alteração de Empresa" : "Inclusão de Empresa")</h2> <!-- Título dinâmico -->
 
-                <div class="form-group">
-                    @if (ViewBag.Operacao == "A")
-                    {
-                        <label class="control-label">Código</label>
-                        <input asp-for="id" class="form-control disabled" readonly />
+        <div class="row">
+            <div class="col-md-6">
+                <form asp-action="Save" method="post">
+                    <!-- Campo oculto para a operação -->
+                    <input type="hidden" name="Operacao" value="@ViewBag.Operacao" />
+
+                    <!-- Código da Empresa -->
+                    <div class="form-group">
+                        <label for="codigoEmpresa" class="control-label">Código da Empresa</label>
+                        <input type="number" id="codigoEmpresa" name="Id" value="@Model.id"
+                               class="form-control" @(ViewBag.Operacao == "A" ? "readonly" : "") />
                         <span asp-validation-for="id" class="text-danger"></span>
-                    }
-                </div>
+                    </div>
 
-                <!-- Ação que será chamada ao submeter o formulário -->
-                <h2>Cadastro da Empresa Parceira</h2> <!-- Título do formulário -->
+                    <!-- Nome da Empresa -->
+                    <div class="form-group">
+                        <label for="nm_empr" class="control-label">Nome da Empresa</label>
+                        <input asp-for="nm_empr" class="form-control" placeholder="Digite o nome da empresa" />
+                        <span asp-validation-for="nm_empr" class="text-danger"></span>
+                    </div>
 
-                <div class="form-group">
-                    <label for="id" class="control-label">Código da Empresa</label>
-                    <!--<input type="number" id="id" name="id" value="@Model.id" required /> <!-- Campo para o código da empresa -->
-                    @if (ViewBag.Operacao == "I")
-                    {
-                        <input type="number" name="Id" value="@Model.id" class="form-control"/>
-                    }
-                    else
-                    {
-                        <input type="number" name="Id" value="@Model.id" class="form-control disabled" readonly/>
-                    }
-                    <span asp-validation-for="id" class="text-danger"></span>
-                    <br />
-                </div>
+                    <!-- CEP -->
+                    <div class="form-group">
+                        <label for="cep_empr" class="control-label">CEP da Empresa</label>
+                        <input asp-for="cep_empr" class="form-control" placeholder="Digite o CEP" />
+                        <span asp-validation-for="cep_empr" class="text-danger"></span>
+                    </div>
 
-                <div class="form-group">
-                    <label for="nm_empr" class="control-label">Nome da Empresa</label>
-                    <input type="text" id="nm_empr" name="nm_empr" value="@Model.nm_empr" /> <!-- Campo para o código da empresa -->
-                    <span asp-validation-for="nm_empr" class="text-danger"></span>
-                </div>
+                    <!-- CNPJ -->
+                    <div class="form-group">
+                        <label for="cnpj_empr" class="control-label">CNPJ da Empresa</label>
+                        <input asp-for="cnpj_empr" class="form-control" placeholder="Digite o CNPJ" />
+                        <span asp-validation-for="cnpj_empr" class="text-danger"></span>
+                    </div>
 
-                <div class="form-group">
-                    <label for="cep_empr" class="control-label">CEP da Empresa</label>
-                    <input type="text" id="cep_empr" name="cep_empr" value="@Model.cep_empr" /> <!-- Campo para o CEP -->
-                    <span asp-validation-for="cep_empr" class="text-danger"></span>
-                </div>
+                    <!-- Telefone de Contato -->
+                    <div class="form-group">
+                        <label for="telf_cont_empr" class="control-label">Telefone de Contato</label>
+                        <input asp-for="telf_cont_empr" class="form-control" placeholder="Digite o telefone de contato" />
+                        <span asp-validation-for="telf_cont_empr" class="text-danger"></span>
+                    </div>
 
-                <div class="form-group">
-                    <label for="cnpj_empr" class="control-label">CNPJ da Empresa</label>
-                    <input type="text" id="cnpj_empr" name="cnpj_empr" value="@Model.cnpj_empr" /> <!-- Campo para o CNPJ -->
-                    <span asp-validation-for="cnpj_empr" class="text-danger"></span>
-                </div>
+                    <!-- Código do Usuário Associado -->
+                    <div class="form-group">
+                        <label for="id_func" class="control-label">Usuário Associado</label>
+                        <select asp-for="id_func" asp-items="ViewBag.funcionarios" class="form-control">
+                            <option value="">Selecione um usuário</option>
+                        </select>
+                        <span asp-validation-for="id_func" class="text-danger"></span>
+                    </div>
 
-                <div class="form-group">
-                    <label for="telf_cont_empr" class="control-label">Telefone de Contato da Empresa</label>
-                    <input type="text" id="telf_cont_empr" name="telf_cont_empr" value="@Model.telf_cont_empr" /> <!-- Campo para telefone -->
-                    <span asp-validation-for="telf_cont_empr" class="text-danger"></span>
-                </div>
+                    <!-- Botões -->
+                    <div class="form-group mt-3">
+                        <button type="submit" class="btn btn-primary">Salvar Dados</button>
+                        <a asp-action="Index" class="btn btn-secondary">Voltar para a listagem</a>
+                    </div>
+                </form>
+            </div>
+        </div>
 
-                <div class="form-group">
-                    <label for="id_func" class="control-label">Código do Usuário Associado à Empresa</label>
-                    <select asp-for="id_func" asp-items="ViewBag.funcionarios" class="form-control"> </select> <!-- Campo para código do usuário -->
-                    <span asp-validation-for="id_func" class="text-danger"></span>
-                </div>
-
-                <div class="form-group">
-                    <input type="submit" value="Salvar Dados" /> <!-- Botão para submeter o formulário -->
-                </div>
-
-                <div class="form-group">
-                    <h2><a href="/EmpresaParceira" >Página Inicial</a></h2> <!-- Link para a página inicial -->
-                </div>
-            </form>
+        <!-- Link adicional para voltar -->
+        <div class="mt-4">
+            <a href="/EmpresaParceira" class="btn btn-link">Página Inicial</a>
         </div>
     </div>
 
-    <div>
-        <a asp-action="Index">Voltar para a listagem</a>
-    </div>
-
+    <!-- Scripts -->
     @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+        @{
+            await Html.RenderPartialAsync("_ValidationScriptsPartial");
+        }
     }
-
 </body>
 </html>

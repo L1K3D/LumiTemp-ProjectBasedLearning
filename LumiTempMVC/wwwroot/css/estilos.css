@@ -1,136 +1,106 @@
-﻿/* Estilos gerais do corpo */
+﻿/* Estilo geral do corpo */
 body {
-    background-color: #001f3f; /* Azul marinho de fundo */
-    font-family: 'PT Sans', sans-serif; /* Fonte padrão para o corpo */
-    color: #003366; /* Cor do texto, um azul mais claro */
-    margin: 0; /* Remove margens padrão do navegador */
-    padding: 0; /* Remove preenchimento padrão do navegador */
-    display: flex; /* Usa flexbox para layout */
-    flex-direction: column; /* Organiza os elementos em coluna */
-    align-items: center; /* Centraliza os itens horizontalmente */
-    justify-content: center; /* Centraliza os itens verticalmente */
-    height: 100vh; /* Altura da tela completa */
-}
-
-body {
-    overflow: auto; /* Adiciona barra de rolagem automaticamente, se necessário */
+    color: #333;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    margin: 30px;
+    line-height: 1.6;
+    background-color: #f9f9f9;
 }
 
 /* Estilo do cabeçalho */
 header {
-    width: 100%; /* Cabeçalho ocupa toda a largura */
-    background-color: #003366; /* Azul mais escuro para o cabeçalho */
-    text-align: center; /* Centraliza o texto no cabeçalho */
-    position: fixed; /* Mantém o cabeçalho fixo no topo */
-    top: 0; /* Posiciona no topo */
-    left: 0; /* Alinha à esquerda */
-    z-index: 1000; /* Garante que o cabeçalho 
-        ja acima de outros elementos */
+    position: relative;
+    text-align: center;
+    margin-bottom: 20px;
 }
 
-/* Estilo do menu de navegação */
-nav.menu-opcoes {
-    width: 100%; /* Preenche toda a largura */
-    display: flex; /* Flexbox para alinhar os itens */
-    justify-content: space-around; /* Espaçamento igual entre os itens */
-    padding: 10px 0; /* Espaçamento vertical do menu */
-}
-
-.menu-opcoes ul {
-    list-style: none; /* Remove marcadores da lista */
-    margin: 0; /* Remove margem */
-    padding: 0; /* Remove preenchimento */
-    display: flex; /* Alinha os itens horizontalmente*/
-}
-
-.menu-opcoes li {
-    margin: 0 15px; /*Espaçamento horizontal entre os itens do menu */
-    color: white;
-}
-
-.menu-opcoes a {
-    text-decoration: none; /*Remove o sublinhado dos links */
-    color: white; /*Cor do texto dos links */
-}
-
-
-
-/*/* Estilo do painel de login */
-#painel-login {
-    display: flex; /* Flexbox para centralizar o painel */
-    align-items: center; /* Centraliza verticalmente */
-    justify-content: center; /* Centraliza horizontalmente */
-    flex-grow: 1; /* Faz o painel ocupar o espaço restante da tela */
-    background-color: #240e67; /* Fundo claro para o painel de login */
-}
-
-.container-login {
-    background-color: #240e67; /* Fundo claro para o painel de login */
-    padding: 30px; /* Espaçamento interno do painel */
-    border-radius: 10px; /* Bordas arredondadas */
-    width: 300px; /* Largura fixa do painel */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Sombra sutil ao redor do painel */
-    margin-top: 100px; /* Espaço acima do painel para não encostar no cabeçalho */
-}
-
-    .container-login label {
-        color: black;
+    header img {
+        width: 150px;
+        cursor: pointer;
+        transition: transform 0.2s ease-in-out;
     }
-/* Estilos do formulário */
-label {
-    display: block; /* Faz os labels ocuparem toda a linha */
-    margin-top: 10px; /* Espaçamento acima dos labels */
-    color: white; /* Cor do texto dos labels */
+
+        header img:hover {
+            transform: scale(1.1);
+        }
+
+/* Container principal */
+.container-inicial {
+    text-align: center;
+    margin: 0 auto;
+    max-width: 800px;
+    background: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
-input {
-    width: 100%; /* Inputs ocupam toda a largura do contêiner */
-    padding: 8px; /* Preenchimento interno */
-    margin-top: 5px; /* Espaçamento acima dos inputs */
-    border: 1px solid #ccc; /* Bordas suaves */
-    border-radius: 4px; /* Bordas arredondadas */
-}
+    /* Estilo do título */
+    .container-inicial h1 {
+        font-size: 2.5rem;
+        color: #0056b3;
+        margin-bottom: 20px;
+    }
 
-/* Estilo dos botões */
+    /* Estilo dos parágrafos */
+    .container-inicial p {
+        font-size: 1rem;
+        color: #555;
+        margin-bottom: 15px;
+    }
+
+    .container-inicial strong {
+        color: #0056b3;
+    }
+
+/* Botões */
 .button-container {
-    display: flex; /* Flexbox para organizar os botões */
-    flex-direction: row; /* Direção horizontal para os botões */
-    justify-content: left; /* Alinha os botões à esquerda */
-    flex-wrap: wrap; /* Permite que os botões quebrem em linha se necessário */
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    justify-content: center;
+    margin-top: 20px;
 }
 
 .botao {
-    display: inline-block; /* Permite aplicar margens e preenchimentos */
-    padding: 15px 25px; /* Preenchimento interno do botão */
-    margin: 10px; /* Espaçamento entre os botões */
-    background-color: #1b6ec2; /* Cor de fundo do botão */
-    color: white; /* Cor do texto do botão */
-    border: none; /* Remove bordas */
-    border-radius: 5px; /* Bordas arredondadas */
-    text-decoration: none; /* Remove sublinhado do link */
-    font-size: 16px; /* Tamanho da fonte */
-    transition: background-color 0.3s; /* Transição suave na cor de fundo */
+    display: inline-block;
+    text-decoration: none;
+    background-color: #0056b3;
+    color: #fff;
+    padding: 12px 20px;
+    font-size: 1rem;
+    font-weight: bold;
+    border-radius: 25px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease-in-out;
+    border: 2px solid transparent;
 }
 
-    /* Efeito hover nos botões */
     .botao:hover {
-        background-color: #1861ac; /* Cor do botão ao passar o mouse */
+        background-color: #fff;
+        color: #0056b3;
+        border-color: #0056b3;
+        transform: translateY(-3px);
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
     }
 
-/* Estilos para tabelas */
-th, td { /* Estilo comum para cabeçalhos e células da tabela */
-    color: white; /* Cor do texto em tabelas */
+/* Estilo do rodapé */
+footer {
+    text-align: center;
+    margin-top: 30px;
+    padding: 10px 0;
+    color: #aaa;
+    font-size: 0.9rem;
+    background-color: #f1f1f1;
+    border-top: 1px solid #ddd;
 }
 
-h1 {
-    color: white; /* Cor do título principal */
-}
+    /* Links no rodapé */
+    footer a {
+        color: #0056b3;
+        text-decoration: none;
+    }
 
-.container {
-    display: inline-block;
-    margin-top: 15px;
-}
-
-h2, a {
-    color: white;
-}
+        footer a:hover {
+            text-decoration: underline;
+        }

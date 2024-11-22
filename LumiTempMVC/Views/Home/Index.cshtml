@@ -11,50 +11,47 @@
     <link rel="stylesheet" href="~/css/estilos.css">
 </head>
 <body>
-    <div class="container-inicial">
-        <h1>
-            <p style="color: whitesmoke;">
-                Bem-vindos à LumiTemp
+    <!-- Cabeçalho -->
+    <header>
+        <div class="container">
+            <h1>Bem-vindos à <strong>LumiTemp</strong></h1>
+            <p>Transformamos a forma como sua empresa monitora e gerencia dados.</p>
+        </div>
+    </header>
+
+    <!-- Seção de Introdução -->
+    <section class="intro">
+        <div class="container">
+            <p>
+                Na <strong>LumiTemp</strong>, somos especializados no aluguel de sensores de alta tecnologia para otimizar o monitoramento em tempo real.
+                Oferecemos soluções personalizadas para atender às suas necessidades específicas, com o objetivo de gerar insights valiosos que melhorem a eficiência operacional da sua empresa.
             </p>
-        </h1>
+            <p>
+                Descubra como nossa tecnologia pode revolucionar seu negócio. <a href="https://wa.me/+5511964835563"><strong>Entre em contato</strong></a>  e faça parte da inovação!
+            </p>
+        </div>
+    </section>
 
-        <p style="color: whitesmoke;">
-            Na <strong>LumiTemp</strong>, transformamos a forma como sua empresa monitora e gerencia dados. Especializados no aluguel de sensores de
-            alta tecnologia, oferecemos soluções personalizadas para atender às suas necessidades específicas. Nossos sensores
-            garantem monitoramento em tempo real, proporcionando insights valiosos que otimizam processos e melhoram a eficiência
-            operacional.
-        </p>
-
-        <p style="color: whitesmoke;">
-            Descubra como nossa tecnologia pode revolucionar seu negócio. Entre em contato e faça parte da inovação!
-        </p>
-
-        <div class="container-inicial">
-
+        <div class="container">
             @if (ViewBag.Logado == true)
             {
                 <div class="button-container">
-
-                    <a class="botao" asp-area="" asp-controller="EmpresaParceira" asp-action="Index">Empresas Parceiras</a>
-                    <a class="botao" asp-area="" asp-controller="Funcionario" asp-action="Index">Funcionarios</a>
-                    <a class="botao" asp-area="" asp-controller="Sensor" asp-action="Index">Sensores</a>
-                    <a class="botao" asp-area="" asp-controller="Dashboard" asp-action="Index">Dashboard</a>
-                    <a class="botao" asp-area="" asp-controller="Login" asp-action="LogOff">Logoff</a>
-                    <a class="botao" asp-area="" asp-controller="Sobre" asp-action="Index">Sobre</a>
-
+                <a class="btn btn-primary" asp-area="" asp-controller="EmpresaParceira" asp-action="Index">Empresas Parceiras</a>
+                <a class="btn btn-primary" asp-area="" asp-controller="Funcionario" asp-action="Index">Funcionários</a>
+                <a class="btn btn-primary" asp-area="" asp-controller="Sensor" asp-action="Index">Sensores</a>
+                <a class="btn btn-primary" asp-area="" asp-controller="Dashboard" asp-action="Index">Dashboard</a>
+                <a class="btn btn-primary" asp-area="" asp-controller="Sobre" asp-action="Index">Sobre</a>
                 </div>
             }
             else
             {
                 <div class="button-container">
-                    <a class="botao" asp-area="" asp-controller="Funcionario" asp-action="Create">Cadastrar Funcionario</a>
-                    <a class="botao" asp-area="" asp-controller="Sobre" asp-action="Index">Sobre</a>
-                    <a class="botao" asp-area="" asp-controller="Login" asp-action="Index">Login</a>
+                <a class ="btn btn-primary" asp-area="" asp-controller="Funcionario" asp-action="Create">Cadastrar Funcionário</a>
+                <a class="btn btn-primary" asp-area="" asp-controller="Sobre" asp-action="Index">Sobre</a>
+                <a class="btn btn-primary" asp-area="" asp-controller="Login" asp-action="Index">Login</a>
                 </div>
             }
         </div>
 
-    </div>
 </body>
 </html>
-

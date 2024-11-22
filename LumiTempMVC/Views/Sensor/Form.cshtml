@@ -21,88 +21,87 @@ else
 </head>
 
 <body>
-    <div class="row">
-        <div class="col-md-4">
+    <main class="container">
+        <section>
             <form asp-action="Save" method="post">
                 <input type="hidden" name="Operacao" value="@ViewBag.Operacao" />
 
-                <div class="form-group">
-                    @if (ViewBag.Operacao == "A")
-                    {
-                        <label class="control-label">Código</label>
-                        <input asp-for="id" class="form-control disabled" readonly />
+                @if (ViewBag.Operacao == "A")
+                {
+                    <fieldset>
+                        <div class="form-group">
+                            <label class="control-label">Código</label>
+                            <input asp-for="id" class="form-control" readonly />
+                            <span asp-validation-for="id" class="text-danger"></span>
+                        </div>
+                    </fieldset>
+                }
+
+                <fieldset>
+                    <div class="form-group">
+                        <label for="id" class="control-label">Código do Sensor</label>
+                        @if (ViewBag.Operacao == "I")
+                        {
+                            <input type="number" name="Id" value="@Model.id" class="form-control" />
+                        }
+                        else
+                        {
+                            <input type="number" name="Id" value="@Model.id" class="form-control" readonly />
+                        }
                         <span asp-validation-for="id" class="text-danger"></span>
-                    }
-                </div>
+                    </div>
 
-                <!-- Ação que será chamada ao submeter o formulário -->
-                <h2>Cadastro da Empresa Parceira</h2> <!-- Título do formulário -->
+                    <div class="form-group">
+                        <label for="ds_tipo_sens" class="control-label">Descrição do Sensor</label>
+                        <input type="text" id="ds_tipo_sens" name="ds_tipo_sens" value="@Model.ds_tipo_sens" class="form-control" />
+                        <span asp-validation-for="ds_tipo_sens" class="text-danger"></span>
+                    </div>
 
-                <div class="form-group">
-                    <label for="id" class="control-label">Código do Sensor</label>
-                    <!--<input type="number" id="id" name="id" value="@Model.id" required /> <!-- Campo para o código da empresa -->
-                    @if (ViewBag.Operacao == "I")
-                    {
-                        <input type="number" name="Id" value="@Model.id" class="form-control" />
-                    }
-                    else
-                    {
-                        <input type="number" name="Id" value="@Model.id" class="form-control disabled" readonly />
-                    }
-                    <span asp-validation-for="id" class="text-danger"></span>
-                    <br />
-                </div>
+                    <div class="form-group">
+                        <label for="dt_vend" class="control-label">Data de Venda</label>
+                        <input type="date" id="dt_vend" name="dt_vend" value="@Model.dt_vend.ToString("yyyy-MM-dd")" class="form-control" />
+                        <span asp-validation-for="dt_vend" class="text-danger"></span>
+                    </div>
 
-                <div class="form-group">
-                    <label for="ds_tipo_sens" class="control-label">Descricao do sensor</label>
-                    <input type="text" id="ds_tipo_sens" name="ds_tipo_sens" value="@Model.ds_tipo_sens" /> <!-- Campo para o código da empresa -->
-                    <span asp-validation-for="ds_tipo_sens" class="text-danger"></span>
-                </div>
+                    <div class="form-group">
+                        <label for="vl_temp_alvo" class="control-label">Valor Alvo</label>
+                        <input type="number" id="vl_temp_alvo" name="vl_temp_alvo" value="@Model.vl_temp_alvo" class="form-control" />
+                        <span asp-validation-for="vl_temp_alvo" class="text-danger"></span>
+                    </div>
 
-                <div class="form-group">
-                    <label for="dt_vend" class="control-label">Data de venda</label>
-                    <input type="date" id="dt_vend" name="dt_vend" value="@Model.dt_vend.ToString("yyyy-MM-dd")" /> <!-- Campo para o CEP -->
-                    <span asp-validation-for="dt_vend" class="text-danger"></span>
-                </div>
+                    <div class="form-group">
+                        <label for="cd_motor" class="control-label">Código do Motor</label>
+                        <input type="number" id="cd_motor" name="cd_motor" value="@Model.cd_motor" class="form-control" />
+                        <span asp-validation-for="cd_motor" class="text-danger"></span>
+                    </div>
 
-                <div class="form-group">
-                    <label for="vl_temp_alvo" class="control-label">Valor Alvo</label>
-                    <input type="number" id="vl_temp_alvo" name="vl_temp_alvo" value="@Model.vl_temp_alvo" /> <!-- Campo para o CNPJ -->
-                    <span asp-validation-for="vl_temp_alvo" class="text-danger"></span>
-                </div>
+                    <div class="form-group">
+                        <label for="id_func" class="control-label">Código do Usuário Associado</label>
+                        <select asp-for="id_func" asp-items="ViewBag.funcionarios" class="form-control"></select>
+                        <span asp-validation-for="id_func" class="text-danger"></span>
+                    </div>
 
-                <div class="form-group">
-                    <label for="cd_motor" class="control-label">Codigo Motor</label>
-                    <input type="number" id="cd_motor" name="cd_motor" value="@Model.cd_motor" /> <!-- Campo para telefone -->
-                    <span asp-validation-for="cd_motor" class="text-danger"></span>
-                </div>
+                    <div class="form-group">
+                        <label for="id_empr" class="control-label">Código da Empresa</label>
+                        <select asp-for="id_empr" asp-items="ViewBag.empresas" class="form-control"></select>
+                        <span asp-validation-for="id_empr" class="text-danger"></span>
+                    </div>
+                </fieldset>
 
                 <div class="form-group">
-                    <label for="id_func" class="control-label">Código do Usuário Associado</label>
-                    <select asp-for="id_func" asp-items="ViewBag.funcionarios" class="form-control"> </select> <!-- Campo para código do usuário -->
-                    <span asp-validation-for="id_func" class="text-danger"></span>
+                    <button type="submit" class="btn btn-primary">Salvar Dados</button>
                 </div>
 
                 <div class="form-group">
-                    <label for="id_empr" class="control-label">Código da Empresa</label>
-                    <select asp-for="id_empr" asp-items="ViewBag.empresas" class="form-control"> </select> <!-- Campo para código do usuário -->
-                    <span asp-validation-for="id_empr" class="text-danger"></span>
-                </div>
-
-                <div class="form-group">
-                    <input type="submit" value="Salvar Dados" /> <!-- Botão para submeter o formulário -->
-                </div>
-
-                <div class="form-group">
-                    <h2><a href="/Sensor">Página Inicial</a></h2> <!-- Link para a página inicial -->
+                    <a href="/Sensor" class="btn btn-secondary">Página Inicial</a>
                 </div>
             </form>
-        </div>
-    </div>
+        </section>
 
-    <div>
-        <a asp-action="Index">Voltar para a listagem</a>
-    </div>
+        <footer>
+            <a asp-action="Index" class="btn btn-link">Voltar para a listagem</a>
+        </footer>
+    </main>
 
     @section Scripts {
         @{
