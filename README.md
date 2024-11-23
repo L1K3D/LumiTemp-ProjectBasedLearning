@@ -353,3 +353,287 @@ CREATE TABLE cadr_sens (
 );
 ```
 
+Exclui as procedures se já existirem para recriá-las
+
+```sql
+DROP PROCEDURE IF EXISTS spDelete
+DROP PROCEDURE IF EXISTS spConsulta
+DROP PROCEDURE IF EXISTS spListagem
+DROP PROCEDURE IF EXISTS spProximoId
+DROP PROCEDURE IF EXISTS spInsert_cadr_empr_parc
+DROP PROCEDURE IF EXISTS spUpdate_cadr_empr_parc
+DROP PROCEDURE IF EXISTS spInsert_cadr_func
+DROP PROCEDURE IF EXISTS spUpdate_cadr_func
+DROP PROCEDURE IF EXISTS spConsultaAvancadaFuncionarios
+DROP PROCEDURE IF EXISTS spInsert_cadr_sens
+DROP PROCEDURE IF EXISTS spUpdate_cadr_sens
+
+GO
+```
+
+Criação da procedure spDelete para deletar um registro baseado no ID
+
+```sql
+CREATE PROCEDURE spDelete
+(
+    -- Declaração dos parâmetros que serão utilizados
+    @ID INT,                               -- ID do registro a ser deletado
+    @tabela VARCHAR(MAX)                   -- Nome da tabela onde o registro será deletado
+)
+AS
+BEGIN
+    -- Declarar a variável para armazenar a consulta SQL
+    DECLARE @sql VARCHAR(MAX);
+    -- Montar a consulta SQL para deletar o registro pelo ID
+    SET @sql = 'DELETE FROM ' + @tabela +
+               ' WHERE ID = ' + CAST(@ID AS VARCHAR(MAX));
+    -- Executar a consulta SQL
+    EXEC(@sql)
+END
+
+GO
+```
+
+Criação da procedure spConsulta para consultar registros baseados no ID
+
+```sql
+CREATE PROCEDURE spConsulta
+(
+    -- Declaração dos parâmetros que serão utilizados
+    @id INT,                               -- ID do registro a ser consultado
+    @tabela VARCHAR(MAX)                   -- Nome da tabela onde o registro será consultado
+)
+AS
+BEGIN
+    -- Declarar a variável para armazenar a consulta SQL
+    DECLARE @sql VARCHAR(MAX);
+    -- Montar a consulta SQL para selecionar registros pelo ID
+    SET @sql = 'SELECT * FROM ' + @tabela +
+               ' WHERE id = ' + CAST(@id AS VARCHAR(MAX));
+    -- Executar a consulta SQL
+    EXEC(@sql)
+END
+
+GO
+```
+
+Criação da procedure spListagem para listar registros ordenados por um campo específico
+
+```sql
+CREATE PROCEDURE spListagem
+(
+    -- Declaração dos parâmetros que serão utilizados
+    @tabela VARCHAR(MAX),                  -- Nome da tabela a ser consultada
+    @ordem VARCHAR(MAX)                    -- Nome do campo pelo qual os registros serão ordenados
+)
+AS
+BEGIN
+    -- Executar a consulta SQL para listar os registros ordenados
+    EXEC('SELECT * FROM ' + @tabela +
+         ' ORDER BY ' + @ordem)
+END
+
+GO
+```
+
+Criação da procedure spProximoId para obter o próximo ID disponível na tabela
+
+```sql
+CREATE PROCEDURE spProximoId
+(
+    -- Declaração dos parâmetros que serão utilizados
+    @tabela VARCHAR(MAX)                   -- Nome da tabela para obter o próximo ID
+)
+AS
+BEGIN
+    -- Executar a consulta SQL para obter o maior ID e incrementar em 1
+    EXEC('SELECT ISNULL(MAX(id) + 1, 1) AS MAIOR FROM ' + @tabela)
+END
+```
+
+Criação da procedure spInsert_cadr_empr_parc para inserir uma nova empresa parceira
+
+```sql
+CREATE PROCEDURE spInsert_cadr_empr_parc
+(
+    -- Declaração dos parâmetros que serão utilizados
+    @ID INT,                               -- ID da empresa
+    @NM_EMPR VARCHAR(30),                  -- Nome da empresa
+    @CEP_EMPR VARCHAR(30),                 -- CEP da empresa
+    @LOG_EMPR VARCHAR(30),                 -- Logradouro da empresa
+    @NUM_EMPR VARCHAR(4),                  -- Número da empresa
+    @COMPL_EMPR VARCHAR(30),               -- Complemento do endereço da empresa
+    @BAIRRO_EMPR VARCHAR(20),              -- Bairro da empresa
+    @CIDADE_EMPR VARCHAR(20),              -- Cidade da empresa
+    @ESTADO_EMPR VARCHAR(2),               -- Estado da empresa
+    @CNPJ_EMPR VARCHAR(15),                -- CNPJ da empresa
+    @TELF_CONT_EMPR VARCHAR(10),           -- Telefone de contato da empresa
+    @ID_FUNC INT                           -- ID do funcionário responsável pela empresa (chave estrangeira)
+) 
+AS
+BEGIN
+    -- Insere um novo registro na tabela 'cadr_empr_parc' com os dados informados
+    INSERT INTO cadr_empr_parc
+    (ID, NM_EMPR, CEP_EMPR, LOG_EMPR, NUM_EMPR, COMPL_EMPR, BAIRRO_EMPR, CIDADE_EMPR, ESTADO_EMPR, CNPJ_EMPR, TELF_CONT_EMPR, ID_FUNC)
+    VALUES
+    (@ID, @NM_EMPR, @CEP_EMPR, @LOG_EMPR, @NUM_EMPR, @COMPL_EMPR, @BAIRRO_EMPR, @CIDADE_EMPR, @ESTADO_EMPR, @CNPJ_EMPR, @TELF_CONT_EMPR, @ID_FUNC)
+END
+
+GO
+```
+
+Criação da procedure spUpdate_cadr_empr_parc para alterar os dados de uma empresa existente
+
+```sql
+CREATE PROCEDURE spUpdate_cadr_empr_parc
+(
+    -- Declaração dos parâmetros que serão utilizados
+    @ID INT,                               -- ID da empresa
+    @NM_EMPR VARCHAR(30),                  -- Nome da empresa
+    @CEP_EMPR VARCHAR(30),                 -- CEP da empresa
+    @LOG_EMPR VARCHAR(30),                 -- Logradouro da empresa
+    @NUM_EMPR VARCHAR(4),                  -- Número da empresa
+    @COMPL_EMPR VARCHAR(30),               -- Complemento do endereço da empresa
+    @BAIRRO_EMPR VARCHAR(20),              -- Bairro da empresa
+    @CIDADE_EMPR VARCHAR(20),              -- Cidade da empresa
+    @ESTADO_EMPR VARCHAR(2),               -- Estado da empresa
+    @CNPJ_EMPR VARCHAR(15),                -- CNPJ da empresa
+    @TELF_CONT_EMPR VARCHAR(11),           -- Telefone de contato da empresa
+    @ID_FUNC INT                           -- ID do funcionário responsável pela empresa (chave estrangeira)
+) 
+AS
+BEGIN
+    -- Atualiza o registro da empresa na tabela 'cadr_empr_parc' com os novos dados
+    UPDATE cadr_empr_parc SET
+        NM_EMPR = @NM_EMPR,                -- Nome da empresa
+        CEP_EMPR = @CEP_EMPR,              -- CEP da empresa
+        LOG_EMPR = @LOG_EMPR,              -- Logradouro da empresa
+        NUM_EMPR = @NUM_EMPR,              -- Número da empresa
+        COMPL_EMPR = @COMPL_EMPR,          -- Complemento do endereço da empresa
+        BAIRRO_EMPR = @BAIRRO_EMPR,        -- Bairro da empresa
+        CIDADE_EMPR = @CIDADE_EMPR,        -- Cidade da empresa
+        ESTADO_EMPR = @ESTADO_EMPR,        -- Estado da empresa
+        CNPJ_EMPR = @CNPJ_EMPR,            -- CNPJ da empresa
+        TELF_CONT_EMPR = @TELF_CONT_EMPR,  -- Telefone de contato da empresa
+        ID_FUNC = @ID_FUNC                 -- ID do funcionário responsável pela empresa
+    WHERE ID = @ID                         -- Condição para identificar a empresa a ser atualizada
+END
+GO
+```
+
+Criação da procedure spInsert_cadr_func para inserir um novo funcionário
+
+```sql
+CREATE PROCEDURE spInsert_cadr_func
+(
+    -- Declaração dos parâmetros que serão utilizados na inserção
+    @ID int,
+    @LOGIN_FUNC varchar(30),
+    @SENHA_FUNC varchar(30),
+    @DT_CADR DATE,
+    @IMAGEM VARBINARY(MAX)
+) 
+AS
+BEGIN
+    -- Insere um novo registro na tabela cadr_func
+    INSERT INTO cadr_func (ID, LOGIN_FUNC, SENHA_FUNC, DT_CADR, IMAGEM)
+    VALUES (@ID, @LOGIN_FUNC, @SENHA_FUNC, @DT_CADR, @IMAGEM)
+END
+GO
+```
+
+Criação da procedure spUpdate_cadr_func para alterar os dados de um funcionário existente
+
+```sql
+CREATE PROCEDURE spUpdate_cadr_func
+(
+    -- Declaração dos parâmetros que serão utilizados na atualização
+    @ID int,
+    @LOGIN_FUNC varchar(30),
+    @SENHA_FUNC varchar(30),
+    @DT_CADR DATE,
+    @IMAGEM VARBINARY(MAX)
+) 
+AS
+BEGIN
+    -- Atualiza o registro existente na tabela cadr_func
+    UPDATE cadr_func
+    SET LOGIN_FUNC = @LOGIN_FUNC, SENHA_FUNC = @SENHA_FUNC, DT_CADR = @DT_CADR, IMAGEM = @IMAGEM
+    WHERE ID = @ID
+END
+GO
+```
+
+Criação da procedure spConsultaAvancadaFuncionarios para consultar funcionários
+
+```sql
+CREATE PROCEDURE spConsultaAvancadaFuncionarios
+(
+    -- Declaração dos parâmetros para a consulta avançada
+    @descricao varchar(max),
+    @dataInicial datetime,
+    @dataFinal datetime
+)
+AS
+BEGIN
+    -- Seleciona registros na tabela cadr_func com base em critérios fornecidos
+    SELECT * FROM cadr_func
+    WHERE cadr_func.DT_CADR BETWEEN @dataInicial AND @dataFinal
+    AND cadr_func.LOGIN_FUNC LIKE '%' + @descricao + '%'
+END
+GO
+```
+
+Criação da procedure spInsert_cadr_sens para inserir um novo sensor
+
+```sql
+CREATE PROCEDURE spInsert_cadr_sens
+(
+    -- Declaração dos parâmetros que serão utilizados
+    @ID INT,                               -- ID do sensor
+    @DS_TIPO_SENS VARCHAR(30),             -- Descrição do tipo de sensor
+    @DT_VEND DATE,                         -- Data de venda do sensor
+    @VL_TEMP_ALVO DECIMAL(5, 2),           -- Valor da temperatura alvo
+    @CD_MOTOR INT,                         -- Código do motor associado ao sensor
+    @ID_FUNC INT,                          -- ID do funcionário responsável (chave estrangeira)
+    @ID_EMPR INT                           -- ID da empresa responsável (chave estrangeira)
+) 
+AS
+BEGIN
+    -- Insere um novo registro na tabela 'cadr_sens' com os dados informados
+    INSERT INTO cadr_sens
+    (ID, DS_TIPO_SENS, DT_VEND, VL_TEMP_ALVO, CD_MOTOR, ID_FUNC, ID_EMPR)
+    VALUES
+    (@ID, @DS_TIPO_SENS, @DT_VEND, @VL_TEMP_ALVO, @CD_MOTOR, @ID_FUNC, @ID_EMPR)
+END
+GO
+```
+
+Criação da procedure spUpdate_cadr_sens para alterar os dados de um sensor existente
+
+```sql
+CREATE PROCEDURE spUpdate_cadr_sens
+(
+    -- Declaração dos parâmetros que serão utilizados
+    @ID INT,                               -- ID do sensor
+    @DS_TIPO_SENS VARCHAR(30),             -- Descrição do tipo de sensor
+    @DT_VEND DATE,                         -- Data de venda do sensor
+    @VL_TEMP_ALVO DECIMAL(5, 2),           -- Valor da temperatura alvo
+    @CD_MOTOR INT,                         -- Código do motor associado ao sensor
+    @ID_FUNC INT,                          -- ID do funcionário responsável (chave estrangeira)
+    @ID_EMPR INT                           -- ID da empresa responsável (chave estrangeira)
+) 
+AS
+BEGIN
+    -- Atualiza o registro do sensor na tabela 'cadr_sens' com os novos dados
+    UPDATE cadr_sens SET
+        DS_TIPO_SENS = @DS_TIPO_SENS,
+        DT_VEND = @DT_VEND,
+        VL_TEMP_ALVO = @VL_TEMP_ALVO,
+        CD_MOTOR = @CD_MOTOR,
+        ID_FUNC = @ID_FUNC,
+        ID_EMPR = @ID_EMPR
+    WHERE ID = @ID                       -- Condição para identificar o sensor a ser atualizado
+END
+GO
+```
