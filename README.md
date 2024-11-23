@@ -3,7 +3,7 @@
 # 📚 Índice
 
 1. [💻 Tecnologias Utilizadas](#tecnologias-utilizadas)
-2. [📜 Introdução](#introdução)
+2. [📜 Introdução](#introducao)
    - [Objetivo](#objetivo)
    - [Descrição da Proposta](#descrição-da-proposta)
 6. [🖥️ Hardware](#hardware)
