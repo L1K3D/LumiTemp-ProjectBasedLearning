@@ -3,7 +3,7 @@
 # 📚 Índice
 
 1. [💻 Tecnologias Utilizadas](#tecnologias-utilizadas)
-2. [📜 Introdução](#introducao)
+2. [📜 Introdução](#introdução)
    - [Objetivo](#objetivo)
    - [Descrição da Proposta](#descrição-da-proposta)
 6. [🖥️ Hardware](#hardware)
@@ -13,7 +13,7 @@
    - [Projeto Físico](#projeto-físico)
 7. [🧑‍💻 Software](#software)
    - [FIWARE](#fiware)
-8. [🏗️ Visão Geral da Arquitetura](#visao-geral-da-arquitetura)
+8. [🏗️ Visão Geral da Arquitetura](#visão-geral-da-arquitetura)
    - [Diagrama de Arquitetura](#diagrama-de-arquitetura)
 10. [🔧 Código do ESP32](#código-do-esp32)
    - [Dependências](#dependências)
