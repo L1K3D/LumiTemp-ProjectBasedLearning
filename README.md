@@ -67,16 +67,16 @@ O protótipo consiste em uma resistência de 6 Ohms com potência de 50W, utiliz
 
 | Componente       | Função                                                                                          | Imagem       |
 |------------------|-------------------------------------------------------------------------------------------------|--------------|
-| Protoboard       | Construção de circuitos temporários sem solda                                                   | ![Imagem](URL_PROTOBOARD) |
-| ESP32            | Comunicação com FIWARE via Wi-Fi e Bluetooth                                                    | ![Imagem](URL_ESP32)      |
-| Resistor 10KΩ    | Proteção contra correntes excessivas e leitura precisa de sinais                                | ![Imagem](URL_RESISTOR)   |
-| Jumper Wires     | Conexão entre componentes                                                                       | ![Imagem](URL_JUMPER)     |
-| Fonte DC         | Fornecimento de tensão contínua                                                                 | ![Imagem](URL_FONTE_DC)   |
-| Cabo de Força    | Transmissão de energia para dispositivos eletrônicos                                            | ![Imagem](URL_CABO_FORCA) |
-| Cabos Banana     | Conexões seguras para equipamentos                                                              | ![Imagem](URL_CABO_BANANA)|
-| Cabo USB         | Comunicação e alimentação de dispositivos eletrônicos                                           | ![Imagem](URL_CABO_USB)   |
-| Protótipo        | Simulação do funcionamento da estufa                                                            | ![Imagem](URL_PROTOIPO)   |
-| Notebook         | Desenvolvimento e monitoramento do sistema                                                      | ![Imagem](URL_NOTEBOOK)   |
+| Protoboard       | Construção de circuitos temporários sem solda                                                   | <img src="https://github.com/user-attachments/assets/43ccb680-1546-4225-9526-bfe1e3fc829b" width="250" height="250"> |
+| ESP32            | Comunicação com FIWARE via Wi-Fi e Bluetooth                                                    | <img src="https://github.com/user-attachments/assets/aea63641-54cb-41b6-a435-959bf6ee645d" width="250" height="250"> |
+| Resistor 10KΩ    | Proteção contra correntes excessivas e leitura precisa de sinais                                | <img src="https://github.com/user-attachments/assets/c20623c0-d764-4970-8d9c-c2642155a82f" width="250" height="250"> |
+| Jumper Wires     | Conexão entre componentes                                                                       | <img src="https://github.com/user-attachments/assets/83e9871a-9d96-41eb-a67e-fb5d86d9f0ce" width="250" height="250"> |
+| Fonte DC         | Fornecimento de tensão contínua                                                                 | <img src="https://github.com/user-attachments/assets/4e6ff303-c9aa-41b7-833a-441ba92742d5" width="250" height="250"> |
+| Cabo de Força    | Transmissão de energia para dispositivos eletrônicos                                            | <img src="https://github.com/user-attachments/assets/6bdb4698-f50f-47df-9d20-79768471e0a5" width="250" height="250"> |
+| Cabos Banana     | Conexões seguras para equipamentos                                                              | <img src="https://github.com/user-attachments/assets/d91e1335-3588-43ac-a931-7da2e27fb276" width="250" height="250"> |
+| Cabo USB         | Comunicação e alimentação de dispositivos eletrônicos                                           | <img src="https://github.com/user-attachments/assets/0425962d-8de5-4643-bd68-18ba22c9553c" width="250" height="250"> |
+| Protótipo        | Simulação do funcionamento da estufa                                                            | <img src="https://github.com/user-attachments/assets/787b509b-2409-42ee-ac23-f2e15ad136dc" width="250" height="250"> |
+| Notebook         | Desenvolvimento e monitoramento do sistema                                                      | <img src="https://github.com/user-attachments/assets/22eb6f01-7e89-43a2-b073-e100ba58843b" width="250" height="250"> |
 
 
 ### Conexões
@@ -109,7 +109,7 @@ O sistema é composto por três partes principais:
 [Sensor de Temperatura] → [ESP32] → [FIWARE] → [Plataforma Web]
 ```
 
-![Diagrama em Camadas](diagrama_camadas.png)
+![diagrama_camadas](https://github.com/user-attachments/assets/1576a5d7-562f-47af-a26c-0902aa1188af)
 
 ## 🔧 Código do ESP32
 
