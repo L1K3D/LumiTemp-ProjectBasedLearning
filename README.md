@@ -12,8 +12,8 @@
    - [Diagrama Elétrico](#diagrama-elétrico)
    - [Projeto Físico](#projeto-físico)
 7. [Software](#software)
-   - [FIWARE](#fiware)
-   - [Diagrama em Camadas da Aplicação](#diagrama-em-camadas-da-aplicação)
+   - [Visão Geral da Arquitetura](#visão-geral-da-arquitetura)
+   - [Diagrama de Arquitetura](#diagrama-de-arquitetura)
 8. [Código do ESP32](#código-do-esp32)
    - [Dependências](#dependências)
    - [Tópicos MQTT Utilizados](#tópicos-mqtt-utilizados)
@@ -34,6 +34,10 @@
    - [Criação das Tabelas](#criação-das-tabelas)
    - [Criação das Procedures](#criação-das-procedures)
 11. [Manual](#manual)
+   - [Como Rodar o Sistema](#como-rodar-o-sistema)
+   - [Exemplo de Uso](#exemplo-de-uso)
+   - [Como Testar](#como-testar)
+   - [Cobertura de Testes](cobertura-de-testes)
 12. [🤝 Project Members](#project-members)
 
 
@@ -705,7 +709,7 @@ GO
 1. **Testar o envio de dados:** Após configurar o ESP32, verifique se os dados estão sendo enviados corretamente para a plataforma FIWARE.
 2. **Testar a interface web:** Acesse a plataforma web e confira se as informações estão sendo exibidas corretamente e se os gráficos de temperatura estão atualizados.
 
-###Cobertura de Testes
+### Cobertura de Testes
 
 -**Testes de conectividade:** Garantir que o ESP32 está se conectando corretamente à rede Wi-Fi.
 -**Testes de visualização de dados:** Verificar se a interface web está recebendo e exibindo os dados de temperatura em tempo real.
