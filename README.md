@@ -1,19 +1,20 @@
-# LUMITEMP - Sistema para monitoramento de secagem de motores elétricos usando IOT
+# 🚀 LUMITEMP - Sistema para monitoramento de secagem de motores elétricos usando IOT
 
 # Índice
 
 1. [Tecnologias Utilizadas](#tecnologias-utilizadas)
-2. [Objetivo](#objetivo)
-3. [Descrição da Proposta](#descrição-da-proposta)
-4. [Hardware](#hardware)
+2. [📜 Introdução](#introdução)
+   - [Objetivo](#objetivo)
+   - [Descrição da Proposta](#descrição-da-proposta)
+6. [Hardware](#hardware)
    - [Componentes](#componentes)
    - [Conexões](#conexões)
    - [Diagrama Elétrico](#diagrama-elétrico)
    - [Projeto Físico](#projeto-físico)
-5. [Software](#software)
+7. [Software](#software)
    - [FIWARE](#fiware)
    - [Diagrama em Camadas da Aplicação](#diagrama-em-camadas-da-aplicação)
-6. [Código do ESP32](#código-do-esp32)
+8. [Código do ESP32](#código-do-esp32)
    - [Dependências](#dependências)
    - [Tópicos MQTT Utilizados](#tópicos-mqtt-utilizados)
    - [Configuração de Rede Wi-Fi e Broker MQTT](#configuração-de-rede-wi-fi-e-broker-mqtt)
@@ -26,14 +27,14 @@
       - [Envio de Estado do LED](#envio-de-estado-do-led)
    - [Funções Auxiliares](#funções-auxiliares)
    - [Função de Leitura de Luminosidade](#função-de-leitura-de-luminosidade)
-7. [Structured Query Language](#structured-query-language)
+9. [Structured Query Language](#structured-query-language)
    - [Diagrama Conceitual](#diagrama-conceitual)
    - [Diagrama Lógico](#diagrama-lógico)
-8. [Banco de Dados](#banco-de-dados)
+10. [Banco de Dados](#banco-de-dados)
    - [Criação das Tabelas](#criação-das-tabelas)
    - [Criação das Procedures](#criação-das-procedures)
-9. [Manual](#manual)
-10. [🤝 Project Members](#project-members)
+11. [Manual](#manual)
+12. [🤝 Project Members](#project-members)
 
 
 ## Tecnologias Utilizadas
@@ -44,11 +45,12 @@
 ![C++](https://img.shields.io/badge/C%2B%2B-00599C?style=for-the-badge&logo=c%2B%2B&logoColor=white)
 ![Microsoft SQL Server](https://img.shields.io/badge/Microsoft%20SQL%20Server-CC2927?style=for-the-badge&logo=microsoft%20sql%20server&logoColor=white)
 
+## 📜 Introdução
 
-## Objetivo
+### Objetivo
 Desenvolver um sistema de monitoramento baseado em Internet das Coisas (IoT) para o controle de estufa de secagem de motores elétricos. Esse sistema deverá obter de forma precisa os dados de temperatura em tempo real, mediante ajustes dinâmicos dos parâmetros de controle, garantido a eficiência operacional. Esse sistema utilizará a plataforma de backend FIWARE para processamento e armazenamento de informações contextuais, visando a otimização do processo de fabricação. A solução permitirá a regulação precisa da temperatura, monitoramento remoto em tempo real e aprimoramento da eficiência operacional, garantindo a produção de motores elétricos de alta qualidade e uniformidade em todas as unidades da empresa. O sistema será complementado por uma plataforma web desenvolvida em ASP.NET MVC, que dará suporte a cadastros e fornecerá visualização de dados em consultas e dashboards.
 
-## Descrição da Proposta
+### Descrição da Proposta
 Em um contexto de produção global, uma empresa de motores elétricos enfrenta desafios significativos relacionados ao monitoramento em tempo real da temperatura nas estufas utilizadas para a secagem dos enrolamentos dos motores. Esse processo é crucial para assegurar a qualidade e durabilidade dos produtos, impactando diretamente a eficiência e a confiabilidade dos motores em aplicações industriais, comerciais e residenciais.
 
 A proposta deste projeto é criar um sistema de monitoramento IoT para um protótipo em escala reduzida de uma estufa de secagem. Este protótipo contará com uma resistência de aquecimento e sensores de temperatura, funcionando como um modelo para o desenvolvimento e teste de um sistema de controle e monitoramento térmico baseado em dispositivos IoT. Os testes serão realizados com base em condições reais de produção, proporcionando a oportunidade de desenvolver um sistema robusto e escalável antes de sua aplicação em larga escala em unidades industriais ao redor do mundo.
@@ -91,7 +93,20 @@ O protótipo consiste em uma resistência de 6 Ohms com potência de 50W, utiliz
 ### FIWARE
 FIWARE é uma plataforma aberta que oferece ferramentas para interoperabilidade entre dispositivos IoT. Com o **Orion Context Broker**, o sistema gerencia dados em tempo real, possibilitando a tomada de decisões automatizadas com base na temperatura. Componentes são implantados via Docker, e APIs RESTful e MQTT garantem a comunicação e integração de dados com o ESP32.
 
-### Diagrama em Camadas da Aplicação
+## 🏗️ Arquitetura
+
+### Visão Geral da Arquitetura
+O sistema é composto por três partes principais:
+
+1. **Hardware (ESP32 e sensores):** O ESP32 se conecta aos sensores de temperatura e envia os dados para a plataforma FIWARE via MQTT.
+2. **Plataforma FIWARE:** Recebe os dados e gerencia os dispositivos IoT, fornecendo uma interface para análise dos dados.
+3. **Plataforma Web:** Interface onde os usuários podem visualizar os dados e controlar os dispositivos remotamente.
+
+### Diagrama de Arquitetura
+```plaintext
+[Sensor de Temperatura] → [ESP32] → [FIWARE] → [Plataforma Web]
+```
+
 ![Diagrama em Camadas](diagrama_camadas.png)
 
 ## Código do ESP32
@@ -678,7 +693,27 @@ GO
 
 ## Manual
 
+### Como Rodar o Sistema
+1. **Carregar o código no ESP32:**
+   - Conecte o ESP32 à sua máquina e faça upload do código para o microcontrolador usando o Arduino IDE.
+   - O código fará a leitura de temperatura via sensor e enviará os dados para a plataforma FIWARE via MQTT.
 
+2. **Acessar a Plataforma Web:**
+   - Abra o navegador e acesse a plataforma web configurada para visualizar os dados de temperatura em tempo real.
+
+### Exemplo de Uso
+- **Monitoramento em Tempo Real:**
+  Após a configuração, a temperatura do motor estará visível na interface web. Você poderá visualizar gráficos e alertas de temperatura.
+
+### Como Testar
+
+1. **Testar o envio de dados:** Após configurar o ESP32, verifique se os dados estão sendo enviados corretamente para a plataforma FIWARE.
+2. **Testar a interface web:** Acesse a plataforma web e confira se as informações estão sendo exibidas corretamente e se os gráficos de temperatura estão atualizados.
+
+###Cobertura de Testes
+
+-**Testes de conectividade:** Garantir que o ESP32 está se conectando corretamente à rede Wi-Fi.
+-**Testes de visualização de dados:** Verificar se a interface web está recebendo e exibindo os dados de temperatura em tempo real.
 
 ## 🤝 Project Members
 
