@@ -2,20 +2,20 @@
 
 # 📚 Índice
 
-1. [Tecnologias Utilizadas](#tecnologias-utilizadas)
+1. [💻 Tecnologias Utilizadas](#tecnologias-utilizadas)
 2. [📜 Introdução](#introdução)
    - [Objetivo](#objetivo)
    - [Descrição da Proposta](#descrição-da-proposta)
-6. [Hardware](#hardware)
+6. [🖥️ Hardware](#hardware)
    - [Componentes](#componentes)
    - [Conexões](#conexões)
    - [Diagrama Elétrico](#diagrama-elétrico)
    - [Projeto Físico](#projeto-físico)
-7. [Software](#software)
+7. [🧑‍💻 Software](#software)
    - [FIWARE](#fiware)
-8. [Visão Geral da Arquitetura](#visao-geral-da-arquitetura)
+8. [🏗️ Visão Geral da Arquitetura](#visao-geral-da-arquitetura)
    - [Diagrama de Arquitetura](#diagrama-de-arquitetura)
-10. [Código do ESP32](#código-do-esp32)
+10. [🔧 Código do ESP32](#código-do-esp32)
    - [Dependências](#dependências)
    - [Tópicos MQTT Utilizados](#tópicos-mqtt-utilizados)
    - [Configuração de Rede Wi-Fi e Broker MQTT](#configuração-de-rede-wi-fi-e-broker-mqtt)
@@ -28,13 +28,13 @@
       - [Envio de Estado do LED](#envio-de-estado-do-led)
    - [Funções Auxiliares](#funções-auxiliares)
    - [Função de Leitura de Luminosidade](#função-de-leitura-de-luminosidade)
-11. [Structured Query Language](#structured-query-language)
+11. [📊 Structured Query Language](#structured-query-language)
    - [Diagrama Conceitual](#diagrama-conceitual)
    - [Diagrama Lógico](#diagrama-lógico)
-11. [Banco de Dados](#banco-de-dados)
+11. [🗃️ Banco de Dados](#banco-de-dados)
    - [Criação das Tabelas](#criação-das-tabelas)
    - [Criação das Procedures](#criação-das-procedures)
-11. [Manual](#manual)
+11. [📑 Manual](#manual)
    - [Como Rodar o Sistema](#como-rodar-o-sistema)
    - [Exemplo de Uso](#exemplo-de-uso)
    - [Como Testar](#como-testar)
@@ -715,8 +715,8 @@ GO
 
 ### Cobertura de Testes
 
--**Testes de conectividade:** Garantir que o ESP32 está se conectando corretamente à rede Wi-Fi.
--**Testes de visualização de dados:** Verificar se a interface web está recebendo e exibindo os dados de temperatura em tempo real.
+- **Testes de conectividade:** Garantir que o ESP32 está se conectando corretamente à rede Wi-Fi.
+- **Testes de visualização de dados:** Verificar se a interface web está recebendo e exibindo os dados de temperatura em tempo real.
 
 ## 🤝 Project Members
 
