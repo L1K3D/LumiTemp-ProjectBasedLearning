@@ -2,7 +2,7 @@
 
 # 📚 Índice
 
-1. 💻 [Tecnologias Utilizadas](#tecnologias-utilizadas)
+1. [💻 Tecnologias Utilizadas](#tecnologias-utilizadas)
 2. [📜 Introdução](#introdução)
    - [Objetivo](#objetivo)
    - [Descrição da Proposta](#descrição-da-proposta)
