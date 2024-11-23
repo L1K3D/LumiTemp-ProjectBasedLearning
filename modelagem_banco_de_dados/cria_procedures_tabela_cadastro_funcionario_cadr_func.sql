@@ -1,9 +1,9 @@
-/*RESUMO*/
-/*O código define e recria procedures no banco de dados `b_lumitemp_main_db` para gerenciar registros 
-da tabela de funcionários. As procedures incluem inserção de novos funcionários (`spIncluiFuncionario`), 
-atualização de informações existentes (`spAlteraFuncionario`), exclusão de registros (`spExcluiFuncionario`), 
-consulta de um funcionário específico por ID (`spConsultaFuncionario`), listagem de todos os funcionários (`spListagemFuncionario`) 
-e obtenção do próximo ID disponível em uma tabela específica (`spProximoId`).*/
+/* 
+Breve Descrição:
+Este script SQL é utilizado para definir e recriar procedures no banco de dados `b_lumitemp_main_db`. 
+As procedures são responsáveis por operações como inserção, atualização e consulta avançada de registros 
+na tabela de funcionários.
+*/
 
 ---------------------------------------------------------------------
 
@@ -15,84 +15,68 @@ GO
 ---------------------------------------------------------------------
 
 -- Exclui as procedures se já existirem para recriá-las
-DROP PROCEDURE spInsert_cadr_func
-DROP PROCEDURE spUpdate_cadr_func
+DROP PROCEDURE IF EXISTS spInsert_cadr_func
+DROP PROCEDURE IF EXISTS spUpdate_cadr_func
+DROP PROCEDURE IF EXISTS spConsultaAvancadaFuncionarios
 
 GO
 
 ---------------------------------------------------------------------
 
--- Criação da procedure spIncluiFuncionario para inserir um novo funcionário
+-- Criação da procedure spInsert_cadr_func para inserir um novo funcionário
 CREATE PROCEDURE spInsert_cadr_func
 (
-    -- Declaração dos parâmetros que serão utilizados
-    @ID INT,                               -- ID do funcionário
-    @LOGIN_FUNC VARCHAR(30),               -- Login do funcionário
-    @SENHA_FUNC VARCHAR(30),               -- Senha do funcionário
-    @DT_CADR DATE                          -- Data de cadastro
+    -- Declaração dos parâmetros que serão utilizados na inserção
+    @ID int,
+    @LOGIN_FUNC varchar(30),
+    @SENHA_FUNC varchar(30),
+    @DT_CADR DATE,
+    @IMAGEM VARBINARY(MAX)
 ) 
 AS
 BEGIN
-    -- Insere um novo registro na tabela 'cadr_func' com os dados informados
-    INSERT INTO cadr_func
-		(ID, LOGIN_FUNC, SENHA_FUNC, DT_CADR)
-    VALUES
-		(@ID, @LOGIN_FUNC, @SENHA_FUNC, @DT_CADR)
+    -- Insere um novo registro na tabela cadr_func
+    INSERT INTO cadr_func (ID, LOGIN_FUNC, SENHA_FUNC, DT_CADR, IMAGEM)
+    VALUES (@ID, @LOGIN_FUNC, @SENHA_FUNC, @DT_CADR, @IMAGEM)
 END
 GO
 
 ---------------------------------------------------------------------
 
--- Criação da procedure spAlteraFuncionario para alterar os dados de um funcionário existente
+-- Criação da procedure spUpdate_cadr_func para alterar os dados de um funcionário existente
 CREATE PROCEDURE spUpdate_cadr_func
 (
-    -- Declaração dos parâmetros que serão utilizados
-    @ID INT,                               -- ID do funcionário
-    @LOGIN_FUNC VARCHAR(30),               -- Login do funcionário
-    @SENHA_FUNC VARCHAR(30),               -- Senha do funcionário
-    @DT_CADR DATE                          -- Data de cadastro
+    -- Declaração dos parâmetros que serão utilizados na atualização
+    @ID int,
+    @LOGIN_FUNC varchar(30),
+    @SENHA_FUNC varchar(30),
+    @DT_CADR DATE,
+    @IMAGEM VARBINARY(MAX)
 ) 
 AS
 BEGIN
-    -- Atualiza o registro do funcionário na tabela 'cadr_func' com os novos dados
-    UPDATE cadr_func SET
-        ID = @ID,
-        LOGIN_FUNC = @LOGIN_FUNC,
-        SENHA_FUNC = @SENHA_FUNC,
-        DT_CADR = @DT_CADR
-    WHERE ID = @ID                         -- Condição para identificar qual funcionário será atualizado
+    -- Atualiza o registro existente na tabela cadr_func
+    UPDATE cadr_func
+    SET LOGIN_FUNC = @LOGIN_FUNC, SENHA_FUNC = @SENHA_FUNC, DT_CADR = @DT_CADR, IMAGEM = @IMAGEM
+    WHERE ID = @ID
 END
 GO
 
--- Atualisa SPs devido a inclusão de imagem
+---------------------------------------------------------------------
 
-ALTER procedure [dbo].[spUpdate_cadr_func]
+-- Criação da procedure spConsultaAvancadaFuncionarios para consultar funcionários
+CREATE PROCEDURE spConsultaAvancadaFuncionarios
 (
- @ID int,
- @LOGIN_FUNC varchar(30) ,
- @SENHA_FUNC varchar(30),
- @DT_CADR DATE,
- @IMAGEM VARBINARY(MAX)
+    -- Declaração dos parâmetros para a consulta avançada
+    @descricao varchar(max),
+    @dataInicial datetime,
+    @dataFinal datetime
 )
-as
-begin
- update cadr_func set LOGIN_FUNC = @LOGIN_FUNC, SENHA_FUNC = @SENHA_FUNC, DT_CADR = @DT_CADR, IMAGEM = @IMAGEM where ID = @ID
-end
+AS
+BEGIN
+    -- Seleciona registros na tabela cadr_func com base em critérios fornecidos
+    SELECT * FROM cadr_func
+    WHERE cadr_func.DT_CADR BETWEEN @dataInicial AND @dataFinal
+    AND cadr_func.LOGIN_FUNC LIKE '%' + @descricao + '%'
+END
 GO
-
-
-ALTER procedure [dbo].[spInsert_cadr_func]
-(
- @ID int,
- @LOGIN_FUNC varchar(30) ,
- @SENHA_FUNC varchar(30),
- @DT_CADR DATE,
- @IMAGEM VARBINARY(MAX)
-)
-as
-begin
- insert into cadr_func (ID, LOGIN_FUNC, SENHA_FUNC, DT_CADR, IMAGEM) values (@ID, @LOGIN_FUNC, @SENHA_FUNC, @DT_CADR, @IMAGEM)
-end
-
-
-select * from cadr_func

@@ -2977,3 +2977,7 @@ C:\Users\paula\Desktop\PBL\LumiTemp-ProjectBasedLearning\LumiTempMVC\obj\Debug\n
 C:\Users\paula\Desktop\PBL\LumiTemp-ProjectBasedLearning\LumiTempMVC\obj\Debug\netcoreapp3.1\LumiTempMVC.genruntimeconfig.cache
 C:\Users\paula\Desktop\PBL\LumiTemp-ProjectBasedLearning\LumiTempMVC\obj\Debug\netcoreapp3.1\Razor\Views\Funcionario\ConsultaAvancada.cshtml.g.cs
 C:\Users\paula\Desktop\PBL\LumiTemp-ProjectBasedLearning\LumiTempMVC\obj\Debug\netcoreapp3.1\Razor\Views\Funcionario\pvGridFuncionarios.cshtml.g.cs
+C:\Users\Heitor\Documents\Program\LumiTemp-ProjectBasedLearning\LumiTempMVC\obj\Debug\netcoreapp3.1\Razor\Views\Funcionario\ConsultaAvancada.cshtml.g.cs
+C:\Users\Heitor\Documents\Program\LumiTemp-ProjectBasedLearning\LumiTempMVC\obj\Debug\netcoreapp3.1\Razor\Views\Funcionario\pvGridFuncionarios.cshtml.g.cs
+C:\Users\Heitor\Documents\Program\LumiTemp-ProjectBasedLearning\LumiTempMVC\bin\Debug\netcoreapp3.1\Newtonsoft.Json.dll
+C:\Users\Heitor\Documents\Program\LumiTemp-ProjectBasedLearning\LumiTempMVC\obj\Debug\netcoreapp3.1\Razor\Views\FiwareData\Index.cshtml.g.cs

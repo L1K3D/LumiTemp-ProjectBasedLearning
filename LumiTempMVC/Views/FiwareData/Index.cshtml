@@ -1,0 +1,156 @@
+﻿@model List<SensorViewModel>
+@{
+    ViewData["Title"] = "LumiTemp Data Viewer";
+}
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewData["Title"]</title>
+    <link rel="stylesheet" href="~/css/site.css" />
+    <script src="https://cdn.jsdelivr.net/npm/plotly.js-dist@2.3.0"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <h1>@ViewData["Title"]</h1>
+
+        <!-- Alerta -->
+        <div id="alert" style="display: none; color: red; font-weight: bold;">Valor acima da média!</div>
+
+        <!-- Dropdown para selecionar tipo de sensor -->
+        <label for="sensor-type">Selecione o Tipo de Sensor:</label>
+        <select id="sensor-type" onchange="fetchSensorCodes()">
+            <option value="">Selecione</option>
+            @foreach (var sensor in Model.Select(s => s.ds_tipo_sens).Distinct())
+            {
+                <option value="@sensor">@sensor</option>
+            }
+        </select>
+
+        <!-- Dropdown para selecionar o código do sensor -->
+        <label for="sensor-code">Selecione o Código do Sensor:</label>
+        <select id="sensor-code" onchange="fetchData()">
+            <option value="">Selecione</option>
+        </select>
+
+        <!-- Input para definir o valor de lastN -->
+        <label for="lastN">Número de Requisições:</label>
+        <input type="number" id="lastN" value="15" min="1" onchange="fetchData()" />
+
+        <div id="lumitemp-graph"></div>
+    </div>
+
+    <script type="text/javascript">
+        var sensors = @Html.Raw(Json.Serialize(Model));
+
+        function fetchSensorCodes() {
+            var sensorType = document.getElementById('sensor-type').value;
+            var sensorCodeDropdown = document.getElementById('sensor-code');
+            sensorCodeDropdown.innerHTML = '<option value="">Selecione</option>';
+
+            var filteredSensors = sensors.filter(sensor => sensor.ds_tipo_sens === sensorType);
+            filteredSensors.forEach(sensor => {
+                var option = document.createElement('option');
+                option.value = sensor.id;
+                option.text = sensor.id;
+                sensorCodeDropdown.appendChild(option);
+            });
+        }
+
+        function fetchData() {
+            var sensorCode = document.getElementById('sensor-code').value;
+            var lastN = document.getElementById('lastN').value;
+            console.log("Fetching data...");
+
+            var selectedSensor = sensorCode ? sensors.find(sensor => sensor.id == sensorCode) : null;
+
+            $.get(`/api/Api/temperature?lastN=${lastN}`, function (data) {
+                console.log("Data received:", data);
+                drawGraph(data, selectedSensor);
+            }).fail(function (jqXHR, textStatus, errorThrown) {
+                console.error("Error fetching data:", textStatus, errorThrown);
+                drawGraph(null, selectedSensor);
+            });
+        }
+
+        function drawGraph(data, selectedSensor) {
+            var traces = [];
+            var times = [];
+            var values = [];
+            var alertTriggered = false;
+
+            if (data && data.length) {
+                times = data.map(item => new Date(item.recvTime));
+                values = data.map(item => item.attrValue);
+
+                var trace = {
+                    x: times,
+                    y: values,
+                    mode: 'lines+markers',
+                    name: 'Temperatura',
+                    line: { color: 'orange' }
+                };
+
+                traces.push(trace);
+
+                var averageValue = values.reduce((a, b) => a + b, 0) / values.length;
+                var traceAverage = {
+                    x: times.length > 0 ? [times[0], times[times.length - 1]] : [new Date(), new Date()],
+                    y: [averageValue, averageValue],
+                    mode: 'lines',
+                    name: 'Média',
+                    line: { color: 'blue', dash: 'dot' }
+                };
+                traces.push(traceAverage);
+
+                // Verifica se algum valor é maior que a média
+                if (values.some(value => value > averageValue)) {
+                    alertTriggered = true;
+                }
+            } else {
+                var offlineTrace = {
+                    x: [],
+                    y: [],
+                    type: 'scatter',
+                    mode: 'lines+markers',
+                    text: 'Servidor Offline',
+                    hoverinfo: 'text',
+                    line: { color: 'gray' }
+                };
+                traces.push(offlineTrace);
+            }
+
+            if (selectedSensor) {
+                var traceTarget = {
+                    x: times.length > 0 ? [times[0], times[times.length - 1]] : [new Date(), new Date()],
+                    y: [selectedSensor.vl_temp_alvo, selectedSensor.vl_temp_alvo],
+                    mode: 'lines',
+                    name: 'Valor Alvo',
+                    line: { color: 'red', dash: 'dash' }
+                };
+                traces.push(traceTarget);
+            }
+
+            var layout = {
+                title: 'Temperatura ao Longo do Tempo',
+                xaxis: { title: 'Timestamp' },
+                yaxis: { title: 'Temperatura' }
+            };
+
+            Plotly.newPlot('lumitemp-graph', traces, layout);
+
+            // Mostra ou esconde o alerta
+            document.getElementById('alert').style.display = alertTriggered ? 'block' : 'none';
+        }
+
+        $(document).ready(function () {
+            fetchSensorCodes();
+            fetchData();
+            setInterval(fetchData, 1500); // Atualiza a cada 1,5 segundos
+        });
+    </script>
+</body>
+</html>

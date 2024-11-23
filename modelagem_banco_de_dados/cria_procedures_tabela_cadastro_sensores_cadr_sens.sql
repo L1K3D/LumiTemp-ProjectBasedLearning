@@ -1,11 +1,9 @@
-/*RESUMO*/
-/*Este código define um conjunto de procedures para gerenciar registros 
-de sensores em uma tabela de banco de dados. Ele permite inserir novos sensores, 
-atualizar informações de sensores existentes, excluir registros com base no ID, 
-consultar um sensor específico, listar todos os sensores e obter o próximo ID 
-disponível na tabela. As procedures manipulam dados como tipo de sensor, data de venda, 
-temperatura alvo, código do motor e IDs de funcionário e empresa associados, 
-facilitando o gerenciamento eficiente dos sensores no sistema.*/
+/* 
+Breve Descrição:
+Este script SQL é utilizado para definir um conjunto de procedures no banco de dados `b_lumitemp_main_db`.
+As procedures são responsáveis por operações como inserção, atualização, exclusão e consulta de registros
+na tabela de sensores (`cadr_sens`).
+*/
 
 ---------------------------------------------------------------------
 
@@ -17,14 +15,14 @@ GO
 ---------------------------------------------------------------------
 
 -- Exclui as procedures se já existirem para recriá-las
-DROP PROCEDURE spInsert_cadr_sens
-DROP PROCEDURE spUpdate_cadr_sens
+DROP PROCEDURE IF EXISTS spInsert_cadr_sens
+DROP PROCEDURE IF EXISTS spUpdate_cadr_sens
 
 GO
 
 ---------------------------------------------------------------------
 
--- Criação da procedure spIncluiFuncionario para inserir um novo funcionário
+-- Criação da procedure spInsert_cadr_sens para inserir um novo sensor
 CREATE PROCEDURE spInsert_cadr_sens
 (
     -- Declaração dos parâmetros que serão utilizados
@@ -48,13 +46,13 @@ GO
 
 ---------------------------------------------------------------------
 
--- Criação da procedure spAlteraSensor para alterar os dados de um sensor existente
+-- Criação da procedure spUpdate_cadr_sens para alterar os dados de um sensor existente
 CREATE PROCEDURE spUpdate_cadr_sens
 (
     -- Declaração dos parâmetros que serão utilizados
     @ID INT,                               -- ID do sensor
     @DS_TIPO_SENS VARCHAR(30),             -- Descrição do tipo de sensor
-    @DT_VEND DATE,            -- Data de venda do sensor
+    @DT_VEND DATE,                         -- Data de venda do sensor
     @VL_TEMP_ALVO DECIMAL(5, 2),           -- Valor da temperatura alvo
     @CD_MOTOR INT,                         -- Código do motor associado ao sensor
     @ID_FUNC INT,                          -- ID do funcionário responsável (chave estrangeira)
