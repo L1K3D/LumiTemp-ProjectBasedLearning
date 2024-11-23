@@ -1,6 +1,6 @@
 # 🚀 LUMITEMP - Sistema para monitoramento de secagem de motores elétricos usando IOT
 
-# Índice
+# 📚 Índice
 
 1. [Tecnologias Utilizadas](#tecnologias-utilizadas)
 2. [📜 Introdução](#introdução)
@@ -12,9 +12,10 @@
    - [Diagrama Elétrico](#diagrama-elétrico)
    - [Projeto Físico](#projeto-físico)
 7. [Software](#software)
-   - [Visão Geral da Arquitetura](#visão-geral-da-arquitetura)
+   - [FIWARE](#fiware)
+8. [Visão Geral da Arquitetura](#visao-geral-da-arquitetura)
    - [Diagrama de Arquitetura](#diagrama-de-arquitetura)
-8. [Código do ESP32](#código-do-esp32)
+10. [Código do ESP32](#código-do-esp32)
    - [Dependências](#dependências)
    - [Tópicos MQTT Utilizados](#tópicos-mqtt-utilizados)
    - [Configuração de Rede Wi-Fi e Broker MQTT](#configuração-de-rede-wi-fi-e-broker-mqtt)
@@ -27,10 +28,10 @@
       - [Envio de Estado do LED](#envio-de-estado-do-led)
    - [Funções Auxiliares](#funções-auxiliares)
    - [Função de Leitura de Luminosidade](#função-de-leitura-de-luminosidade)
-9. [Structured Query Language](#structured-query-language)
+11. [Structured Query Language](#structured-query-language)
    - [Diagrama Conceitual](#diagrama-conceitual)
    - [Diagrama Lógico](#diagrama-lógico)
-10. [Banco de Dados](#banco-de-dados)
+11. [Banco de Dados](#banco-de-dados)
    - [Criação das Tabelas](#criação-das-tabelas)
    - [Criação das Procedures](#criação-das-procedures)
 11. [Manual](#manual)
@@ -41,7 +42,7 @@
 12. [🤝 Project Members](#project-members)
 
 
-## Tecnologias Utilizadas
+## 💻 Tecnologias Utilizadas
 ![JavaScript](https://img.shields.io/badge/JavaScript-323330?style=for-the-badge&logo=javascript&logoColor=F7DF1E)
 ![C#](https://img.shields.io/badge/C%23-239120?style=for-the-badge&logo=csharp&logoColor=white)
 ![HTML5](https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white)
@@ -61,7 +62,7 @@ A proposta deste projeto é criar um sistema de monitoramento IoT para um protó
 
 O protótipo consiste em uma resistência de 6 Ohms com potência de 50W, utilizada para o aquecimento, acoplada a um dissipador de calor e a um sensor de temperatura LM35.
 
-## Hardware
+## 🖥️ Hardware
 
 ### Componentes
 
@@ -92,9 +93,12 @@ O protótipo consiste em uma resistência de 6 Ohms com potência de 50W, utiliz
 ### Projeto Físico
 ![Projeto Físico](projeto_fisico.png)
 
-## Software
+## 🧑‍💻 Software
 
-### Visão Geral da Arquitetura
+### FIWARE
+O FIWARE é uma plataforma de código aberto que oferece ferramentas e componentes para desenvolver soluções inteligentes, especialmente para IoT e cidades inteligentes. Ele facilita a integração de dispositivos conectados, gerenciamento de dados em tempo real e a criação de serviços baseados em APIs abertas, como o Context Broker. Com suporte a análise de dados e segurança, o FIWARE é ideal para desenvolver sistemas escaláveis e eficientes, permitindo automação e otimização de processos em diversos setores.
+
+## 🏗️ Visão Geral da Arquitetura
 O sistema é composto por três partes principais:
 
 1. **Hardware (ESP32 e sensores):** O ESP32 se conecta aos sensores de temperatura e envia os dados para a plataforma FIWARE via MQTT.
@@ -108,7 +112,7 @@ O sistema é composto por três partes principais:
 
 ![Diagrama em Camadas](diagrama_camadas.png)
 
-## Código do ESP32
+## 🔧 Código do ESP32
 
 ### Dependências
 - **WiFi.h**: Biblioteca para conexão Wi-Fi
@@ -303,7 +307,7 @@ void handleLuminosity() {
 }
 ```
 
-## Structured Query Language
+## 📊 Structured Query Language
 
 ### Diagrama Conceitual
 ![Diagrama Conceitual](diagrama_eletrico.png)
@@ -311,7 +315,7 @@ void handleLuminosity() {
 ### Diagrama Lógico
 ![Diagrama Lógico](projeto_fisico.png)
 
-## Banco de Dados
+## 🗃️ Banco de Dados
 
 ### Criação das Tabelas
 Cria o banco de dados principal para gerenciamento de luminosidade e temperatura
@@ -690,7 +694,7 @@ END
 GO
 ```
 
-## Manual
+## 📑 Manual
 
 ### Como Rodar o Sistema
 1. **Carregar o código no ESP32:**
