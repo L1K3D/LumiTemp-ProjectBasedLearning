@@ -313,9 +313,9 @@ void handleLuminosity() {
 ![Diagrama Lógico](projeto_fisico.png)
 
 ## 🗃️ Banco de Dados
+Este banco de dados foi desenvolvido para gerenciar sensores de luminosidade e temperatura, além de armazenar informações sobre funcionários responsáveis e empresas parceiras. O objetivo é monitorar e controlar os dados de sensores em ambientes industriais ou comerciais.
 
-### Criação das Tabelas
-Cria o banco de dados principal para gerenciamento de luminosidade e temperatura
+O banco de dados principal (b_lumitemp_main_db) é utilizado para armazenar informações sobre funcionários, sensores, e empresas parceiras envolvidas no sistema de gerenciamento de sensores.
 
 ```sql
 CREATE DATABASE b_lumitemp_main_db
@@ -330,14 +330,15 @@ USE b_lumitemp_main_db
 
 GO
 ```
+### Criação das Tabelas
 
-Remove a tabela de cadastro de funcionários caso ela já exista
+**Remove a tabela de cadastro de funcionários caso ela já exista**
 
 ```sql
 DROP TABLE IF EXISTS cadr_func;
 ```
 
-Cria a tabela de cadastro de funcionários
+**Cria a tabela de cadastro de funcionários (cadr_func):** Tabela responsável por armazenar os dados dos funcionários que têm acesso ao sistema.
 
 ```sql
 CREATE TABLE cadr_func (
@@ -350,14 +351,20 @@ CREATE TABLE cadr_func (
 
 GO
 ```
+| Coluna     | Tipo        | Descrição                                               |
+|------------|-------------|---------------------------------------------------------|
+| `CD_FUNC`  | `INT`       | Código do funcionário, chave primária com incremento automático. |
+| `LOGIN_FUNC` | `VARCHAR(30)` | Login do funcionário (máximo 30 caracteres).         |
+| `SENHA_FUNC` | `VARCHAR(30)` | Senha do funcionário (máximo 30 caracteres).         |
+| `DT_CADR`  | `DATE`      | Data de cadastro do funcionário.                         |
 
-Remove a tabela de cadastro de empresas parceiras caso ela já exista
+**Remove a tabela de cadastro de empresas parceiras caso ela já exista**
 
 ```sql
 DROP TABLE IF EXISTS cadr_empr_parc;
 ```
 
-Cria a tabela de cadastro de empresas parceiras
+**Cria a tabela de cadastro de empresas parceiras (cadr_empr_parc)**: Tabela que armazena os dados das empresas parceiras envolvidas no fornecimento e suporte dos sensores.
 
 ```sql
 CREATE TABLE cadr_empr_parc (
@@ -379,6 +386,14 @@ CREATE TABLE cadr_empr_parc (
 
 GO
 ```
+| Coluna          | Tipo          | Descrição                                                    |
+|-----------------|---------------|--------------------------------------------------------------|
+| `CD_EMPR`       | `INT`         | Código da empresa parceira, chave primária com incremento automático. |
+| `NM_EMPR`       | `VARCHAR(30)` | Nome da empresa parceira (máximo 30 caracteres).              |
+| `CEP_EMPR`      | `VARCHAR(8)`  | CEP da empresa parceira (8 caracteres).                      |
+| `CNPJ_EMPR`     | `VARCHAR(15)` | CNPJ da empresa parceira (15 caracteres).                    |
+| `TELF_CONT_EMPR`| `VARCHAR(10)` | Telefone de contato da empresa parceira (10 caracteres).      |
+| `CD_FUNC`       | `INT`         | Chave estrangeira referenciando o funcionário responsável.    |
 
 Remove a tabela de cadastro de sensores caso ela já exista
 
@@ -386,7 +401,7 @@ Remove a tabela de cadastro de sensores caso ela já exista
 DROP TABLE IF EXISTS cadr_sens;
 ```
 
-Cria a tabela de cadastro de sensores
+**Cria a tabela de cadastro de sensores (cadr_sens)**: Tabela que armazena informações sobre os sensores de luminosidade e temperatura cadastrados no sistema.
 
 ```sql
 CREATE TABLE cadr_sens (
@@ -403,6 +418,16 @@ CREATE TABLE cadr_sens (
         REFERENCES cadr_empr_parc(ID)
 );
 ```
+| Coluna          | Tipo          | Descrição                                                     |
+|-----------------|---------------|---------------------------------------------------------------|
+| `CD_SENS`       | `INT`         | Código do sensor, chave primária com incremento automático.    |
+| `DS_TIPO_SENS`  | `VARCHAR(30)` | Descrição do tipo de sensor (máximo 30 caracteres).            |
+| `DT_VEND`       | `DATETIME`    | Data de venda do sensor. Campo obrigatório.                    |
+| `VL_TEMP_ALVO`  | `DECIMAL(5,2)`| Valor de temperatura alvo com 5 dígitos e 2 casas decimais.    |
+| `VL_UMID_ALVO`  | `DECIMAL(5,2)`| Valor de umidade alvo com 5 dígitos e 2 casas decimais.        |
+| `CD_MOTOR`      | `INT`         | Código do motor relacionado ao sensor.                         |
+| `CD_FUNC`       | `INT`         | Chave estrangeira referenciando o funcionário responsável.     |
+| `CD_EMPR`       | `INT`         | Chave estrangeira referenciando a empresa parceira relacionada.|
 
 ### Criação das Procedures
 
