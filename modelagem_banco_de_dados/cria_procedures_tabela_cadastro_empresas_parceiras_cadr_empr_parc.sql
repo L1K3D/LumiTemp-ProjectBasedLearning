@@ -30,6 +30,12 @@ CREATE PROCEDURE spInsert_cadr_empr_parc
     @ID INT,                               -- ID da empresa
     @NM_EMPR VARCHAR(30),                  -- Nome da empresa
     @CEP_EMPR VARCHAR(30),                 -- CEP da empresa
+	@LOG_EMPR VARCHAR(30),                 -- LOGRADOURO da empresa 
+	@NUM_EMPR VARCHAR(4),				   -- NÚMERO da empresa
+	@COMPL_EMPR VARCHAR (30),              -- COMPLEMENTO da empresa
+	@BAIRRO_EMPR VARCHAR (20),             -- BAIRRO da empresa
+	@CIDADE_EMPR VARCHAR (20),             -- CIDADE da empresa 
+	@ESTADO_EMPR VARCHAR (2),			   -- ESTADO da empresa
     @CNPJ_EMPR VARCHAR(15),                -- CNPJ da empresa
     @TELF_CONT_EMPR VARCHAR(10),           -- Telefone de contato da empresa
     @ID_FUNC INT                           -- ID do funcionário responsável pela empresa (chave estrangeira)
@@ -38,9 +44,9 @@ AS
 BEGIN
     -- Insere um novo registro na tabela 'cadr_empr_parc' com os dados informados
     INSERT INTO cadr_empr_parc
-    (ID, NM_EMPR, CEP_EMPR, CNPJ_EMPR, TELF_CONT_EMPR, ID_FUNC)
+    (ID, NM_EMPR, CEP_EMPR, LOG_EMPR, NUM_EMPR, COMPL_EMPR, BAIRRO_EMPR, CIDADE_EMPR, ESTADO_EMPR, CNPJ_EMPR, TELF_CONT_EMPR, ID_FUNC)
     VALUES
-    (@ID, @NM_EMPR, @CEP_EMPR, @CNPJ_EMPR, @TELF_CONT_EMPR, @ID_FUNC)
+    (@ID, @NM_EMPR, @CEP_EMPR, @LOG_EMPR, @NUM_EMPR, @COMPL_EMPR, @BAIRRO_EMPR, @CIDADE_EMPR, @ESTADO_EMPR, @CNPJ_EMPR, @TELF_CONT_EMPR, @ID_FUNC)
 END
 
 GO
@@ -54,6 +60,12 @@ CREATE PROCEDURE spUpdate_cadr_empr_parc
     @ID INT,                               -- ID da empresa
     @NM_EMPR VARCHAR(30),                  -- Nome da empresa
     @CEP_EMPR VARCHAR(30),                 -- CEP da empresa
+	@LOG_EMPR VARCHAR(30),                 -- LOGRADOURO da empresa 
+	@NUM_EMPR VARCHAR(4),				   -- NÚMERO da empresa
+	@COMPL_EMPR VARCHAR (30),              -- COMPLEMENTO da empresa
+	@BAIRRO_EMPR VARCHAR (20),             -- BAIRRO da empresa
+	@CIDADE_EMPR VARCHAR (20),             -- CIDADE da empresa 
+	@ESTADO_EMPR VARCHAR (2),			   -- ESTADO da empresa
     @CNPJ_EMPR VARCHAR(15),                -- CNPJ da empresa
     @TELF_CONT_EMPR VARCHAR(11),           -- Telefone de contato da empresa
     @ID_FUNC INT                           -- ID do funcionário responsável pela empresa
@@ -64,6 +76,12 @@ BEGIN
     UPDATE cadr_empr_parc SET
 		NM_EMPR = @NM_EMPR,                    -- Nome da empresa
 		CEP_EMPR = @CEP_EMPR,                  -- CEP da empresa
+		LOG_EMPR = @LOG_EMPR,                  -- LOGRADOURO da empresa 
+		NUM_EMPR = @NUM_EMPR,				   -- NÚMERO da empresa
+		COMPL_EMPR = @COMPL_EMPR,              -- COMPLEMENTO da empresa
+		BAIRRO_EMPR = @BAIRRO_EMPR,            -- BAIRRO da empresa
+		CIDADE_EMPR = @CIDADE_EMPR,            -- CIDADE da empresa 
+		ESTADO_EMPR = @ESTADO_EMPR,			   -- ESTADO da empresa
 		CNPJ_EMPR = @CNPJ_EMPR,                -- CNPJ da empresa
 		TELF_CONT_EMPR = @TELF_CONT_EMPR,      -- Telefone de contato da empresa
 		ID_FUNC = @ID_FUNC                     -- ID do funcionário responsável pela empresa

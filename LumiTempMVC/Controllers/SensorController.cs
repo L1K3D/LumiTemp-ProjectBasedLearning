@@ -56,30 +56,8 @@ namespace LumiTempMVC.Controllers
             }
         }
 
-        public void ValidaDados(SensorViewModel sensor, string operacao)
+        protected override void ValidaDados(SensorViewModel sensor, string operacao)
         {
-            SensorDAO dao = new SensorDAO();
-
-            // Validação do ID
-            if (sensor.id <= 0)
-            {
-                ModelState.AddModelError("id", "Id inválido!");
-            }
-            else
-            {
-                try
-                {
-                    if (operacao == "I" && dao.Consulta(sensor.id) != null)
-                        ModelState.AddModelError("id", "Código já está em uso.");
-                    if (operacao == "A" && dao.Consulta(sensor.id) == null)
-                        ModelState.AddModelError("id", "Empresa não existe.");
-                }
-                catch (Exception ex)
-                {
-                    ModelState.AddModelError("id", $"Erro ao validar ID: {ex.Message}");
-                }
-            }
-
             // Validação do Nome
             if (string.IsNullOrEmpty(sensor.ds_tipo_sens))
                 ModelState.AddModelError("ds_tipo_sens", "Preencha a descrição do sensor");
@@ -93,6 +71,20 @@ namespace LumiTempMVC.Controllers
             if (sensor.cd_motor <= 0)
                 ModelState.AddModelError("cd_motor", "Preencha o código de um motor");
 
+        }
+        protected override void PreencheDadosParaView(string Operacao, SensorViewModel model)
+        {
+            base.PreencheDadosParaView(Operacao, model);
+            model.dt_vend = DateTime.Now;
+            PreparaListaFuncionariosParaCombo();
+            PreparaListaEmpresasParceirasParaCombo();
+
+            List<SelectListItem> listaTipos = new List<SelectListItem>();
+            listaTipos.Add(new SelectListItem("Selecione um tipo...", "0"));
+            listaTipos.Add(new SelectListItem("LUMINOSIDADE", "LUMINOSIDADE"));
+            listaTipos.Add(new SelectListItem("UMIDADE", "UMIDADE"));
+            listaTipos.Add(new SelectListItem("TEMPERATURA", "TEMPERATURA"));
+            ViewBag.Tipos = listaTipos;
         }
 
     }

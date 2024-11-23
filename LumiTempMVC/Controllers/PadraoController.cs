@@ -197,7 +197,7 @@ namespace LumiTempMVC.Controllers
             ViewBag.Funcionarios = listaFuncionarios;
         }
 
-        private void PreparaListaEmpresasParceirasParaCombo()
+        protected virtual void PreparaListaEmpresasParceirasParaCombo()
         {
             EmpresaParceiraDAO empresaDao = new EmpresaParceiraDAO();
             var empresas = empresaDao.Listagem();

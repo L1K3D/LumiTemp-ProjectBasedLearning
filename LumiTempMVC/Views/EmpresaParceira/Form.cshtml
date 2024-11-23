@@ -39,8 +39,51 @@
                     <!-- CEP -->
                     <div class="form-group">
                         <label for="cep_empr" class="control-label">CEP da Empresa</label>
+                        <input type="button" name="btnBuscaCEP" value="Buscar" onclick="buscaCEP()" />
                         <input asp-for="cep_empr" class="form-control" placeholder="Digite o CEP" />
                         <span asp-validation-for="cep_empr" class="text-danger"></span>
+                    </div>
+
+                    <!-- Logradouro -->
+                    <div class="form-group">
+                        <label for="log_empr" class="control-label">Logradouro da Empresa</label>
+                        <input asp-for="log_empr" class="form-control" placeholder="Digite o Logradouro" />
+                        <span asp-validation-for="log_empr" class="text-danger"></span>
+                    </div>
+
+                    <!-- Numero -->
+                    <div class="form-group">
+                        <label for="num_empr" class="control-label">Número da Empresa</label>
+                        <input asp-for="num_empr" class="form-control" placeholder="Digite o Número" />
+                        <span asp-validation-for="num_empr" class="text-danger"></span>
+                    </div>
+
+                    <!-- Complemento -->
+                    <div class="form-group">
+                        <label for="compl_empr" class="control-label">Complemento da Empresa</label>
+                        <input asp-for="compl_empr" class="form-control" placeholder="Digite o Complemento" />
+                        <span asp-validation-for="compl_empr" class="text-danger"></span>
+                    </div>
+
+                    <!-- Bairro -->
+                    <div class="form-group">
+                        <label for="bairro_empr" class="control-label">Bairro da Empresa</label>
+                        <input asp-for="bairro_empr" class="form-control" placeholder="Digite o Bairro" />
+                        <span asp-validation-for="bairro_empr" class="text-danger"></span>
+                    </div>
+
+                    <!-- Cidade -->
+                    <div class="form-group">
+                        <label for="cidade_empr" class="control-label">Cidade da Empresa</label>
+                        <input asp-for="cidade_empr" class="form-control" placeholder="Digite a Cidade" />
+                        <span asp-validation-for="cidade_empr" class="text-danger"></span>
+                    </div>
+
+                    <!-- Estado -->
+                    <div class="form-group">
+                        <label for="estado_empr" class="control-label">Estado da Empresa</label>
+                        <input asp-for="estado_empr" class="form-control" placeholder="Digite o Estado" />
+                        <span asp-validation-for="estado_empr" class="text-danger"></span>
                     </div>
 
                     <!-- CNPJ -->

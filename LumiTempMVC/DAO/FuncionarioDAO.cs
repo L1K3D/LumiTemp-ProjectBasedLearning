@@ -2,6 +2,8 @@
 using System.Data.SqlClient; // Biblioteca para manipulação de SQL Server.
 using System.Data; // Biblioteca para trabalhar com tabelas e dados estruturados.
 using System; // Biblioteca para funcionalidades básicas.
+using System.Collections.Generic;
+using System.Reflection.Emit;
 
 namespace LumiTempMVC.DAO
 {
@@ -53,5 +55,19 @@ namespace LumiTempMVC.DAO
         {
             Tabela = "cadr_func"; // Define o nome da tabela como "funcionarios".
         }
+        public List<FuncionarioViewModel> ConsultaAvancadaFuncionarios(string descricao, DateTime dataInicial, DateTime dataFinal)
+        {
+            SqlParameter[] p = {
+                new SqlParameter("descricao", descricao),
+                new SqlParameter("dataInicial", dataInicial),
+                new SqlParameter("dataFinal", dataFinal),
+ };
+            var tabela = HelperDAO.ExecutaProcSelect("spConsultaAvancadaFuncionarios", p);
+            var lista = new List<FuncionarioViewModel>();
+            foreach (DataRow dr in tabela.Rows)
+                lista.Add(MontaModel(dr));
+            return lista;
+        }
+
     }
 }

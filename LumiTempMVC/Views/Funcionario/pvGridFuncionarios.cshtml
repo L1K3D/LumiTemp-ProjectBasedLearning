@@ -1,0 +1,16 @@
+﻿@model List<FuncionarioViewModel>
+<table class="table table-striped">
+    <tr>
+        <th>Código</th>
+        <th>Login</th>
+        <th>Data de Cadastro</th>
+    </tr>
+    @foreach (var funcionario in Model)
+    {
+        <tr>
+            <td>@funcionario.id</td>
+            <td>@funcionario.login_func</td>
+            <td>@funcionario.dt_cadr.ToShortDateString()</td>
+        </tr>
+    }
+</table>

@@ -62,6 +62,26 @@ namespace LumiTempMVC.Controllers
             // Validação do Nome
             if (string.IsNullOrEmpty(empresa.nm_empr))
                 ModelState.AddModelError("nm_empr", "Preencha o nome.");
+            
+            // Validação do Logradouro
+            if (string.IsNullOrEmpty(empresa.log_empr))
+                ModelState.AddModelError("log_empr", "Preencha o logradouro.");
+
+            // Validação do Número
+            if (string.IsNullOrEmpty(empresa.num_empr))
+                ModelState.AddModelError("num_empr", "Preencha o número.");
+            
+            // Validação do Bairro
+            if (string.IsNullOrEmpty(empresa.bairro_empr))
+                ModelState.AddModelError("bairro_empr", "Preencha o bairro.");
+
+            // Validação da Cidade
+            if (string.IsNullOrEmpty(empresa.cidade_empr))
+                ModelState.AddModelError("cidade_empr", "Preencha a cidade.");
+
+            // Validação do Estado
+            if (string.IsNullOrEmpty(empresa.estado_empr))
+                ModelState.AddModelError("estado_empr", "Preencha o estado.");
 
             // Validação do CNPJ: 14 dígitos
             if (string.IsNullOrEmpty(empresa.cnpj_empr))
@@ -135,5 +155,9 @@ namespace LumiTempMVC.Controllers
             return cnpj.EndsWith(digito);
         }
 
+        protected override void PreencheDadosParaView(string Operacao, EmpresaParceiraViewModel model)
+        {
+            base.PreencheDadosParaView(Operacao, model);
+        }
     }
 }

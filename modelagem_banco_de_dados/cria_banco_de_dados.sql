@@ -30,9 +30,15 @@ DROP TABLE cadr_empr_parc;
 
 -- Cria a tabela de cadastro de empresas parceiras
 CREATE TABLE cadr_empr_parc (
-    ID INT PRIMARY KEY,  -- Código da empresa parceira, chave primária com incremento automático
+    ID INT PRIMARY KEY,                      -- Código da empresa parceira, chave primária com incremento automático
     NM_EMPR VARCHAR(30),                     -- Nome da empresa parceira (máximo 30 caracteres)
     CEP_EMPR VARCHAR(8),                     -- CEP da empresa parceira (8 caracteres)
+	LOG_EMPR VARCHAR(30),					 -- LOGRADOURO da empresa parceira (máximo 30 caracteres)
+	NUM_EMPR VARCHAR(4),                     -- NÚMERO da empresa parceira (máximo 4 caracteres)
+	COMPL_EMPR VARCHAR (30),                 -- COMPLEMENTO da empresa parceira (máximo 30 caracteres)
+	BAIRRO_EMPR VARCHAR (20),               -- BAIRRO da empresa parceira (máximo 20 caracteres)
+	CIDADE_EMPR VARCHAR (20),                -- CIDADE da empresa parceira (máximo 20 caracteres)
+	ESTADO_EMPR VARCHAR (2),				 -- ESTADO da empresa parceira (máximo 2 caracteres) 
     CNPJ_EMPR VARCHAR(15),                   -- CNPJ da empresa parceira (15 caracteres)
     TELF_CONT_EMPR VARCHAR(11),              -- Telefone de contato da empresa parceira (11 caracteres)
     ID_FUNC INT,                             -- Código do funcionário responsável (chave estrangeira)
@@ -41,6 +47,8 @@ CREATE TABLE cadr_empr_parc (
 );
 
 GO
+
+select * from cadr_empr_parc
 
 ---------------------------------------------------------------------
 
@@ -67,31 +75,3 @@ CREATE TABLE cadr_sens (
 ALTER TABLE cadr_func ADD IMAGEM varbinary(max);
 GO
  
-ALTER procedure [dbo].[spUpdate_cadr_func]
-(
- @ID int,
- @LOGIN_FUNC varchar(30) ,
- @SENHA_FUNC varchar(30),
- @DT_CADR DATE,
- @IMAGEM VARBINARY(MAX)
-)
-as
-begin
- update cadr_func set LOGIN_FUNC = @LOGIN_FUNC, SENHA_FUNC = @SENHA_FUNC, DT_CADR = @DT_CADR, IMAGEM = @IMAGEM where ID = @ID
-end
-GO
-ALTER procedure [dbo].[spInsert_cadr_func]
-(
- @ID int,
- @LOGIN_FUNC varchar(30) ,
- @SENHA_FUNC varchar(30),
- @DT_CADR DATE,
- @IMAGEM VARBINARY(MAX)
-)
-as
-begin
- insert into cadr_func (ID, LOGIN_FUNC, SENHA_FUNC, DT_CADR, IMAGEM) values (@ID, @LOGIN_FUNC, @SENHA_FUNC, @DT_CADR, @IMAGEM)
-end
-
-
-select * from cadr_func

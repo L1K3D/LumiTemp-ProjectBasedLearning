@@ -53,7 +53,7 @@ else
 
                     <div class="form-group">
                         <label for="ds_tipo_sens" class="control-label">Descrição do Sensor</label>
-                        <input type="text" id="ds_tipo_sens" name="ds_tipo_sens" value="@Model.ds_tipo_sens" class="form-control" />
+                        <select asp-for="ds_tipo_sens" asp-items="ViewBag.Tipos" class="form-control"> </select>
                         <span asp-validation-for="ds_tipo_sens" class="text-danger"></span>
                     </div>
 

@@ -7,6 +7,8 @@ using System.Text;
 using Microsoft.AspNetCore.Http;
 using System.IO;
 using System.Reflection;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using System.Data.SqlTypes;
 
 namespace LumiTempMVC.Controllers
 {
@@ -107,6 +109,40 @@ namespace LumiTempMVC.Controllers
                 }
             }
         }
-
+        protected override void PreencheDadosParaView(string Operacao, FuncionarioViewModel model)
+        {
+            base.PreencheDadosParaView(Operacao, model);
+            model.dt_cadr = DateTime.Now;
+        }
+        public IActionResult ExibeConsultaAvancada()
+        {
+            try
+            {
+                return View("ConsultaAvancada");
+            }
+            catch (Exception erro)
+            {
+                return View("Error", new ErrorViewModel(erro.Message));
+            }
+        }
+        public IActionResult ObtemDadosConsultaAvancada(string descricao, DateTime dataInicial, DateTime dataFinal)
+        {
+            try
+            {
+                FuncionarioDAO dao = new FuncionarioDAO();
+                if (string.IsNullOrEmpty(descricao))
+                    descricao = "";
+                if (dataInicial.Date == Convert.ToDateTime("01/01/0001"))
+                    dataInicial = SqlDateTime.MinValue.Value;
+                if (dataFinal.Date == Convert.ToDateTime("01/01/0001"))
+                    dataFinal = SqlDateTime.MaxValue.Value;
+                var lista = dao.ConsultaAvancadaFuncionarios(descricao, dataInicial, dataFinal);
+                return PartialView("pvGridFuncionarios", lista);
+            }
+            catch (Exception erro)
+            {
+                return Json(new { erro = true, msg = erro.Message });
+            }
+        }
     }
 }

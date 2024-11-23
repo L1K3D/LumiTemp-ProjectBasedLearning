@@ -71,3 +71,20 @@ BEGIN
  -- Executar a consulta SQL para obter o maior ID e incrementar em 1
  EXEC('SELECT ISNULL(MAX(id) + 1, 1) AS MAIOR FROM ' + @tabela)
 END
+
+-- Procedimento para selecionar os dados com base no filtros de tela 
+-- CONSULTA AVANÇADA DE FUNCIONÁRIOS
+
+create procedure [dbo].[spConsultaAvancadaFuncionarios] 
+(
+	@descricao varchar(max),
+	@dataInicial datetime,
+	@dataFinal datetime)
+as
+begin
+	select * from cadr_func
+	where cadr_func.DT_CADR between @dataInicial and @dataFinal and 
+	cadr_func.LOGIN_FUNC like '%' + @descricao + '%'  
+
+end
+
