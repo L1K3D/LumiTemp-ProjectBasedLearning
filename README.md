@@ -90,11 +90,6 @@ O protótipo consiste em uma resistência de 6 Ohms com potência de 50W, utiliz
 
 ## Software
 
-### FIWARE
-FIWARE é uma plataforma aberta que oferece ferramentas para interoperabilidade entre dispositivos IoT. Com o **Orion Context Broker**, o sistema gerencia dados em tempo real, possibilitando a tomada de decisões automatizadas com base na temperatura. Componentes são implantados via Docker, e APIs RESTful e MQTT garantem a comunicação e integração de dados com o ESP32.
-
-## 🏗️ Arquitetura
-
 ### Visão Geral da Arquitetura
 O sistema é composto por três partes principais:
 
