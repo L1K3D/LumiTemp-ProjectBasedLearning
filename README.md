@@ -1,6 +1,42 @@
 # LUMITEMP - Sistema para monitoramento de secagem de motores elétricos usando IOT
 
-## Tecnologias
+# Índice
+
+1. [Tecnologias Utilizadas](#tecnologias-utilizadas)
+2. [Objetivo](#objetivo)
+3. [Descrição da Proposta](#descrição-da-proposta)
+4. [Hardware](#hardware)
+   - [Componentes](#componentes)
+   - [Conexões](#conexões)
+   - [Diagrama Elétrico](#diagrama-elétrico)
+   - [Projeto Físico](#projeto-físico)
+5. [Software](#software)
+   - [FIWARE](#fiware)
+   - [Diagrama em Camadas da Aplicação](#diagrama-em-camadas-da-aplicação)
+6. [Código do ESP32](#código-do-esp32)
+   - [Dependências](#dependências)
+   - [Tópicos MQTT Utilizados](#tópicos-mqtt-utilizados)
+   - [Configuração de Rede Wi-Fi e Broker MQTT](#configuração-de-rede-wi-fi-e-broker-mqtt)
+   - [Função de Configuração do Sistema](#função-de-configuração-do-sistema)
+   - [Loop Principal](#loop-principal)
+   - [Reconexão com o Wi-Fi](#reconexão-com-o-wi-fi)
+   - [Função Callback MQTT](#função-callback-mqtt)
+   - [Funções de Controle e Monitoramento](#funções-de-controle-e-monitoramento)
+      - [Verificação de Conexões](#verificação-de-conexões)
+      - [Envio de Estado do LED](#envio-de-estado-do-led)
+   - [Funções Auxiliares](#funções-auxiliares)
+   - [Função de Leitura de Luminosidade](#função-de-leitura-de-luminosidade)
+7. [Structured Query Language](#structured-query-language)
+   - [Diagrama Conceitual](#diagrama-conceitual)
+   - [Diagrama Lógico](#diagrama-lógico)
+8. [Banco de Dados](#banco-de-dados)
+   - [Criação das Tabelas](#criação-das-tabelas)
+   - [Criação das Procedures](#criação-das-procedures)
+9. [Manual](#manual)
+10. [🤝 Project Members](#project-members)
+
+
+## Tecnologias Utilizadas
 ![JavaScript](https://img.shields.io/badge/JavaScript-323330?style=for-the-badge&logo=javascript&logoColor=F7DF1E)
 ![C#](https://img.shields.io/badge/C%23-239120?style=for-the-badge&logo=csharp&logoColor=white)
 ![HTML5](https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white)
@@ -263,7 +299,7 @@ void handleLuminosity() {
 
 ## Banco de Dados
 
-### Criação do Banco de Dados
+### Criação das Tabelas
 Cria o banco de dados principal para gerenciamento de luminosidade e temperatura
 
 ```sql
@@ -352,6 +388,8 @@ CREATE TABLE cadr_sens (
         REFERENCES cadr_empr_parc(ID)
 );
 ```
+
+### Criação das Procedures
 
 Exclui as procedures se já existirem para recriá-las
 
@@ -637,3 +675,16 @@ BEGIN
 END
 GO
 ```
+
+## Manual
+
+
+
+## 🤝 Project Members
+
+- Enzo Brito Alves de Oliveira - RA: 082220040
+- Erikson Vieira Queiroz - RA: 082220021
+- Guilherme Alves Barbosa - RA: 082220014
+- Heitor Santos Ferreira - RA: 081230042
+- Tainara do Nascimento Casimiro - RA: 082220011
+- William Santim - RA: 082220033
