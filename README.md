@@ -17,7 +17,6 @@
    - [Diagrama de Arquitetura](#diagrama-de-arquitetura)
 10. [🔧 Código do ESP32](#código-do-esp32)
    - [Dependências](#dependências)
-   - [Tópicos MQTT Utilizados](#tópicos-mqtt-utilizados)
    - [Configuração de Rede Wi-Fi e Broker MQTT](#configuração-de-rede-wi-fi-e-broker-mqtt)
    - [Função de Configuração do Sistema](#função-de-configuração-do-sistema)
    - [Loop Principal](#loop-principal)
@@ -139,8 +138,6 @@ const String mensagem_TOPICO_PUBLISH_2 = "/TEF/lamp" + lamp + "/attrs/t";
 // GPIO do LED
 const int default_D4 = 2;
 ```
-### Tópicos MQTT Utilizados
-
 
 ### Configuração de Rede Wi-Fi e Broker MQTT
 Estabelece a conexão com a rede Wi-Fi e o Broker MQTT. Caso a conexão seja perdida, o código tenta reconectar automaticamente.
