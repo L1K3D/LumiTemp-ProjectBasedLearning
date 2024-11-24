@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "85aa7bbc-6d0b-48ff-9872-9877e4516acb",
+		"_postman_id": "4617de84-8f1e-4a91-a8a2-907b94e2be84",
 		"name": "LumiTemp - Fiware",
 		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
 		"_exporter_id": "38973380"
@@ -290,9 +290,9 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n  \"on\": {\n      \"type\" : \"command\",\n      \"value\" : \"\"\n  }\n}"
+									"raw": "{\n  \"off\": {\n      \"type\" : \"command\",\n      \"value\" : \"\"\n  }\n}"
 								},
-								"url": "http://{{url}}:1026/v2/entities/urn:ngsi-ld:Lamp:03x/attrs"
+								"url": "http://{{url}}:1026/v2/entities/urn:ngsi-ld:Lamp:04x/attrs"
 							},
 							"response": []
 						},
@@ -317,7 +317,7 @@
 										"type": "text"
 									}
 								],
-								"url": "http://{{url}}:1026/v2/entities/urn:ngsi-ld:Lamp:03x/attrs/luminosity"
+								"url": "http://{{url}}:1026/v2/entities/urn:ngsi-ld:Lamp:04x/attrs/luminosity"
 							},
 							"response": []
 						},
@@ -342,7 +342,7 @@
 										"type": "text"
 									}
 								],
-								"url": "http://{{url}}:1026/v2/entities/urn:ngsi-ld:Lamp:03x/attrs/state"
+								"url": "http://{{url}}:1026/v2/entities/urn:ngsi-ld:Lamp:04x/attrs/state"
 							},
 							"response": []
 						},
@@ -367,32 +367,7 @@
 										"type": "text"
 									}
 								],
-								"url": "http://{{url}}:1026/v2/entities/urn:ngsi-ld:Humi:03x/attrs/humidity"
-							},
-							"response": []
-						},
-						{
-							"name": "MQTT - Resultados do estado da umidade",
-							"request": {
-								"method": "GET",
-								"header": [
-									{
-										"key": "fiware-service",
-										"value": "smart",
-										"type": "text"
-									},
-									{
-										"key": "fiware-servicepath",
-										"value": "/",
-										"type": "text"
-									},
-									{
-										"key": "accept",
-										"value": "application/json",
-										"type": "text"
-									}
-								],
-								"url": "http://{{url}}:1026/v2/entities/urn:ngsi-ld:Humi:03x/attrs/state"
+								"url": "http://{{url}}:1026/v2/entities/urn:ngsi-ld:Humi:04x/attrs/humidity"
 							},
 							"response": []
 						},
@@ -417,32 +392,7 @@
 										"type": "text"
 									}
 								],
-								"url": "http://{{url}}:1026/v2/entities/urn:ngsi-ld:Temp:03x/attrs/temperature"
-							},
-							"response": []
-						},
-						{
-							"name": "MQTT - Resultados do estado da temperatura",
-							"request": {
-								"method": "GET",
-								"header": [
-									{
-										"key": "fiware-service",
-										"value": "smart",
-										"type": "text"
-									},
-									{
-										"key": "fiware-servicepath",
-										"value": "/",
-										"type": "text"
-									},
-									{
-										"key": "accept",
-										"value": "application/json",
-										"type": "text"
-									}
-								],
-								"url": "http://{{url}}:1026/v2/entities/urn:ngsi-ld:Temp:03x/attrs/state"
+								"url": "http://{{url}}:1026/v2/entities/urn:ngsi-ld:Temp:04x/attrs/temperature"
 							},
 							"response": []
 						}
@@ -693,7 +643,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n  \"description\": \"Notify STH-Comet of all Motion Sensor count changes\", // Descrição da notificação\r\n  \"subject\": {\r\n    \"entities\": [\r\n      {\r\n        \"id\": \"urn:ngsi-ld:Lamp:03x\",\r\n        \"type\": \"Lamp\"\r\n      }\r\n    ],\r\n    \"condition\": { \"attrs\": [\"luminosity\"] } // Condição para acionar a notificação (alteração de luminosidade)\r\n  },\r\n  \"notification\": {\r\n    \"http\": {\r\n      \"url\": \"http://{{url}}:8666/notify\" // URL para notificação do STH-Comet\r\n    },\r\n    \"attrs\": [\r\n      \"luminosity\" // Atributo a ser notificado (luminosidade)\r\n    ],\r\n    \"attrsFormat\": \"legacy\" // Formato dos atributos a ser notificado (legado)\r\n  }\r\n}"
+									"raw": "{\r\n  \"description\": \"Notify STH-Comet of all Motion Sensor count changes\", // Descrição da notificação\r\n  \"subject\": {\r\n    \"entities\": [\r\n      {\r\n        \"id\": \"urn:ngsi-ld:Lamp:04x\",\r\n        \"type\": \"Lamp\"\r\n      }\r\n    ],\r\n    \"condition\": { \"attrs\": [\"luminosity\"] } // Condição para acionar a notificação (alteração de luminosidade)\r\n  },\r\n  \"notification\": {\r\n    \"http\": {\r\n      \"url\": \"http://{{url}}:8666/notify\" // URL para notificação do STH-Comet\r\n    },\r\n    \"attrs\": [\r\n      \"luminosity\" // Atributo a ser notificado (luminosidade)\r\n    ],\r\n    \"attrsFormat\": \"legacy\" // Formato dos atributos a ser notificado (legado)\r\n  }\r\n}"
 								},
 								"url": "http://{{url}}:1026/v2/subscriptions"
 							},
@@ -716,7 +666,7 @@
 									}
 								],
 								"url": {
-									"raw": "http://{{url}}:8666/STH/v1/contextEntities/type/Lamp/id/urn:ngsi-ld:Lamp:03x/attributes/luminosity?lastN=30",
+									"raw": "http://{{url}}:8666/STH/v1/contextEntities/type/Lamp/id/urn:ngsi-ld:Lamp:04x/attributes/luminosity?lastN=30",
 									"protocol": "http",
 									"host": [
 										"{{url}}"
@@ -729,7 +679,7 @@
 										"type",
 										"Lamp",
 										"id",
-										"urn:ngsi-ld:Lamp:03x",
+										"urn:ngsi-ld:Lamp:04x",
 										"attributes",
 										"luminosity"
 									],
@@ -808,7 +758,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n  \"description\": \"Notify STH-Comet of all Motion Sensor count changes\", // Descrição da notificação\r\n  \"subject\": {\r\n    \"entities\": [\r\n      {\r\n        \"id\": \"urn:ngsi-ld:Humi:03x\",\r\n        \"type\": \"Lamp\"\r\n      }\r\n    ],\r\n    \"condition\": { \"attrs\": [\"humidity\"] } // Condição para acionar a notificação (alteração de luminosidade)\r\n  },\r\n  \"notification\": {\r\n    \"http\": {\r\n      \"url\": \"http://{{url}}:8666/notify\" // URL para notificação do STH-Comet\r\n    },\r\n    \"attrs\": [\r\n      \"humidity\" // Atributo a ser notificado (luminosidade)\r\n    ],\r\n    \"attrsFormat\": \"legacy\" // Formato dos atributos a ser notificado (legado)\r\n  }\r\n}"
+									"raw": "{\r\n  \"description\": \"Notify STH-Comet of all Motion Sensor count changes\", // Descrição da notificação\r\n  \"subject\": {\r\n    \"entities\": [\r\n      {\r\n        \"id\": \"urn:ngsi-ld:Humi:04x\",\r\n        \"type\": \"Humi\"\r\n      }\r\n    ],\r\n    \"condition\": { \"attrs\": [\"humidity\"] } // Condição para acionar a notificação (alteração de luminosidade)\r\n  },\r\n  \"notification\": {\r\n    \"http\": {\r\n      \"url\": \"http://{{url}}:8666/notify\" // URL para notificação do STH-Comet\r\n    },\r\n    \"attrs\": [\r\n      \"humidity\" // Atributo a ser notificado (luminosidade)\r\n    ],\r\n    \"attrsFormat\": \"legacy\" // Formato dos atributos a ser notificado (legado)\r\n  }\r\n}"
 								},
 								"url": "http://{{url}}:1026/v2/subscriptions"
 							},
@@ -831,7 +781,7 @@
 									}
 								],
 								"url": {
-									"raw": "http://{{url}}:8666/STH/v1/contextEntities/type/Humi/id/urn:ngsi-ld:Humi:03x/attributes/humidity?lastN=30",
+									"raw": "http://{{url}}:8666/STH/v1/contextEntities/type/Humi/id/urn:ngsi-ld:Humi:04x/attributes/humidity?lastN=30",
 									"protocol": "http",
 									"host": [
 										"{{url}}"
@@ -844,7 +794,7 @@
 										"type",
 										"Humi",
 										"id",
-										"urn:ngsi-ld:Humi:03x",
+										"urn:ngsi-ld:Humi:04x",
 										"attributes",
 										"humidity"
 									],
@@ -923,7 +873,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n  \"description\": \"Notify STH-Comet of all Motion Sensor count changes\", // Descrição da notificação\r\n  \"subject\": {\r\n    \"entities\": [\r\n      {\r\n        \"id\": \"urn:ngsi-ld:Lamp:001\",\r\n        \"type\": \"Lamp\"\r\n      }\r\n    ],\r\n    \"condition\": { \"attrs\": [\"temperature\"] } // Condição para acionar a notificação (alteração de luminosidade)\r\n  },\r\n  \"notification\": {\r\n    \"http\": {\r\n      \"url\": \"http://{{url}}:8666/notify\" // URL para notificação do STH-Comet\r\n    },\r\n    \"attrs\": [\r\n      \"temperature\" // Atributo a ser notificado (luminosidade)\r\n    ],\r\n    \"attrsFormat\": \"legacy\" // Formato dos atributos a ser notificado (legado)\r\n  }\r\n}"
+									"raw": "{\r\n  \"description\": \"Notify STH-Comet of all Motion Sensor count changes\", // Descrição da notificação\r\n  \"subject\": {\r\n    \"entities\": [\r\n      {\r\n        \"id\": \"urn:ngsi-ld:Temp:04x\",\r\n        \"type\": \"Temp\"\r\n      }\r\n    ],\r\n    \"condition\": { \"attrs\": [\"temperature\"] } // Condição para acionar a notificação (alteração de luminosidade)\r\n  },\r\n  \"notification\": {\r\n    \"http\": {\r\n      \"url\": \"http://{{url}}:8666/notify\" // URL para notificação do STH-Comet\r\n    },\r\n    \"attrs\": [\r\n      \"temperature\" // Atributo a ser notificado (luminosidade)\r\n    ],\r\n    \"attrsFormat\": \"legacy\" // Formato dos atributos a ser notificado (legado)\r\n  }\r\n}"
 								},
 								"url": "http://{{url}}:1026/v2/subscriptions"
 							},
@@ -946,7 +896,7 @@
 									}
 								],
 								"url": {
-									"raw": "http://{{url}}:8666/STH/v1/contextEntities/type/Temp/id/urn:ngsi-ld:Temp:03x/attributes/temperature?lastN=30",
+									"raw": "http://{{url}}:8666/STH/v1/contextEntities/type/Temp/id/urn:ngsi-ld:Temp:04x/attributes/temperature?lastN=15",
 									"protocol": "http",
 									"host": [
 										"{{url}}"
@@ -959,7 +909,7 @@
 										"type",
 										"Temp",
 										"id",
-										"urn:ngsi-ld:Temp:03x",
+										"urn:ngsi-ld:Temp:04x",
 										"attributes",
 										"temperature"
 									],
@@ -975,11 +925,6 @@
 											"value": "1",
 											"description": "Define o deslocamento da consulta. É usado para recuperar resultados além do limite. No exemplo, está configurado como 1, o que significa que a consulta começará a partir do segundo resultado (ignorando o primeiro resultado).",
 											"disabled": true
-										},
-										{
-											"key": "lastN",
-											"value": "30",
-											"description": "Especifica o número de resultados mais recentes a serem recuperados. Neste caso, está configurado como 20, o que resultará na recuperação dos 20 dados mais recentes."
 										},
 										{
 											"key": "aggrMethod",
@@ -1004,6 +949,10 @@
 											"value": "2023-08-03T10:28:21.237",
 											"description": "Formato UTC",
 											"disabled": true
+										},
+										{
+											"key": "lastN",
+											"value": "15"
 										}
 									]
 								}
