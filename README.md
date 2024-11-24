@@ -87,10 +87,10 @@ O protótipo consiste em uma resistência de 6 Ohms com potência de 50W, utiliz
 | Protótipo  | ...     |
 
 ### Diagrama Elétrico
-![Diagrama Elétrico](diagrama_eletrico.png)
+
 
 ### Projeto Físico
-![Projeto Físico](projeto_fisico.png)
+![Projeto Fisico](https://github.com/user-attachments/assets/0613bbed-6c72-4048-b0f5-aeebe96815ce)
 
 ## 🧑‍💻 Software
 
