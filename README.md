@@ -1,47 +1,43 @@
-# 🚀 LUMITEMP - Sistema para monitoramento de secagem de motores elétricos usando IOT
+# 🚀 LUMITEMP - System for Monitoring Electric Motor Drying Using IoT
 
-# 📚 Índice
+# 📚 Index
 
-1. [💻 Tecnologias Utilizadas](#tecnologias-utilizadas)
-2. [📜 Introdução](#introdução)
-   - [Objetivo](#objetivo)
-   - [Descrição da Proposta](#descrição-da-proposta)
+1. [💻 Technologies Used](#technologies-used)
+2. [📜 Introduction](#introduction)
+   - [Objective](#objective)
+   - [Proposal Description](#proposal-description)
 6. [🖥️ Hardware](#hardware)
-   - [Componentes](#componentes)
-   - [Conexões](#conexões)
-   - [Diagrama Elétrico](#diagrama-elétrico)
-   - [Projeto Físico](#projeto-físico)
+   - [Components](#components)
+   - [Connections](#connections)
+   - [Electrical Diagram](#electrical-diagram)
+   - [Physical Project](#physical-project)
 7. [🧑‍💻 Software](#software)
    - [FIWARE](#fiware)
-8. [🏗️ Visão Geral da Arquitetura](#visão-geral-da-arquitetura)
-   - [Diagrama de Arquitetura](#diagrama-de-arquitetura)
-10. [🔧 Código do ESP32](#código-do-esp32)
-   - [Dependências](#dependências)
-   - [Configuração de Rede Wi-Fi e Broker MQTT](#configuração-de-rede-wi-fi-e-broker-mqtt)
-   - [Função de Configuração do Sistema](#função-de-configuração-do-sistema)
-   - [Loop Principal](#loop-principal)
-   - [Reconexão com o Wi-Fi](#reconexão-com-o-wi-fi)
-   - [Função Callback MQTT](#função-callback-mqtt)
-   - [Funções de Controle e Monitoramento](#funções-de-controle-e-monitoramento)
-      - [Verificação de Conexões](#verificação-de-conexões)
-      - [Envio de Estado do LED](#envio-de-estado-do-led)
-   - [Funções Auxiliares](#funções-auxiliares)
-   - [Função de Leitura de Luminosidade](#função-de-leitura-de-luminosidade)
-11. [📊 Structured Query Language](#structured-query-language)
-   - [Diagrama Conceitual](#diagrama-conceitual)
-   - [Diagrama Lógico](#diagrama-lógico)
-11. [🗃️ Banco de Dados](#banco-de-dados)
-   - [Criação das Tabelas](#criação-das-tabelas)
-   - [Criação das Procedures](#criação-das-procedures)
+8. [🏗️ Architecture Overview](#architecture-overview)
+   - [Architecture Diagram](#architecture-diagram)
+10. [🔧 ESP32 Code](#esp32-code)
+   - [Dependencies](#dependencies)
+   - [Wi-Fi and MQTT Broker Configuration](#wi-fi-and-mqtt-broker-configuration)
+   - [System Setup Function](#system-setup-function)
+   - [Main Loop](#main-loop)
+   - [Wi-Fi Reconnection](#wi-fi-reconnection)
+   - [MQTT Callback Function](#mqtt-callback-function)
+   - [Control and Monitoring Functions](#control-and-monitoring-functions)
+      - [Connection Verification](#connection-verification)
+      - [LED State Transmission](#led-state-transmission)
+   - [Helper Functions](#helper-functions)
+11. [🗃️ Database](#database)
+   - [Table Creation](#table-creation)
+   - [Procedure Creation](#procedure-creation)
 11. [📑 Manual](#manual)
-   - [Como Rodar o Sistema](#como-rodar-o-sistema)
-   - [Exemplo de Uso](#exemplo-de-uso)
-   - [Como Testar](#como-testar)
-   - [Cobertura de Testes](cobertura-de-testes)
+   - [How to Run the System](#how-to-run-the-system)
+   - [Example of Use](#example-of-use)
+   - [How to Test](#how-to-test)
+   - [Test Coverage](#test-coverage)
 12. [🤝 Project Members](#project-members)
 
 
-## 💻 Tecnologias Utilizadas
+## 💻 Technologies Used
 ![JavaScript](https://img.shields.io/badge/JavaScript-323330?style=for-the-badge&logo=javascript&logoColor=F7DF1E)
 ![C#](https://img.shields.io/badge/C%23-239120?style=for-the-badge&logo=csharp&logoColor=white)
 ![HTML5](https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white)
@@ -49,98 +45,92 @@
 ![C++](https://img.shields.io/badge/C%2B%2B-00599C?style=for-the-badge&logo=c%2B%2B&logoColor=white)
 ![Microsoft SQL Server](https://img.shields.io/badge/Microsoft%20SQL%20Server-CC2927?style=for-the-badge&logo=microsoft%20sql%20server&logoColor=white)
 
-## 📜 Introdução
+## 📜 Introduction
 
-### Objetivo
-Desenvolver um sistema de monitoramento baseado em Internet das Coisas (IoT) para o controle de estufa de secagem de motores elétricos. Esse sistema deverá obter de forma precisa os dados de temperatura em tempo real, mediante ajustes dinâmicos dos parâmetros de controle, garantido a eficiência operacional. Esse sistema utilizará a plataforma de backend FIWARE para processamento e armazenamento de informações contextuais, visando a otimização do processo de fabricação. A solução permitirá a regulação precisa da temperatura, monitoramento remoto em tempo real e aprimoramento da eficiência operacional, garantindo a produção de motores elétricos de alta qualidade e uniformidade em todas as unidades da empresa. O sistema será complementado por uma plataforma web desenvolvida em ASP.NET MVC, que dará suporte a cadastros e fornecerá visualização de dados em consultas e dashboards.
+### Objective
+Develop an IoT-based monitoring system for controlling the drying oven of electric motors. This system should accurately obtain real-time temperature data through dynamic control parameter adjustments, ensuring operational efficiency. It will use the FIWARE backend platform for processing and storing contextual information, aiming to optimize the manufacturing process. The solution will enable precise temperature regulation, real-time remote monitoring, and enhanced operational efficiency, ensuring the production of high-quality electric motors with consistency across all company units. The system will be complemented by a web platform developed in ASP.NET MVC, supporting registrations and providing data visualization through queries and dashboards.
 
-### Descrição da Proposta
-Em um contexto de produção global, uma empresa de motores elétricos enfrenta desafios significativos relacionados ao monitoramento em tempo real da temperatura nas estufas utilizadas para a secagem dos enrolamentos dos motores. Esse processo é crucial para assegurar a qualidade e durabilidade dos produtos, impactando diretamente a eficiência e a confiabilidade dos motores em aplicações industriais, comerciais e residenciais.
+### Proposal Description
+In a global production context, an electric motor company faces significant challenges related to real-time temperature monitoring in ovens used for drying motor windings. This process is crucial for ensuring the quality and durability of the products, directly impacting the efficiency and reliability of the motors in industrial, commercial, and residential applications.
 
-A proposta deste projeto é criar um sistema de monitoramento IoT para um protótipo em escala reduzida de uma estufa de secagem. Este protótipo contará com uma resistência de aquecimento e sensores de temperatura, funcionando como um modelo para o desenvolvimento e teste de um sistema de controle e monitoramento térmico baseado em dispositivos IoT. Os testes serão realizados com base em condições reais de produção, proporcionando a oportunidade de desenvolver um sistema robusto e escalável antes de sua aplicação em larga escala em unidades industriais ao redor do mundo.
+The project's proposal is to create an IoT monitoring system for a reduced-scale prototype of a drying oven. This prototype will have a heating resistor and temperature sensors, serving as a model for developing and testing a thermal control and monitoring system based on IoT devices. Tests will be conducted under real production conditions, offering the opportunity to develop a robust and scalable system before its large-scale application in industrial units worldwide.
 
-O protótipo consiste em uma resistência de 6 Ohms com potência de 50W, utilizada para o aquecimento, acoplada a um dissipador de calor e a um sensor de temperatura LM35.
+The prototype consists of a 6-ohm, 50W heating resistor used for heating, attached to a heat sink and an LM35 temperature sensor.
 
 ## 🖥️ Hardware
 
-### Componentes
+### Components
 
-| Componente       | Função                                                                                          | Imagem       |
-|------------------|-------------------------------------------------------------------------------------------------|--------------|
-| Protoboard       | Construção de circuitos temporários sem solda                                                   | <img src="https://github.com/user-attachments/assets/43ccb680-1546-4225-9526-bfe1e3fc829b" width="300" height="250"> |
-| ESP32            | Comunicação com FIWARE via Wi-Fi e Bluetooth                                                    | <img src="https://github.com/user-attachments/assets/aea63641-54cb-41b6-a435-959bf6ee645d" width="300" height="250"> |
-| Resistor 10KΩ    | Proteção contra correntes excessivas e leitura precisa de sinais                                | <img src="https://github.com/user-attachments/assets/c20623c0-d764-4970-8d9c-c2642155a82f" width="300" height="250"> |
-| Jumper Wires     | Conexão entre componentes                                                                       | <img src="https://github.com/user-attachments/assets/83e9871a-9d96-41eb-a67e-fb5d86d9f0ce" width="300" height="250"> |
-| Fonte DC         | Fornecimento de tensão contínua                                                                 | <img src="https://github.com/user-attachments/assets/4e6ff303-c9aa-41b7-833a-441ba92742d5" width="300" height="250"> |
-| Cabo de Força    | Transmissão de energia para dispositivos eletrônicos                                            | <img src="https://github.com/user-attachments/assets/6bdb4698-f50f-47df-9d20-79768471e0a5" width="300" height="250"> |
-| Cabos Banana     | Conexões seguras para equipamentos                                                              | <img src="https://github.com/user-attachments/assets/d91e1335-3588-43ac-a931-7da2e27fb276" width="300" height="250"> |
-| Cabo USB         | Comunicação e alimentação de dispositivos eletrônicos                                           | <img src="https://github.com/user-attachments/assets/0425962d-8de5-4643-bd68-18ba22c9553c" width="300" height="250"> |
-| Protótipo        | Simulação do funcionamento da estufa                                                            | <img src="https://github.com/user-attachments/assets/787b509b-2409-42ee-ac23-f2e15ad136dc" width="300" height="250"> |
-| Notebook         | Desenvolvimento e monitoramento do sistema                                                      | <img src="https://github.com/user-attachments/assets/22eb6f01-7e89-43a2-b073-e100ba58843b" width="300" height="250"> |
+| Component        | Function                                                                                       | Image        |
+|------------------|------------------------------------------------------------------------------------------------|--------------|
+| Breadboard       | Construction of temporary circuits without soldering                                           | <img src="https://github.com/user-attachments/assets/43ccb680-1546-4225-9526-bfe1e3fc829b" width="300" height="250"> |
+| ESP32            | Communication with FIWARE via Wi-Fi and Bluetooth                                              | <img src="https://github.com/user-attachments/assets/aea63641-54cb-41b6-a435-959bf6ee645d" width="300" height="250"> |
+| 10KΩ Resistor    | Protection against excessive currents and accurate signal reading                              | <img src="https://github.com/user-attachments/assets/c20623c0-d764-4970-8d9c-c2642155a82f" width="300" height="250"> |
+| Jumper Wires     | Connection between components                                                                  | <img src="https://github.com/user-attachments/assets/83e9871a-9d96-41eb-a67e-fb5d86d9f0ce" width="300" height="250"> |
+| DC Power Supply  | Providing continuous voltage                                                                   | <img src="https://github.com/user-attachments/assets/4e6ff303-c9aa-41b7-833a-441ba92742d5" width="300" height="250"> |
+| Power Cable      | Power transmission for electronic devices                                                      | <img src="https://github.com/user-attachments/assets/6bdb4698-f50f-47df-9d20-79768471e0a5" width="300" height="250"> |
+| Banana Cable     | Secure connections for equipment                                                               | <img src="https://github.com/user-attachments/assets/d91e1335-3588-43ac-a931-7da2e27fb276" width="300" height="250"> |
+| USB Cable        | Communication and power for electronic devices                                                 | <img src="https://github.com/user-attachments/assets/0425962d-8de5-4643-bd68-18ba22c9553c" width="300" height="250"> |
+| Prototype        | Simulation of the greenhouse operation                                                         | <img src="https://github.com/user-attachments/assets/787b509b-2409-42ee-ac23-f2e15ad136dc" width="300" height="250"> |
+| Laptop           | System development and monitoring                                                              | <img src="https://github.com/user-attachments/assets/22eb6f01-7e89-43a2-b073-e100ba58843b" width="300" height="250"> |
 
 
-### Conexões
+### Connections
 | Componente | Conexão |
 |------------|---------|
 | ESP32      | ...     |
 | Fonte DC   | ...     |
 | Protótipo  | ...     |
 
-### Diagrama Elétrico
+### Electrical Diagram
+![Diagrama Eletrico](https://github.com/user-attachments/assets/344704d4-6a32-4f0e-82db-04b97bd81879)
 
-
-### Projeto Físico
+### Physical Project
 ![Projeto Fisico](https://github.com/user-attachments/assets/0613bbed-6c72-4048-b0f5-aeebe96815ce)
 
 ## 🧑‍💻 Software
 
 ### FIWARE
-O FIWARE é uma plataforma de código aberto que oferece ferramentas e componentes para desenvolver soluções inteligentes, especialmente para IoT e cidades inteligentes. Ele facilita a integração de dispositivos conectados, gerenciamento de dados em tempo real e a criação de serviços baseados em APIs abertas, como o Context Broker. Com suporte a análise de dados e segurança, o FIWARE é ideal para desenvolver sistemas escaláveis e eficientes, permitindo automação e otimização de processos em diversos setores.
+FIWARE is an open-source platform that provides tools and components for developing smart solutions, especially for IoT and smart cities. It facilitates the integration of connected devices, real-time data management, and the creation of services based on open APIs, such as the Context Broker. With support for data analytics and security, FIWARE is ideal for developing scalable and efficient systems, enabling process automation and optimization across various sectors.
 
-## 🏗️ Visão Geral da Arquitetura
-O sistema é composto por três partes principais:
+## 🏗️ Architecture Overview
+The system is composed of three main parts:
 
-1. **Hardware (ESP32 e sensores):** O ESP32 se conecta aos sensores de temperatura e envia os dados para a plataforma FIWARE via MQTT.
-2. **Plataforma FIWARE:** Recebe os dados e gerencia os dispositivos IoT, fornecendo uma interface para análise dos dados.
-3. **Plataforma Web:** Interface onde os usuários podem visualizar os dados e controlar os dispositivos remotamente.
+1. **Hardware (ESP32 and sensors):** The ESP32 connects to temperature sensors and sends data to the FIWARE platform via MQTT.
+2. **FIWARE Platform:** Receives data and manages IoT devices, providing an interface for data analysis.
+3. **Web Platform:** Interface where users can view data and control devices remotely.
 
-### Diagrama de Arquitetura
+### Architecture Diagram
 ```plaintext
-[Sensor de Temperatura] → [ESP32] → [FIWARE] → [Plataforma Web]
-```
+[Temperature Sensor] → [ESP32] → [FIWARE] → [Web Platform]
+````
 
 ![diagrama_camadas](https://github.com/L1K3D/LumiTemp-ProjectBasedLearning/blob/main/Fiware/FiwareDeploy_new_v4.png?raw=true)
 
-## 🔧 Código do ESP32
+## 🔧 ESP32 Code
 
-### Dependências
-- **WiFi.h**: Biblioteca para conexão Wi-Fi
-- **PubSubClient.h**: Biblioteca MQTT para Arduino
+### Dependencies
+- **WiFi.h**: Library for Wi-Fi connection
+- **PubSubClient.h**: MQTT library for Arduino
 
 ```cpp
 #include <WiFi.h>
 #include <PubSubClient.h>
 
-// Configurações de Wi-Fi
-const char* default_SSID = "POCO F5";
-const char* default_PASSWORD = "kanx5025";
-
-// Configurações do Broker MQTT
-const char* default_BROKER_MQTT = "4.228.64.5";
-const int default_BROKER_PORT = 1883;
-
-// Tópicos MQTT
-const String lamp = "03y";
-const String mensagem_TOPICO_SUBSCRIBE = "/TEF/lamp" + lamp + "/cmd";
-const String mensagem_TOPICO_PUBLISH_1 = "/TEF/lamp" + lamp + "/attrs";
-const String mensagem_TOPICO_PUBLISH_2 = "/TEF/lamp" + lamp + "/attrs/t";
-
-// GPIO do LED
-const int default_D4 = 2;
+// Settings - editable variables
+const char* default_SSID = "your_wifi_network"; // Wi-Fi network name
+const char* default_PASSWORD = "your_wifi_password"; // Wi-Fi network password
+const char* default_BROKER_MQTT = "ip_host_fiware"; // IP of the MQTT Broker
+const int default_BROKER_PORT = 1883; // Port of the MQTT Broker
+const char* default_TOPICO_SUBSCRIBE = "/TEF/lamp001/cmd"; // MQTT topic for listening
+const char* default_TOPICO_PUBLISH_1 = "/TEF/lamp001/attrs"; // MQTT topic for sending information to the Broker
+const char* default_TOPICO_PUBLISH_2 = "/TEF/lamp001/attrs/l"; // MQTT topic for sending information to the Broker
+const char* default_ID_MQTT = "fiware_001"; // MQTT ID
+const int default_D4 = 2; // Onboard LED pin
 ```
 
-### Configuração de Rede Wi-Fi e Broker MQTT
-Estabelece a conexão com a rede Wi-Fi e o Broker MQTT. Caso a conexão seja perdida, o código tenta reconectar automaticamente.
+### Wi-Fi and MQTT Broker Configuration
+Establishes the connection to the Wi-Fi network and the MQTT Broker. If the connection is lost, the code attempts to reconnect automatically.
 
 ```cpp
 void initWiFi() {
@@ -158,8 +148,8 @@ void initMQTT() {
 }
 ```
 
-### Função de Configuração do Sistema
-No setup(), são inicializados os componentes necessários, incluindo a configuração da comunicação serial, Wi-Fi e MQTT. Além disso, o LED onboard é inicialmente enviado com o comando de estado "ligado".
+### System Setup Function
+In the setup(), the necessary components are initialized, including the configuration of serial communication, Wi-Fi, and MQTT. Additionally, the onboard LED is initially set to the "on" state command.
 
 ```cpp
 void setup() {
@@ -172,8 +162,8 @@ void setup() {
 }
 ```
 
-### Loop Principal
-A função loop() verifica a conexão Wi-Fi e MQTT, envia o estado do LED e trata o envio de dados sobre a luminosidade.
+### Main Loop
+The loop() function checks the Wi-Fi and MQTT connection, sends the LED state, and handles the transmission of data about the brightness.
 
 ```cpp
 void loop() {
@@ -184,8 +174,8 @@ void loop() {
 }
 ```
 
-### Reconexão com o Wi-Fi
-A função reconectWiFi() tenta conectar o ESP32 à rede Wi-Fi caso ele perca a conexão. A cada 100 ms é feita uma nova tentativa, até que a conexão seja bem-sucedida.
+### Wi-Fi Reconnection
+The reconnectWiFi() function attempts to reconnect the ESP32 to the Wi-Fi network if the connection is lost. A new attempt is made every 100 ms until the connection is successful.
 
 ```cpp
 void reconectWiFi() {
@@ -202,13 +192,13 @@ void reconectWiFi() {
     Serial.println("IP obtido: ");
     Serial.println(WiFi.localIP());
 
-    // Garantir que o LED inicie desligado
+    // Ensure that the LED starts off
     digitalWrite(D4, LOW);
 }
 ```
 
-### Função Callback MQTT
-A função mqtt_callback() é responsável por tratar as mensagens recebidas do Broker MQTT. Caso a mensagem seja para ligar o LED, o pino D4 é configurado como HIGH (LED ligado). Caso contrário, o LED é desligado.
+### MQTT Callback Function
+The mqtt_callback() function is responsible for handling messages received from the MQTT Broker. If the message is to turn on the LED, pin D4 is set to HIGH (LED on). Otherwise, the LED is turned off.
 
 ```cpp
 void mqtt_callback(char* topic, byte* payload, unsigned int length) {
@@ -220,11 +210,11 @@ void mqtt_callback(char* topic, byte* payload, unsigned int length) {
     Serial.print("- Mensagem recebida: ");
     Serial.println(msg);
 
-    // Forma o padrão de tópico para comparação
+    // Forms the topic pattern for comparison
     String onTopic = String(topicPrefix) + "@on|";
     String offTopic = String(topicPrefix) + "@off|";
 
-    // Compara com o tópico recebido
+    // Compares with the received topic
     if (msg.equals(onTopic)) {
         digitalWrite(D4, HIGH);
         EstadoSaida = '1';
@@ -237,11 +227,11 @@ void mqtt_callback(char* topic, byte* payload, unsigned int length) {
 }
 ```
 
-### Funções de Controle e Monitoramento
-Essas funções são responsáveis por garantir que o LED e o sensor de luminosidade funcionem corretamente.
+### Control and Monitoring Functions
+These functions are responsible for ensuring that the LED and the brightness sensor operate correctly.
 
-#### Verificação de Conexões
-A função VerificaConexoesWiFIEMQTT() garante que o Wi-Fi e o MQTT estejam conectados, e reconecta caso necessário.
+#### Connection Verification
+The VerificaConexoesWiFIEMQTT() function ensures that Wi-Fi and MQTT are connected, and reconnects if necessary.
 
 ```cpp
 void VerificaConexoesWiFIEMQTT() {
@@ -251,8 +241,8 @@ void VerificaConexoesWiFIEMQTT() {
 }
 ```
 
-#### Envio de Estado do LED
-A função EnviaEstadoOutputMQTT() publica o estado do LED no Broker MQTT e imprime o status no monitor serial.
+#### LED State Transmission
+The EnviaEstadoOutputMQTT() function publishes the LED state to the MQTT Broker and prints the status to the serial monitor.
 
 ```cpp
 void EnviaEstadoOutputMQTT() {
@@ -270,10 +260,10 @@ void EnviaEstadoOutputMQTT() {
 }
 ```
 
-### Funções Auxiliares
-InitOutput(): Inicializa o pino do LED e realiza um pisca-pisca para indicar que o sistema foi iniciado.
-reconnectMQTT(): Tenta reconectar ao Broker MQTT caso a conexão seja perdida.
-handleLuminosity(): Lê o valor de luminosidade de um sensor analógico (conectado no pino 34) e envia esse valor para o Broker MQTT.
+### Helper Functions
+InitOutput(): Initializes the LED pin and performs a blink to indicate that the system has started.
+reconnectMQTT(): Attempts to reconnect to the MQTT Broker if the connection is lost.
+handleLuminosity(): Reads the brightness value from an analog sensor (connected to pin 34) and sends this value to the MQTT Broker.
 
 ```cpp
 void InitOutput() {
@@ -289,33 +279,10 @@ void InitOutput() {
 }
 ```
 
-### Função de Leitura de Luminosidade
-Lê um valor de luminosidade de um potenciômetro e publica este valor no Broker MQTT.
+## 🗃️ Database
+This database was developed to manage brightness and temperature sensors, as well as store information about responsible employees and partner companies. The goal is to monitor and control sensor data in industrial or commercial environments.
 
-```cpp
-void handleLuminosity() {
-    const int potPin = 34;
-    int sensorValue = analogRead(potPin);
-    int luminosity = map(sensorValue, 0, 4095, 0, 100);
-    String mensagem = String(luminosity);
-    Serial.print("Valor da luminosidade: ");
-    Serial.println(mensagem.c_str());
-    MQTT.publish(TOPICO_PUBLISH_2, mensagem.c_str());
-}
-```
-
-## 📊 Structured Query Language
-
-### Diagrama Conceitual
-![Diagrama Conceitual](diagrama_eletrico.png)
-
-### Diagrama Lógico
-![Diagrama Lógico](projeto_fisico.png)
-
-## 🗃️ Banco de Dados
-Este banco de dados foi desenvolvido para gerenciar sensores de luminosidade e temperatura, além de armazenar informações sobre funcionários responsáveis e empresas parceiras. O objetivo é monitorar e controlar os dados de sensores em ambientes industriais ou comerciais.
-
-O banco de dados principal (b_lumitemp_main_db) é utilizado para armazenar informações sobre funcionários, sensores, e empresas parceiras envolvidas no sistema de gerenciamento de sensores.
+The main database (b_lumitemp_main_db) is used to store information about employees, sensors, and partner companies involved in the sensor management system.
 
 ```sql
 CREATE DATABASE b_lumitemp_main_db
@@ -323,115 +290,116 @@ CREATE DATABASE b_lumitemp_main_db
 GO
 ```
 
-Define o banco de dados a ser utilizado como o contexto atual
+Define the database to be used as the current context.
 
 ```sql
 USE b_lumitemp_main_db
 
 GO
 ```
-### Criação das Tabelas
+### Table Creation
 
-**Remove a tabela de cadastro de funcionários caso ela já exista**
+**Remove the employee registration table if it already exists**
 
 ```sql
 DROP TABLE IF EXISTS cadr_func;
 ```
 
-**Cria a tabela de cadastro de funcionários (cadr_func):** Tabela responsável por armazenar os dados dos funcionários que têm acesso ao sistema.
+**Create the Employee Registration Table (cadr_func):** Table responsible for storing the data of employees who have access to the system.
 
 ```sql
 CREATE TABLE cadr_func (
-    ID INT PRIMARY KEY,                     -- Código do funcionário, chave primária com incremento automático
-    LOGIN_FUNC VARCHAR(30),                 -- Login do funcionário (máximo 30 caracteres)
-    SENHA_FUNC VARCHAR(30),                 -- Senha do funcionário (máximo 30 caracteres)
-    DT_CADR DATE,                           -- Data de cadastro do funcionário
-    IMAGEM VARBINARY(MAX)                   -- Imagem do funcionário
+    ID INT PRIMARY KEY,                     -- Employee code, primary key with auto-increment
+    LOGIN_FUNC VARCHAR(30),                 -- Employee login (maximum 30 characters)
+    SENHA_FUNC VARCHAR(30),                 -- Employee password (maximum 30 characters)
+    DT_CADR DATE,                           -- Employee registration date
+    IMAGEM VARBINARY(MAX)                   -- Employee image
 );
 
 GO
 ```
-| Coluna     | Tipo        | Descrição                                               |
-|------------|-------------|---------------------------------------------------------|
-| `CD_FUNC`  | `INT`       | Código do funcionário, chave primária com incremento automático. |
-| `LOGIN_FUNC` | `VARCHAR(30)` | Login do funcionário (máximo 30 caracteres).         |
-| `SENHA_FUNC` | `VARCHAR(30)` | Senha do funcionário (máximo 30 caracteres).         |
-| `DT_CADR`  | `DATE`      | Data de cadastro do funcionário.                         |
+| Column        | Type          | Description                                              |
+|---------------|---------------|----------------------------------------------------------|
+| `CD_FUNC`     | `INT`         | Employee code, primary key with auto-increment.          |
+| `LOGIN_FUNC`  | `VARCHAR(30)` | Employee login (maximum 30 characters).                  |
+| `SENHA_FUNC`  | `VARCHAR(30)` | Employee password (maximum 30 characters).               |
+| `DT_CADR`     | `DATE`        | Employee registration date.                              |
 
-**Remove a tabela de cadastro de empresas parceiras caso ela já exista**
+**Remove the partner companies registration table if it already exists**
 
 ```sql
 DROP TABLE IF EXISTS cadr_empr_parc;
 ```
 
-**Cria a tabela de cadastro de empresas parceiras (cadr_empr_parc)**: Tabela que armazena os dados das empresas parceiras envolvidas no fornecimento e suporte dos sensores.
+**Create the Partner Companies Registration Table (cadr_empr_parc)**: Table that stores the data of partner companies involved in the supply and support of the sensors.
 
 ```sql
 CREATE TABLE cadr_empr_parc (
-    ID INT PRIMARY KEY,                     -- Código da empresa parceira, chave primária com incremento automático
-    NM_EMPR VARCHAR(30),                    -- Nome da empresa parceira (máximo 30 caracteres)
-    CEP_EMPR VARCHAR(8),                    -- CEP da empresa parceira (8 caracteres)
-    LOG_EMPR VARCHAR(30),                   -- Logradouro da empresa parceira (máximo 30 caracteres)
-    NUM_EMPR VARCHAR(4),                    -- Número da empresa parceira (máximo 4 caracteres)
-    COMPL_EMPR VARCHAR(30),                 -- Complemento do endereço da empresa parceira (máximo 30 caracteres)
-    BAIRRO_EMPR VARCHAR(20),                -- Bairro da empresa parceira (máximo 20 caracteres)
-    CIDADE_EMPR VARCHAR(20),                -- Cidade da empresa parceira (máximo 20 caracteres)
-    ESTADO_EMPR VARCHAR(2),                 -- Estado da empresa parceira (máximo 2 caracteres)
-    CNPJ_EMPR VARCHAR(15),                  -- CNPJ da empresa parceira (15 caracteres)
-    TELF_CONT_EMPR VARCHAR(11),             -- Telefone de contato da empresa parceira (11 caracteres)
-    ID_FUNC INT,                            -- Código do funcionário responsável (chave estrangeira)
+    ID INT PRIMARY KEY,                     -- Partner company code, primary key with auto-increment
+    NM_EMPR VARCHAR(30),                    -- Partner company name (maximum 30 characters)
+    CEP_EMPR VARCHAR(8),                    -- Partner company ZIP code (8 characters)
+    LOG_EMPR VARCHAR(30),                   -- Partner company address (maximum 30 characters)
+    NUM_EMPR VARCHAR(4),                    -- Partner company address number (maximum 4 characters)
+    COMPL_EMPR VARCHAR(30),                 -- Partner company address complement (maximum 30 characters)
+    BAIRRO_EMPR VARCHAR(20),                -- Partner company neighborhood (maximum 20 characters)
+    CIDADE_EMPR VARCHAR(20),                -- Partner company city (maximum 20 characters)
+    ESTADO_EMPR VARCHAR(2),                 -- Partner company state (maximum 2 characters)
+    CNPJ_EMPR VARCHAR(15),                  -- Partner company CNPJ (15 characters)
+    TELF_CONT_EMPR VARCHAR(11),             -- Partner company contact phone (11 characters)
+    ID_FUNC INT,                            -- Responsible employee code (foreign key)
     CONSTRAINT FK_CD_FUNC FOREIGN KEY (ID_FUNC)  
-        REFERENCES cadr_func(ID)            -- Chave estrangeira referenciando 'ID' da tabela 'cadr_func'
+        REFERENCES cadr_func(ID)            -- Foreign key referencing 'ID' from 'cadr_func' table
 );
 
 GO
 ```
-| Coluna          | Tipo          | Descrição                                                    |
-|-----------------|---------------|--------------------------------------------------------------|
-| `CD_EMPR`       | `INT`         | Código da empresa parceira, chave primária com incremento automático. |
-| `NM_EMPR`       | `VARCHAR(30)` | Nome da empresa parceira (máximo 30 caracteres).              |
-| `CEP_EMPR`      | `VARCHAR(8)`  | CEP da empresa parceira (8 caracteres).                      |
-| `CNPJ_EMPR`     | `VARCHAR(15)` | CNPJ da empresa parceira (15 caracteres).                    |
-| `TELF_CONT_EMPR`| `VARCHAR(10)` | Telefone de contato da empresa parceira (10 caracteres).      |
-| `CD_FUNC`       | `INT`         | Chave estrangeira referenciando o funcionário responsável.    |
 
-Remove a tabela de cadastro de sensores caso ela já exista
+| Column           | Type          | Description                                                    |
+|------------------|---------------|----------------------------------------------------------------|
+| `CD_EMPR`        | `INT`         | Partner company code, primary key with auto-increment.         |
+| `NM_EMPR`        | `VARCHAR(30)` | Partner company name (maximum 30 characters).                  |
+| `CEP_EMPR`       | `VARCHAR(8)`  | Partner company ZIP code (8 characters).                       |
+| `CNPJ_EMPR`      | `VARCHAR(15)` | Partner company CNPJ (15 characters).                          |
+| `TELF_CONT_EMPR` | `VARCHAR(10)` | Partner company contact phone (10 characters).                 |
+| `CD_FUNC`        | `INT`         | Foreign key referencing the responsible employee.              |
+
+**Remove the sensors registration table if it already exists**
 
 ```sql
 DROP TABLE IF EXISTS cadr_sens;
 ```
 
-**Cria a tabela de cadastro de sensores (cadr_sens)**: Tabela que armazena informações sobre os sensores de luminosidade e temperatura cadastrados no sistema.
+**Create the Sensors Registration Table (cadr_sens)**: Table that stores information about the light and temperature sensors registered in the system.
 
 ```sql
 CREATE TABLE cadr_sens (
-    ID INT PRIMARY KEY,                     -- Código do sensor, chave primária com incremento automático
-    DS_TIPO_SENS VARCHAR(MAX),              -- Descrição do tipo de sensor
-    DT_VEND DATE,                           -- Data de venda do sensor, campo obrigatório
-    VL_TEMP_ALVO DECIMAL(5, 2),             -- Valor de temperatura alvo com 5 dígitos e 2 casas decimais
-    CD_MOTOR INT,                           -- Código do motor relacionado ao sensor
-    ID_FUNC INT,                            -- Código do funcionário responsável (chave estrangeira)
-    CONSTRAINT FK_CD_FUNC_SENS FOREIGN KEY (ID_FUNC)  -- Nome único para a chave estrangeira de 'ID_FUNC'
+    ID INT PRIMARY KEY,                     -- Sensor code, primary key with auto-increment
+    DS_TIPO_SENS VARCHAR(MAX),              -- Description of the sensor type
+    DT_VEND DATE,                           -- Sensor sale date, required field
+    VL_TEMP_ALVO DECIMAL(5, 2),             -- Target temperature value with 5 digits and 2 decimal places
+    CD_MOTOR INT,                           -- Motor code related to the sensor
+    ID_FUNC INT,                            -- Responsible employee code (foreign key)
+    CONSTRAINT FK_CD_FUNC_SENS FOREIGN KEY (ID_FUNC)  -- Unique name for the foreign key of 'ID_FUNC'
         REFERENCES cadr_func(ID),
-    ID_EMPR INT,                            -- Código da empresa parceira (chave estrangeira)
-    CONSTRAINT FK_CD_EMPR_SENS FOREIGN KEY (ID_EMPR)  -- Nome único para a chave estrangeira de 'ID_EMPR'
+    ID_EMPR INT,                            -- Partner company code (foreign key)
+    CONSTRAINT FK_CD_EMPR_SENS FOREIGN KEY (ID_EMPR)  -- Unique name for the foreign key of 'ID_EMPR'
         REFERENCES cadr_empr_parc(ID)
 );
 ```
-| Coluna          | Tipo          | Descrição                                                     |
+| Column          | Type          | Description                                                     |
 |-----------------|---------------|---------------------------------------------------------------|
-| `CD_SENS`       | `INT`         | Código do sensor, chave primária com incremento automático.    |
-| `DS_TIPO_SENS`  | `VARCHAR(30)` | Descrição do tipo de sensor (máximo 30 caracteres).            |
-| `DT_VEND`       | `DATETIME`    | Data de venda do sensor. Campo obrigatório.                    |
-| `VL_TEMP_ALVO`  | `DECIMAL(5,2)`| Valor de temperatura alvo com 5 dígitos e 2 casas decimais.    |
-| `VL_UMID_ALVO`  | `DECIMAL(5,2)`| Valor de umidade alvo com 5 dígitos e 2 casas decimais.        |
-| `CD_MOTOR`      | `INT`         | Código do motor relacionado ao sensor.                         |
-| `CD_FUNC`       | `INT`         | Chave estrangeira referenciando o funcionário responsável.     |
-| `CD_EMPR`       | `INT`         | Chave estrangeira referenciando a empresa parceira relacionada.|
+| `CD_SENS`       | `INT`         | Sensor code, primary key with auto-increment.                   |
+| `DS_TIPO_SENS`  | `VARCHAR(30)` | Description of the sensor type (maximum 30 characters).         |
+| `DT_VEND`       | `DATETIME`    | Sensor sale date. Required field.                               |
+| `VL_TEMP_ALVO`  | `DECIMAL(5,2)`| Target temperature value with 5 digits and 2 decimal places.    |
+| `VL_UMID_ALVO`  | `DECIMAL(5,2)`| Target humidity value with 5 digits and 2 decimal places.       |
+| `CD_MOTOR`      | `INT`         | Motor code related to the sensor.                               |
+| `CD_FUNC`       | `INT`         | Foreign key referencing the responsible employee.               |
+| `CD_EMPR`       | `INT`         | Foreign key referencing the related partner company.            |
 
-### Criação das Procedures
+### Procedure Creation
 
-Exclui as procedures se já existirem para recriá-las
+Drop the procedures if they already exist in order to recreate them.
 
 ```sql
 DROP PROCEDURE IF EXISTS spDelete
@@ -449,64 +417,64 @@ DROP PROCEDURE IF EXISTS spUpdate_cadr_sens
 GO
 ```
 
-Criação da procedure spDelete para deletar um registro baseado no ID
+Creation of the "spDelete" procedure to delete a record based on the ID
 
 ```sql
 CREATE PROCEDURE spDelete
 (
-    -- Declaração dos parâmetros que serão utilizados
-    @ID INT,                               -- ID do registro a ser deletado
-    @tabela VARCHAR(MAX)                   -- Nome da tabela onde o registro será deletado
+    -- Declaration of parameters to be used
+    @ID INT,                               -- ID of the record to be deleted
+    @tabela VARCHAR(MAX)                   -- Name of the table where the record will be deleted
 )
 AS
 BEGIN
-    -- Declarar a variável para armazenar a consulta SQL
+    -- Declare the variable to store the SQL query
     DECLARE @sql VARCHAR(MAX);
-    -- Montar a consulta SQL para deletar o registro pelo ID
+    -- Build the SQL query to delete the record by ID
     SET @sql = 'DELETE FROM ' + @tabela +
                ' WHERE ID = ' + CAST(@ID AS VARCHAR(MAX));
-    -- Executar a consulta SQL
+    -- Execute the SQL query
     EXEC(@sql)
 END
 
 GO
 ```
 
-Criação da procedure spConsulta para consultar registros baseados no ID
+Creation of the "spConsulta" procedure to query records based on the ID
 
 ```sql
 CREATE PROCEDURE spConsulta
 (
-    -- Declaração dos parâmetros que serão utilizados
-    @id INT,                               -- ID do registro a ser consultado
-    @tabela VARCHAR(MAX)                   -- Nome da tabela onde o registro será consultado
+    -- Declaration of the parameters to be used
+    @id INT,                               -- ID of the record to be queried
+    @tabela VARCHAR(MAX)                   -- Name of the table where the record will be queried
 )
 AS
 BEGIN
-    -- Declarar a variável para armazenar a consulta SQL
+    -- Declare the variable to store the SQL query
     DECLARE @sql VARCHAR(MAX);
-    -- Montar a consulta SQL para selecionar registros pelo ID
+    -- Build the SQL query to select records by ID
     SET @sql = 'SELECT * FROM ' + @tabela +
                ' WHERE id = ' + CAST(@id AS VARCHAR(MAX));
-    -- Executar a consulta SQL
+    -- Execute the SQL query
     EXEC(@sql)
 END
 
 GO
 ```
 
-Criação da procedure spListagem para listar registros ordenados por um campo específico
+Creation of the "spListagem" procedure to list records ordered by a specific field
 
 ```sql
 CREATE PROCEDURE spListagem
 (
-    -- Declaração dos parâmetros que serão utilizados
-    @tabela VARCHAR(MAX),                  -- Nome da tabela a ser consultada
-    @ordem VARCHAR(MAX)                    -- Nome do campo pelo qual os registros serão ordenados
+    -- Declaration of the parameters to be used
+    @tabela VARCHAR(MAX),                  -- Name of the table to be queried
+    @ordem VARCHAR(MAX)                    -- Name of the field by which the records will be ordered
 )
 AS
 BEGIN
-    -- Executar a consulta SQL para listar os registros ordenados
+    -- Execute the SQL query to list the records ordered by the specified field
     EXEC('SELECT * FROM ' + @tabela +
          ' ORDER BY ' + @ordem)
 END
@@ -514,43 +482,43 @@ END
 GO
 ```
 
-Criação da procedure spProximoId para obter o próximo ID disponível na tabela
+Creation of the "spProximoId" procedure to obtain the next available ID in the table.
 
 ```sql
 CREATE PROCEDURE spProximoId
 (
-    -- Declaração dos parâmetros que serão utilizados
-    @tabela VARCHAR(MAX)                   -- Nome da tabela para obter o próximo ID
+    -- Declaration of the parameters to be used
+    @tabela VARCHAR(MAX)                   -- Name of the table to get the next ID
 )
 AS
 BEGIN
-    -- Executar a consulta SQL para obter o maior ID e incrementar em 1
+    -- Execute the SQL query to get the highest ID and increment by 1
     EXEC('SELECT ISNULL(MAX(id) + 1, 1) AS MAIOR FROM ' + @tabela)
 END
 ```
 
-Criação da procedure spInsert_cadr_empr_parc para inserir uma nova empresa parceira
+Creation of the "spInsert_cadr_empr_parc" procedure to insert a new partner company.
 
 ```sql
 CREATE PROCEDURE spInsert_cadr_empr_parc
 (
-    -- Declaração dos parâmetros que serão utilizados
-    @ID INT,                               -- ID da empresa
-    @NM_EMPR VARCHAR(30),                  -- Nome da empresa
-    @CEP_EMPR VARCHAR(30),                 -- CEP da empresa
-    @LOG_EMPR VARCHAR(30),                 -- Logradouro da empresa
-    @NUM_EMPR VARCHAR(4),                  -- Número da empresa
-    @COMPL_EMPR VARCHAR(30),               -- Complemento do endereço da empresa
-    @BAIRRO_EMPR VARCHAR(20),              -- Bairro da empresa
-    @CIDADE_EMPR VARCHAR(20),              -- Cidade da empresa
-    @ESTADO_EMPR VARCHAR(2),               -- Estado da empresa
-    @CNPJ_EMPR VARCHAR(15),                -- CNPJ da empresa
-    @TELF_CONT_EMPR VARCHAR(10),           -- Telefone de contato da empresa
-    @ID_FUNC INT                           -- ID do funcionário responsável pela empresa (chave estrangeira)
+    -- Declaration of the parameters to be used
+    @ID INT,                               -- Company ID
+    @NM_EMPR VARCHAR(30),                  -- Company name
+    @CEP_EMPR VARCHAR(30),                 -- Company postal code (CEP)
+    @LOG_EMPR VARCHAR(30),                 - Company street address
+    @NUM_EMPR VARCHAR(4),                  -- Company building number
+    @COMPL_EMPR VARCHAR(30),               -- Company address complement
+    @BAIRRO_EMPR VARCHAR(20),              -- Company neighborhood
+    @CIDADE_EMPR VARCHAR(20),              -- Company city
+    @ESTADO_EMPR VARCHAR(2),               -- Company state
+    @CNPJ_EMPR VARCHAR(15),                --- Company CNPJ
+    @TELF_CONT_EMPR VARCHAR(10),           -- Company contact phone
+    @ID_FUNC INT                           -- Employee ID responsible for the company (foreign key)
 ) 
 AS
 BEGIN
-    -- Insere um novo registro na tabela 'cadr_empr_parc' com os dados informados
+    -- Insert a new record into the 'cadr_empr_parc' table with the provided data
     INSERT INTO cadr_empr_parc
     (ID, NM_EMPR, CEP_EMPR, LOG_EMPR, NUM_EMPR, COMPL_EMPR, BAIRRO_EMPR, CIDADE_EMPR, ESTADO_EMPR, CNPJ_EMPR, TELF_CONT_EMPR, ID_FUNC)
     VALUES
@@ -560,51 +528,51 @@ END
 GO
 ```
 
-Criação da procedure spUpdate_cadr_empr_parc para alterar os dados de uma empresa existente
+Creation of the "spUpdate_cadr_empr_parc" procedure to update the data of an existing company
 
 ```sql
 CREATE PROCEDURE spUpdate_cadr_empr_parc
 (
-    -- Declaração dos parâmetros que serão utilizados
-    @ID INT,                               -- ID da empresa
-    @NM_EMPR VARCHAR(30),                  -- Nome da empresa
-    @CEP_EMPR VARCHAR(30),                 -- CEP da empresa
-    @LOG_EMPR VARCHAR(30),                 -- Logradouro da empresa
-    @NUM_EMPR VARCHAR(4),                  -- Número da empresa
-    @COMPL_EMPR VARCHAR(30),               -- Complemento do endereço da empresa
-    @BAIRRO_EMPR VARCHAR(20),              -- Bairro da empresa
-    @CIDADE_EMPR VARCHAR(20),              -- Cidade da empresa
-    @ESTADO_EMPR VARCHAR(2),               -- Estado da empresa
-    @CNPJ_EMPR VARCHAR(15),                -- CNPJ da empresa
-    @TELF_CONT_EMPR VARCHAR(11),           -- Telefone de contato da empresa
-    @ID_FUNC INT                           -- ID do funcionário responsável pela empresa (chave estrangeira)
-) 
+    -- Declaration of the parameters to be used
+    @ID INT,                               -- Company ID
+    @NM_EMPR VARCHAR(30),                  -- Company name
+    @CEP_EMPR VARCHAR(30),                 -- Company postal code (CEP)
+    @LOG_EMPR VARCHAR(30),                 -- Company street address
+    @NUM_EMPR VARCHAR(4),                  -- Company building number
+    @COMPL_EMPR VARCHAR(30),               -- Company address complement
+    @BAIRRO_EMPR VARCHAR(20),              -- Company neighborhood
+    @CIDADE_EMPR VARCHAR(20),              -- Company city
+    @ESTADO_EMPR VARCHAR(2),               -- Company state
+    @CNPJ_EMPR VARCHAR(15),                -- Company CNPJ
+    @TELF_CONT_EMPR VARCHAR(11),           -- Company contact phone
+    @ID_FUNC INT                           -- Employee ID responsible for the company (foreign key)
+)  
 AS
 BEGIN
-    -- Atualiza o registro da empresa na tabela 'cadr_empr_parc' com os novos dados
+    -- Update the company record in the 'cadr_empr_parc' table with the new data
     UPDATE cadr_empr_parc SET
-        NM_EMPR = @NM_EMPR,                -- Nome da empresa
-        CEP_EMPR = @CEP_EMPR,              -- CEP da empresa
-        LOG_EMPR = @LOG_EMPR,              -- Logradouro da empresa
-        NUM_EMPR = @NUM_EMPR,              -- Número da empresa
-        COMPL_EMPR = @COMPL_EMPR,          -- Complemento do endereço da empresa
-        BAIRRO_EMPR = @BAIRRO_EMPR,        -- Bairro da empresa
-        CIDADE_EMPR = @CIDADE_EMPR,        -- Cidade da empresa
-        ESTADO_EMPR = @ESTADO_EMPR,        -- Estado da empresa
-        CNPJ_EMPR = @CNPJ_EMPR,            -- CNPJ da empresa
-        TELF_CONT_EMPR = @TELF_CONT_EMPR,  -- Telefone de contato da empresa
-        ID_FUNC = @ID_FUNC                 -- ID do funcionário responsável pela empresa
-    WHERE ID = @ID                         -- Condição para identificar a empresa a ser atualizada
+        NM_EMPR = @NM_EMPR,                -- Company name
+        CEP_EMPR = @CEP_EMPR,              -- Company postal code
+        LOG_EMPR = @LOG_EMPR,              -- Company street address
+        NUM_EMPR = @NUM_EMPR,              -- Company building number
+        COMPL_EMPR = @COMPL_EMPR,          -- Company address complement
+        BAIRRO_EMPR = @BAIRRO_EMPR,        -- Company neighborhood
+        CIDADE_EMPR = @CIDADE_EMPR,        -- Company city
+        ESTADO_EMPR = @ESTADO_EMPR,        -- Company state
+        CNPJ_EMPR = @CNPJ_EMPR,            -- Company CNPJ
+        TELF_CONT_EMPR = @TELF_CONT_EMPR,  -- Company contact phone
+        ID_FUNC = @ID_FUNC                 -- Employee ID responsible for the company
+    WHERE ID = @ID                         -- Condition to identify the company to be updated
 END
 GO
 ```
 
-Criação da procedure spInsert_cadr_func para inserir um novo funcionário
+Creation of the "spInsert_cadr_func" procedure to insert a new employee.
 
 ```sql
 CREATE PROCEDURE spInsert_cadr_func
 (
-    -- Declaração dos parâmetros que serão utilizados na inserção
+    -- Declaration of the parameters to be used in the insertion.
     @ID int,
     @LOGIN_FUNC varchar(30),
     @SENHA_FUNC varchar(30),
@@ -613,19 +581,19 @@ CREATE PROCEDURE spInsert_cadr_func
 ) 
 AS
 BEGIN
-    -- Insere um novo registro na tabela cadr_func
+    -- Inserts a new record into the cadr_func table.
     INSERT INTO cadr_func (ID, LOGIN_FUNC, SENHA_FUNC, DT_CADR, IMAGEM)
     VALUES (@ID, @LOGIN_FUNC, @SENHA_FUNC, @DT_CADR, @IMAGEM)
 END
 GO
 ```
 
-Criação da procedure spUpdate_cadr_func para alterar os dados de um funcionário existente
+Creation of the "spUpdate_cadr_func" procedure to update the details of an existing employee.
 
 ```sql
 CREATE PROCEDURE spUpdate_cadr_func
 (
-    -- Declaração dos parâmetros que serão utilizados na atualização
+    -- Declaration of the parameters to be used for the update
     @ID int,
     @LOGIN_FUNC varchar(30),
     @SENHA_FUNC varchar(30),
@@ -634,7 +602,7 @@ CREATE PROCEDURE spUpdate_cadr_func
 ) 
 AS
 BEGIN
-    -- Atualiza o registro existente na tabela cadr_func
+    -- Updates the existing record in the cadr_func table
     UPDATE cadr_func
     SET LOGIN_FUNC = @LOGIN_FUNC, SENHA_FUNC = @SENHA_FUNC, DT_CADR = @DT_CADR, IMAGEM = @IMAGEM
     WHERE ID = @ID
@@ -642,19 +610,19 @@ END
 GO
 ```
 
-Criação da procedure spConsultaAvancadaFuncionarios para consultar funcionários
+Creation of the "spConsultaAvancadaFuncionarios" procedure to query employees
 
 ```sql
 CREATE PROCEDURE spConsultaAvancadaFuncionarios
 (
-    -- Declaração dos parâmetros para a consulta avançada
+    -- Declaration of parameters for the advanced query
     @descricao varchar(max),
     @dataInicial datetime,
     @dataFinal datetime
 )
 AS
 BEGIN
-    -- Seleciona registros na tabela cadr_func com base em critérios fornecidos
+    -- Select records from the cadr_func table based on the provided criteria
     SELECT * FROM cadr_func
     WHERE cadr_func.DT_CADR BETWEEN @dataInicial AND @dataFinal
     AND cadr_func.LOGIN_FUNC LIKE '%' + @descricao + '%'
@@ -662,23 +630,23 @@ END
 GO
 ```
 
-Criação da procedure spInsert_cadr_sens para inserir um novo sensor
+Creation of the "spInsert_cadr_sens" procedure to insert a new sensor
 
 ```sql
 CREATE PROCEDURE spInsert_cadr_sens
 (
-    -- Declaração dos parâmetros que serão utilizados
-    @ID INT,                               -- ID do sensor
-    @DS_TIPO_SENS VARCHAR(30),             -- Descrição do tipo de sensor
-    @DT_VEND DATE,                         -- Data de venda do sensor
-    @VL_TEMP_ALVO DECIMAL(5, 2),           -- Valor da temperatura alvo
-    @CD_MOTOR INT,                         -- Código do motor associado ao sensor
-    @ID_FUNC INT,                          -- ID do funcionário responsável (chave estrangeira)
-    @ID_EMPR INT                           -- ID da empresa responsável (chave estrangeira)
+    -- Declaration of the parameters to be used
+    @ID INT,                               -- Sensor ID
+    @DS_TIPO_SENS VARCHAR(30),             -- Description of the sensor type
+    @DT_VEND DATE,                         -- Sale date of the sensor
+    @VL_TEMP_ALVO DECIMAL(5, 2),           -- Target temperature value
+    @CD_MOTOR INT,                         -- Motor code associated with the sensor
+    @ID_FUNC INT,                          -- Employee ID responsible (foreign key)
+    @ID_EMPR INT                           -- Company ID responsible (foreign key)
 ) 
 AS
 BEGIN
-    -- Insere um novo registro na tabela 'cadr_sens' com os dados informados
+    -- Insert a new record into the 'cadr_sens' table with the provided data
     INSERT INTO cadr_sens
     (ID, DS_TIPO_SENS, DT_VEND, VL_TEMP_ALVO, CD_MOTOR, ID_FUNC, ID_EMPR)
     VALUES
@@ -687,23 +655,23 @@ END
 GO
 ```
 
-Criação da procedure spUpdate_cadr_sens para alterar os dados de um sensor existente
+Creation of the "spUpdate_cadr_sens" procedure to update the data of an existing sensor
 
 ```sql
 CREATE PROCEDURE spUpdate_cadr_sens
 (
-    -- Declaração dos parâmetros que serão utilizados
-    @ID INT,                               -- ID do sensor
-    @DS_TIPO_SENS VARCHAR(30),             -- Descrição do tipo de sensor
-    @DT_VEND DATE,                         -- Data de venda do sensor
-    @VL_TEMP_ALVO DECIMAL(5, 2),           -- Valor da temperatura alvo
-    @CD_MOTOR INT,                         -- Código do motor associado ao sensor
-    @ID_FUNC INT,                          -- ID do funcionário responsável (chave estrangeira)
-    @ID_EMPR INT                           -- ID da empresa responsável (chave estrangeira)
+    -- Declaration of parameters to be used
+    @ID INT,                               -- Sensor ID
+    @DS_TIPO_SENS VARCHAR(30),             -- Description of the sensor type
+    @DT_VEND DATE,                         -- Sensor sale date
+    @VL_TEMP_ALVO DECIMAL(5, 2),           -- Target temperature value
+    @CD_MOTOR INT,                         -- Motor code associated with the sensor
+    @ID_FUNC INT,                          -- ID of the responsible employee (foreign key)
+    @ID_EMPR INT                           -- ID of the responsible company (foreign key)
 ) 
 AS
 BEGIN
-    -- Atualiza o registro do sensor na tabela 'cadr_sens' com os novos dados
+    -- Update the sensor record in the 'cadr_sens' table with the new data
     UPDATE cadr_sens SET
         DS_TIPO_SENS = @DS_TIPO_SENS,
         DT_VEND = @DT_VEND,
@@ -711,34 +679,34 @@ BEGIN
         CD_MOTOR = @CD_MOTOR,
         ID_FUNC = @ID_FUNC,
         ID_EMPR = @ID_EMPR
-    WHERE ID = @ID                       -- Condição para identificar o sensor a ser atualizado
+    WHERE ID = @ID                       -- Condition to identify the sensor to be updated
 END
 GO
 ```
 
 ## 📑 Manual
 
-### Como Rodar o Sistema
-1. **Carregar o código no ESP32:**
-   - Conecte o ESP32 à sua máquina e faça upload do código para o microcontrolador usando o Arduino IDE.
-   - O código fará a leitura de temperatura via sensor e enviará os dados para a plataforma FIWARE via MQTT.
+### How to Run the System
+1. **Upload the Code to the ESP32:**
+   - Connect the ESP32 to your computer and upload the code to the microcontroller using the Arduino IDE.
+   - The code will read temperature data from the sensor and send it to the FIWARE platform via MQTT.
 
-2. **Acessar a Plataforma Web:**
-   - Abra o navegador e acesse a plataforma web configurada para visualizar os dados de temperatura em tempo real.
+2. **Access the Web Platform:**
+   - Open your browser and access the configured web platform to view the real-time temperature data.
 
-### Exemplo de Uso
-- **Monitoramento em Tempo Real:**
-  Após a configuração, a temperatura do motor estará visível na interface web. Você poderá visualizar gráficos e alertas de temperatura.
+### Example of Use
+- **Real-Time Monitoring:**
+  After setup, the motor temperature will be visible on the web interface. You can view temperature graphs and alerts.
 
-### Como Testar
+### How to Test
 
-1. **Testar o envio de dados:** Após configurar o ESP32, verifique se os dados estão sendo enviados corretamente para a plataforma FIWARE.
-2. **Testar a interface web:** Acesse a plataforma web e confira se as informações estão sendo exibidas corretamente e se os gráficos de temperatura estão atualizados.
+1. **Test Data Sending:** After configuring the ESP32, check if the data is being sent correctly to the FIWARE platform.
+2. **Test the Web Interface:** Access the web platform and check if the information is displayed correctly and if the temperature graphs are updated.
 
-### Cobertura de Testes
+### Test Coverage
 
-- **Testes de conectividade:** Garantir que o ESP32 está se conectando corretamente à rede Wi-Fi.
-- **Testes de visualização de dados:** Verificar se a interface web está recebendo e exibindo os dados de temperatura em tempo real.
+- **Connectivity Tests:** Ensure the ESP32 is connecting correctly to the Wi-Fi network.
+- **Data Visualization Tests:** Verify if the web interface is receiving and displaying the temperature data in real-time.
 
 ## 🤝 Project Members
 
