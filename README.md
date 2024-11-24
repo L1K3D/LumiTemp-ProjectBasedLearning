@@ -109,7 +109,7 @@ O sistema é composto por três partes principais:
 [Sensor de Temperatura] → [ESP32] → [FIWARE] → [Plataforma Web]
 ```
 
-![diagrama_camadas](https://github.com/user-attachments/assets/1576a5d7-562f-47af-a26c-0902aa1188af)
+![diagrama_camadas](https://github.com/L1K3D/LumiTemp-ProjectBasedLearning/blob/main/Fiware/FiwareDeploy_new_v4.png?raw=true)
 
 ## 🔧 Código do ESP32
 
