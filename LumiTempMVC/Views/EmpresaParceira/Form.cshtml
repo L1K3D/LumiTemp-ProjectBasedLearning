@@ -1,134 +1,144 @@
 ﻿@model EmpresaParceiraViewModel
 @{
-    Layout = "~/Views/Shared/_Layout.cshtml"; // Define o layout compartilhado da página
+    var titulo = ViewBag.Operacao == "A" ? "Alteração de Empresa" : "Inclusão de Empresa";
 }
 
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-    <meta charset="utf-8" />
-    <link rel="stylesheet" type="text/css" href="~/css/estilos.css" /> <!-- Estilo da página -->
-    <title>@(ViewBag.Operacao == "A" ? "Alteração de Empresa" : "Inclusão de Empresa")</title> <!-- Título dinâmico -->
-</head>
+<div class="container mt-5">
+    <h1 class="text-center">@titulo</h1>
+    <form asp-action="Save" method="post" class="form-container">
+        <!-- Campo oculto para a operação -->
+        <input type="hidden" name="Operacao" value="@ViewBag.Operacao" />
 
-<body>
-    <div class="container">
-        <h2>@(ViewBag.Operacao == "A" ? "Alteração de Empresa" : "Inclusão de Empresa")</h2> <!-- Título dinâmico -->
-
-        <div class="row">
-            <div class="col-md-6">
-                <form asp-action="Save" method="post">
-                    <!-- Campo oculto para a operação -->
-                    <input type="hidden" name="Operacao" value="@ViewBag.Operacao" />
-
-                    <!-- Código da Empresa -->
-                    <div class="form-group">
-                        <label for="codigoEmpresa" class="control-label">Código da Empresa</label>
-                        <input type="number" id="codigoEmpresa" name="Id" value="@Model.id"
-                               class="form-control" @(ViewBag.Operacao == "A" ? "readonly" : "") />
-                        <span asp-validation-for="id" class="text-danger"></span>
-                    </div>
-
-                    <!-- Nome da Empresa -->
-                    <div class="form-group">
-                        <label for="nm_empr" class="control-label">Nome da Empresa</label>
-                        <input asp-for="nm_empr" class="form-control" placeholder="Digite o nome da empresa" />
-                        <span asp-validation-for="nm_empr" class="text-danger"></span>
-                    </div>
-
-                    <!-- CEP -->
-                    <div class="form-group">
-                        <label for="cep_empr" class="control-label">CEP da Empresa</label>
-                        <input type="button" name="btnBuscaCEP" value="Buscar" onclick="buscaCEP()" />
-                        <input asp-for="cep_empr" class="form-control" placeholder="Digite o CEP" />
-                        <span asp-validation-for="cep_empr" class="text-danger"></span>
-                    </div>
-
-                    <!-- Logradouro -->
-                    <div class="form-group">
-                        <label for="log_empr" class="control-label">Logradouro da Empresa</label>
-                        <input asp-for="log_empr" class="form-control" placeholder="Digite o Logradouro" />
-                        <span asp-validation-for="log_empr" class="text-danger"></span>
-                    </div>
-
-                    <!-- Numero -->
-                    <div class="form-group">
-                        <label for="num_empr" class="control-label">Número da Empresa</label>
-                        <input asp-for="num_empr" class="form-control" placeholder="Digite o Número" />
-                        <span asp-validation-for="num_empr" class="text-danger"></span>
-                    </div>
-
-                    <!-- Complemento -->
-                    <div class="form-group">
-                        <label for="compl_empr" class="control-label">Complemento da Empresa</label>
-                        <input asp-for="compl_empr" class="form-control" placeholder="Digite o Complemento" />
-                        <span asp-validation-for="compl_empr" class="text-danger"></span>
-                    </div>
-
-                    <!-- Bairro -->
-                    <div class="form-group">
-                        <label for="bairro_empr" class="control-label">Bairro da Empresa</label>
-                        <input asp-for="bairro_empr" class="form-control" placeholder="Digite o Bairro" />
-                        <span asp-validation-for="bairro_empr" class="text-danger"></span>
-                    </div>
-
-                    <!-- Cidade -->
-                    <div class="form-group">
-                        <label for="cidade_empr" class="control-label">Cidade da Empresa</label>
-                        <input asp-for="cidade_empr" class="form-control" placeholder="Digite a Cidade" />
-                        <span asp-validation-for="cidade_empr" class="text-danger"></span>
-                    </div>
-
-                    <!-- Estado -->
-                    <div class="form-group">
-                        <label for="estado_empr" class="control-label">Estado da Empresa</label>
-                        <input asp-for="estado_empr" class="form-control" placeholder="Digite o Estado" />
-                        <span asp-validation-for="estado_empr" class="text-danger"></span>
-                    </div>
-
-                    <!-- CNPJ -->
-                    <div class="form-group">
-                        <label for="cnpj_empr" class="control-label">CNPJ da Empresa</label>
-                        <input asp-for="cnpj_empr" class="form-control" placeholder="Digite o CNPJ" />
-                        <span asp-validation-for="cnpj_empr" class="text-danger"></span>
-                    </div>
-
-                    <!-- Telefone de Contato -->
-                    <div class="form-group">
-                        <label for="telf_cont_empr" class="control-label">Telefone de Contato</label>
-                        <input asp-for="telf_cont_empr" class="form-control" placeholder="Digite o telefone de contato" />
-                        <span asp-validation-for="telf_cont_empr" class="text-danger"></span>
-                    </div>
-
-                    <!-- Código do Usuário Associado -->
-                    <div class="form-group">
-                        <label for="id_func" class="control-label">Usuário Associado</label>
-                        <select asp-for="id_func" asp-items="ViewBag.funcionarios" class="form-control">
-                            <option value="">Selecione um usuário</option>
-                        </select>
-                        <span asp-validation-for="id_func" class="text-danger"></span>
-                    </div>
-
-                    <!-- Botões -->
-                    <div class="form-group mt-3">
-                        <button type="submit" class="btn btn-primary">Salvar Dados</button>
-                        <a asp-action="Index" class="btn btn-secondary">Voltar para a listagem</a>
-                    </div>
-                </form>
-            </div>
-        </div>
-
-        <!-- Link adicional para voltar -->
-        <div class="mt-4">
-            <a href="/EmpresaParceira" class="btn btn-link">Página Inicial</a>
-        </div>
-    </div>
-
-    <!-- Scripts -->
-    @section Scripts {
-        @{
-            await Html.RenderPartialAsync("_ValidationScriptsPartial");
+        <!-- Código da Empresa (somente para Alteração) -->
+        @if (ViewBag.Operacao == "A")
+        {
+            <fieldset class="border p-3 mb-4">
+                <div class="form-group">
+                    <label for="id" class="control-label">Código da Empresa</label>
+                    <input asp-for="id" class="form-control" readonly />
+                    <span asp-validation-for="id" class="text-danger"></span>
+                </div>
+            </fieldset>
         }
+
+        <!-- Nome da Empresa -->
+        <fieldset class="border p-3 mb-4">
+            <div class="form-group">
+                <label for="nm_empr" class="control-label">Nome da Empresa</label>
+                <input asp-for="nm_empr" class="form-control" placeholder="Digite o nome da empresa" />
+                <span asp-validation-for="nm_empr" class="text-danger"></span>
+            </div>
+
+            <!-- CEP -->
+            <div class="form-group">
+                <label for="cep_empr" class="control-label">CEP da Empresa</label>
+                <input type="button" name="btnBuscaCEP" value="Buscar" onclick="buscaCEP()" />
+                <input asp-for="cep_empr" class="form-control" placeholder="Digite o CEP" />
+                <span asp-validation-for="cep_empr" class="text-danger"></span>
+            </div>
+
+            <!-- Logradouro -->
+            <div class="form-group">
+                <label for="log_empr" class="control-label">Logradouro da Empresa</label>
+                <input asp-for="log_empr" class="form-control" placeholder="Digite o Logradouro" />
+                <span asp-validation-for="log_empr" class="text-danger"></span>
+            </div>
+
+            <!-- Número -->
+            <div class="form-group">
+                <label for="num_empr" class="control-label">Número da Empresa</label>
+                <input asp-for="num_empr" class="form-control" placeholder="Digite o Número" />
+                <span asp-validation-for="num_empr" class="text-danger"></span>
+            </div>
+
+            <!-- Complemento -->
+            <div class="form-group">
+                <label for="compl_empr" class="control-label">Complemento da Empresa</label>
+                <input asp-for="compl_empr" class="form-control" placeholder="Digite o Complemento" />
+                <span asp-validation-for="compl_empr" class="text-danger"></span>
+            </div>
+
+            <!-- Bairro -->
+            <div class="form-group">
+                <label for="bairro_empr" class="control-label">Bairro da Empresa</label>
+                <input asp-for="bairro_empr" class="form-control" placeholder="Digite o Bairro" />
+                <span asp-validation-for="bairro_empr" class="text-danger"></span>
+            </div>
+
+            <!-- Cidade -->
+            <div class="form-group">
+                <label for="cidade_empr" class="control-label">Cidade da Empresa</label>
+                <input asp-for="cidade_empr" class="form-control" placeholder="Digite a Cidade" />
+                <span asp-validation-for="cidade_empr" class="text-danger"></span>
+            </div>
+
+            <!-- Estado -->
+            <div class="form-group">
+                <label for="estado_empr" class="control-label">Estado da Empresa</label>
+                <input asp-for="estado_empr" class="form-control" placeholder="Digite o Estado" />
+                <span asp-validation-for="estado_empr" class="text-danger"></span>
+            </div>
+
+            <!-- CNPJ -->
+            <div class="form-group">
+                <label for="cnpj_empr" class="control-label">CNPJ da Empresa</label>
+                <input asp-for="cnpj_empr" class="form-control" placeholder="Digite o CNPJ" />
+                <span asp-validation-for="cnpj_empr" class="text-danger"></span>
+            </div>
+
+            <!-- Telefone de Contato -->
+            <div class="form-group">
+                <label for="telf_cont_empr" class="control-label">Telefone de Contato</label>
+                <input asp-for="telf_cont_empr" class="form-control" placeholder="Digite o telefone de contato" />
+                <span asp-validation-for="telf_cont_empr" class="text-danger"></span>
+            </div>
+
+            <!-- Código do Usuário Associado -->
+            <div class="form-group">
+                <label for="id_func" class="control-label">Usuário Associado</label>
+                <select asp-for="id_func" asp-items="ViewBag.funcionarios" class="form-control">
+                    <option value="">Selecione um usuário</option>
+                </select>
+                <span asp-validation-for="id_func" class="text-danger"></span>
+            </div>
+        </fieldset>
+
+        <!-- Botões -->
+        <div class="button-group d-flex justify-content-between mt-4">
+            <button type="submit" class="btn btn-success btn-lg">Salvar Dados</button>
+            <a href="/EmpresaParceira" class="btn btn-secondary btn-lg">Voltar para a listagem</a>
+        </div>
+    </form>
+
+    <a asp-action="Index" class="btn btn-link mt-4">Página Inicial</a>
+</div>
+
+<!-- Scripts -->
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
-</body>
-</html>
+}
+
+<script>
+    function buscaCEP() {
+        // Função para buscar CEP e preencher os campos automaticamente
+    }
+</script>
+
+<style>
+    .form-container {
+        max-width: 800px;
+        margin: 0 auto;
+    }
+
+    .btn-lg {
+        font-size: 1.2rem;
+        padding: 0.8rem 2rem;
+    }
+
+    .text-danger {
+        font-size: 0.875rem;
+        color: #dc3545;
+    }
+</style>

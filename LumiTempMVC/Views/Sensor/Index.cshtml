@@ -1,83 +1,74 @@
-﻿@model List<SensorViewModel> // Define o modelo como uma lista de SensorViewModel
+﻿@model List<SensorViewModel> 
 @{
-    ViewData["Title"] = "Sensor"; // Define o título da página
+    ViewData["Title"] = "Tela de Sensores";
 }
 
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-    <meta charset="utf-8" /> <!-- Define a codificação de caracteres -->
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /> <!-- Configura a visualização em dispositivos móveis -->
-    <title>Tela de Sensores</title> <!-- Título da aba do navegador -->
-    <link rel="stylesheet" href="~/css/estilos.css" /> <!-- Link para o arquivo CSS -->
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> <!-- Inclui a biblioteca jQuery -->
-</head>
+<div class="container mt-4">
+    <header class="text-center mb-5">
+        <h1>@ViewData["Title"]</h1>
+    </header>
 
-<body>
-
-    <div>
-        <h1>Sensores</h1> <!-- Título principal da seção -->
+    <!-- Botões de ação -->
+    <div class="d-flex justify-content-between mb-4">
+        <a href="/Sensor/create" class="btn btn-primary btn-lg">Novo Registro</a>
+        <a href="/home" class="btn btn-light btn-lg">Página Inicial</a>
+        <button class="btn btn-success btn-lg" onclick="extrairDados()">Extrair Dados</button>
     </div>
 
-    <div>
-        <!-- Botões de ação para criar novo registro e extrair dados -->
-        <a href="/Sensor/create" class="btn btn-primary">Novo Registro</a>
-        <a href="/home" class="btn btn-light">Página Inicial</a>
-        <button class="btn btn-success" onclick="extrairDados()">Extrair Dados</button> <!-- Botão para extrair dados -->
-    </div>
-    <br />
-    
-    <!-- Tabela para exibir os sensores cadastrados -->
-    <table class="table table-responsive">
-        <thead>
-            <tr>
-                <th>Ação</th> <!-- Coluna para ações como editar e apagar -->
-                <th>Código do Sensor</th>
-                <th>Descrição do Tipo de Sensor</th>
-                <th>Data da Venda</th>
-                <th>Valor da Temperatura Alvo Configurada</th>
-                <th>Código do Motor Associado ao Sensor</th>
-                <th>Código do Funcionário Associado ao Motor</th>
-                <th>Código da Empresa Associada ao Sensor</th>
-            </tr>
-        </thead>
-        <tbody>
-            @if (Model != null && Model.Count > 0) // Verifica se há sensores cadastrados
-            {
-                foreach (var sensor in Model) // Itera sobre a lista de sensores
+    <!-- Tabela de Sensores -->
+    <section>
+        <table class="table table-striped table-bordered table-hover">
+            <thead class="thead-dark">
+                <tr>
+                    <th>Ação</th>
+                    <th>Código do Sensor</th>
+                    <th>Descrição do Tipo de Sensor</th>
+                    <th>Data da Venda</th>
+                    <th>Valor da Temperatura Alvo Configurada</th>
+                    <th>Código do Motor Associado ao Sensor</th>
+                    <th>Código do Funcionário Associado ao Motor</th>
+                    <th>Código da Empresa Associada ao Sensor</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model != null && Model.Count > 0)
+                {
+                    foreach (var sensor in Model)
+                    {
+                        <tr>
+                            <td>
+                                <a href="/Sensor/Edit?id=@sensor.id" class="btn btn-warning btn-sm">Editar</a>
+                                <a href="javascript:void(0);" onclick="apagarSensor(@sensor.id)" class="btn btn-danger btn-sm">Apagar</a>
+                            </td>
+                            <td>@sensor.id</td>
+                            <td>@sensor.ds_tipo_sens</td>
+                            <td>@sensor.dt_vend</td>
+                            <td>@sensor.vl_temp_alvo</td>
+                            <td>@sensor.cd_motor</td>
+                            <td>@sensor.id_func</td>
+                            <td>@sensor.id_empr</td>
+                        </tr>
+                    }
+                }
+                else
                 {
                     <tr>
-                        <td>
-                            <!-- Botões para editar e apagar o registro do sensor -->
-                            <a href="/Sensor/Edit?id=@sensor.id" class="btn btn-warning">Editar</a>
-                            <a href="javascript:void(0);" onclick="apagarSensor(@sensor.id)" class="btn btn-danger">Apagar</a>
-                        </td>
-                        <td>@sensor.id</td> <!-- Código do sensor -->
-                        <td>@sensor.ds_tipo_sens</td> <!-- Descrição do tipo de sensor -->
-                        <td>@sensor.dt_vend</td> <!-- Data da venda -->
-                        <td>@sensor.vl_temp_alvo</td> <!-- Valor da temperatura alvo -->
-                        <td>@sensor.cd_motor</td> <!-- Código do motor associado -->
-                        <td>@sensor.id_func</td> <!-- Código do funcionário associado -->
-                        <td>@sensor.id_empr</td> <!-- Código da empresa associada -->
+                        <td colspan="8" class="text-center">Nenhum Sensor Cadastrado.</td>
                     </tr>
                 }
-            }
-            else // Se não houver sensores cadastrados
-            {
-                <tr>
-                    <td colspan="8" class="text-center">Nenhum Sensor Cadastrado.</td> <!-- Mensagem de aviso -->
-                </tr>
-            }
-        </tbody>
-    </table>
-    <script>
-        function apagarSensor(id) {
-            if (confirm('Confirma a exclusão do registro?'))
-                location.href = 'Sensor/Delete?id=' + id;
-        }
+            </tbody>
+        </table>
+    </section>
+</div>
 
-        function extrairDados() {
-            window.location.href = '@Url.Action("ExtrairDados", "Sensor")'; // Redireciona para a ação de extração de dados
+<script>
+    function apagarSensor(id) {
+        if (confirm('Confirma a exclusão do registro?')) {
+            location.href = 'Sensor/Delete?id=' + id;
         }
-    </script>
-</body>
+    }
+
+    function extrairDados() {
+        window.location.href = '@Url.Action("ExtrairDados", "Sensor")';
+    }
+</script>

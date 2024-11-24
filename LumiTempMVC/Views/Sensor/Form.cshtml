@@ -3,29 +3,18 @@
     Layout = "~/Views/Shared/_Layout.cshtml"; // Define o layout compartilhado da página
 }
 
-@if (ViewBag.Operacao == "A")
-{
-    <h2>Alteração de Sensor</h2>
-}
-else
-{
-    <h2>Inclusão de Sensor</h2>
-}
 
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-    <meta charset="utf-8" />
-    <link rel="stylesheet" type="text/css" href="~/css/estilos.css" /> <!-- Estilo da página -->
-    <title>Cadastro da Sensor</title> <!-- Título da página -->
-</head>
+        <!-- Cabeçalho com base na operação -->
+        <section>
+            <h2>@(ViewBag.Operacao == "A" ? "Alteração de Sensor" : "Inclusão de Sensor")</h2>
+        </section>
 
-<body>
-    <main class="container">
+        <!-- Formulário de Cadastro -->
         <section>
             <form asp-action="Save" method="post">
                 <input type="hidden" name="Operacao" value="@ViewBag.Operacao" />
 
+                <!-- Código do Sensor - Apenas leitura se for Alteração -->
                 @if (ViewBag.Operacao == "A")
                 {
                     <fieldset>
@@ -37,23 +26,18 @@ else
                     </fieldset>
                 }
 
-                <fieldset>
+                <!-- Código e Descrição do Sensor -->
+                <fieldset class="border p-3 mb-4">
                     <div class="form-group">
                         <label for="id" class="control-label">Código do Sensor</label>
-                        @if (ViewBag.Operacao == "I")
-                        {
-                            <input type="number" name="Id" value="@Model.id" class="form-control" />
-                        }
-                        else
-                        {
-                            <input type="number" name="Id" value="@Model.id" class="form-control" readonly />
-                        }
+                        <input type="number" name="Id" value="@Model.id" class="form-control" @(ViewBag.Operacao == "I" ? "" : "readonly") />
                         <span asp-validation-for="id" class="text-danger"></span>
                     </div>
 
                     <div class="form-group">
                         <label for="ds_tipo_sens" class="control-label">Descrição do Sensor</label>
-                        <select asp-for="ds_tipo_sens" asp-items="ViewBag.Tipos" class="form-control"> </select>
+                        <select asp-for="ds_tipo_sens" asp-items="ViewBag.Tipos" class="form-control">
+                        </select>
                         <span asp-validation-for="ds_tipo_sens" class="text-danger"></span>
                     </div>
 
@@ -77,17 +61,20 @@ else
 
                     <div class="form-group">
                         <label for="id_func" class="control-label">Código do Usuário Associado</label>
-                        <select asp-for="id_func" asp-items="ViewBag.funcionarios" class="form-control"></select>
+                        <select asp-for="id_func" asp-items="ViewBag.funcionarios" class="form-control">
+                        </select>
                         <span asp-validation-for="id_func" class="text-danger"></span>
                     </div>
 
                     <div class="form-group">
                         <label for="id_empr" class="control-label">Código da Empresa</label>
-                        <select asp-for="id_empr" asp-items="ViewBag.empresas" class="form-control"></select>
+                        <select asp-for="id_empr" asp-items="ViewBag.empresas" class="form-control">
+                        </select>
                         <span asp-validation-for="id_empr" class="text-danger"></span>
                     </div>
                 </fieldset>
 
+                <!-- Botões de Ação -->
                 <div class="form-group">
                     <button type="submit" class="btn btn-primary">Salvar Dados</button>
                 </div>
@@ -98,16 +85,14 @@ else
             </form>
         </section>
 
-        <footer>
+        <!-- Rodapé -->
+        <footer class="mt-4">
             <a asp-action="Index" class="btn btn-link">Voltar para a listagem</a>
         </footer>
-    </main>
+
 
     @section Scripts {
         @{
             await Html.RenderPartialAsync("_ValidationScriptsPartial");
         }
     }
-
-</body>
-</html>

@@ -2,13 +2,21 @@
 @{
     ViewData["Title"] = "Empresa Parceira";
 }
+
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Dahsboard</title>
+    <title>Dashboard</title>
+
     <!-- Link para o CSS -->
     <link rel="stylesheet" href="~/css/estilos.css" />
+
+    <!-- Font Awesome para ícones -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+
+    <!-- jQuery -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
     <script>
         function extrairDados() {
             // Chama a ação que irá extrair os dados
@@ -18,20 +26,46 @@
 </head>
 
 <body>
+    <!-- Cabeçalho -->
     <header>
-        <!-- Criando o Cabeçalho com barra de opções -->
-        <nav class="menu-opcoes">
-            <ul>
-                <li><a href="Home">Home</a></li>
-                <li><a href="Sensor">Cadastro de Sensores</a></li>
-                <li><a href="Funcionario">Cadastro de Funcionários</a></li>
-                <li><a href="Sobre">Sobre</a></li>
-            </ul>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <a class="navbar-brand" href="#">Empresa Parceira</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="Home">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="Sensor">Cadastro de Sensores</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="Funcionario">Cadastro de Funcionários</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="Sobre">Sobre</a>
+                    </li>
+                </ul>
+            </div>
         </nav>
     </header>
 
-    <div>
-        <h1>Dashboard</h1>
+    <!-- Conteúdo Principal -->
+    <div class="container mt-5">
+        <h1 class="display-4 text-center mb-4">Dashboard</h1>
+
+        <!-- Botão para Extrair Dados -->
+        <div class="text-center">
+            <button class="btn btn-success btn-lg" onclick="extrairDados()">
+                <i class="fas fa-download"></i> Extrair Dados
+            </button>
+        </div>
     </div>
+
+    <!-- Scripts para Bootstrap (se necessário para interações) -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
  *@

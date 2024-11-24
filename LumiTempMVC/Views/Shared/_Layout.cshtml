@@ -5,62 +5,68 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - LumiTempMVC</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="~/css/estilos.css" />
+    <link rel="stylesheet" href="~/css/estilos.css">
+    <link href='http://fonts.googleapis.com/css?family=Cookie' rel='stylesheet' type='text/css'>
 </head>
 <body>
-    <!-- Cabeçalho -->
-    <header class="container">
-        <!-- Logo -->
-        <a asp-area="" asp-controller="Home" asp-action="Index">
-            <img src="~/img/logolumi.png" alt="LumiTemp" class="logo" />
-        </a>
+    <header class="header-user-dropdown">
 
-        <!-- Menu de Navegação -->
-        @if (ViewBag.Logado == true)
-        {
-            <nav class="menu-opcoes">
-                <ul>
-                    <li><a asp-area="" asp-controller="EmpresaParceira" asp-action="Index">Empresas Parceiras</a></li>
-                    <li><a asp-area="" asp-controller="Funcionario" asp-action="Index">Funcionários</a></li>
-                    <li><a asp-area="" asp-controller="Sensor" asp-action="Index">Sensores</a></li>
-                    <li><a asp-area="" asp-controller="Dashboard" asp-action="Index">Dashboard</a></li>
-                    <li><a asp-area="" asp-controller="Sobre" asp-action="Index">Sobre</a></li>
-                    <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="" asp-controller="Funcionario" asp-action="ExibeConsultaAvancada">
-                            Consulta Avançada de Funcionarios
-                        </a>
-                    </li>
-                </ul>
-            </nav>
-            <p class="Login">
-                <a asp-area="" asp-controller="Login" asp-action="LogOff">Logoff</a>
-            </p>
-        }
-        else
-        {
-            <nav class="menu-opcoes">
-                <ul>
-                    <li><a asp-area="" asp-controller="Funcionario" asp-action="Create">Cadastrar Funcionário</a></li>
-                    <li><a asp-area="" asp-controller="Sobre" asp-action="Index">Sobre</a></li>
-                </ul>
-            </nav>
-            <p class="Login">
-                <a asp-area="" asp-controller="Login" asp-action="Index">Login</a>
-            </p>
-        }
+        <div class="header-limiter">
+            <h1>
+                <a href="Home"><img src="~/img/logolumi.png" alt="LumiTemp" class="logo" /></a>
+            </h1>
+
+            @if (ViewBag.Logado == true)
+            {
+                <nav>
+                    <a asp-area="" asp-controller="EmpresaParceira" asp-action="Index">Empresas Parceiras</a>
+                    <a asp-area="" asp-controller="Funcionario" asp-action="Index">Funcionários</a>
+                    <a asp-area="" asp-controller="Sensor" asp-action="Index">Sensores</a>
+                    <a asp-area="" asp-controller="Dashboard" asp-action="Index">Dashboard</a>
+                    <a asp-area="" asp-controller="Sobre" asp-action="Index">Sobre</a>
+                    <a class="nav-link" asp-area="" asp-controller="Funcionario" asp-action="ExibeConsultaAvancada">Consulta Avançada<span class="header-new-feature">new</span></a>
+                </nav>
+                <div class="header-user-menu">
+                    <img src="~/img/login.png" alt="User Image" />
+
+                    <ul>
+                        <li><a asp-area="" asp-controller="Funcionario" asp-action="Edit">Editar</a></li>
+                        <li><a asp-area="" asp-controller="Login" asp-action="LogOff">Logoff</a></li>
+                    </ul>
+                </div>
+            }
+            else
+            {
+                <nav>
+                    <a asp-area="" asp-controller="Funcionario" asp-action="Create">Cadastrar Funcionário</a>
+                    <a asp-area="" asp-controller="Sobre" asp-action="Index">Sobre</a>
+                </nav>
+
+
+                <div class="header-user-menu">
+                    <img src="~/img/login.png" alt="User Image" />
+
+                    <ul>
+                        <li><a asp-area="" asp-controller="Login" asp-action="">Login</a></li>
+                    </ul>
+                </div>
+            }
+        </div>
+
     </header>
 
-    <!-- Corpo Principal -->
-    <div class="container-principal">
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
-    </div>
+    <section id="main">
+        @RenderBody()
+    </section>
 
     <!-- Rodapé -->
-    <footer class="border-top footer text-muted text-center py-3">
-        <p>&copy; 2024 LumiTemp. Todos os direitos reservados.</p>
-    </footer>
+    <section class="footer_section">
+        <div class="container">
+            <p>
+                &copy; <span id="displayYear"></span> Todos os direitos reservados por LumiTemp
+            </p>
+        </div>
+    </section>
 
     <!-- Scripts -->
     <script src="~/lib/jquery/dist/jquery.min.js"></script>

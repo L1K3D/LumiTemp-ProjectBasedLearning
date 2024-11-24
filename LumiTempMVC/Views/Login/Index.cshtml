@@ -4,19 +4,128 @@
 }
 
 <body>
-    <section id="painel-login">
+    <section id="painel-login" class="d-flex justify-content-center align-items-center vh-100">
         <div class="container-login">
-            <h2>Login</h2>
-            <form action="/login/Fazlogin" method="post">
-                <label for="usuario" class="control-label">Usuário</label>
-                <input type="text" name="usuario" class="form-control" required placeholder='Usuário...' />
-                <label for="senha" class="control-label">Senha</label>
-                <input type="password" name="senha" class="form-control" required placeholder='Senha...' />
-                <br />
-                <input type="submit" value="Login" class="btn btn-success" />
-                <br />
-                <span class="text-danger"> @ViewBag.Erro</span>
+            <h2 class="text-center mb-4">Acesse sua conta</h2>
+            <form action="/login/Fazlogin" method="post" class="login-form">
+                <!-- Usuário -->
+                <div class="form-group">
+                    <label for="usuario" class="control-label">Usuário</label>
+                    <input type="text" name="usuario" class="form-control" required placeholder="Usuário..." />
+                    <span class="text-danger" id="usuarioErro"></span>
+                </div>
+
+                <!-- Senha -->
+                <div class="form-group">
+                    <label for="senha" class="control-label">Senha</label>
+                    <input type="password" name="senha" class="form-control" required placeholder="Senha..." />
+                    <span class="text-danger" id="senhaErro"></span>
+                </div>
+
+                <!-- Mensagem de erro do login -->
+                <div class="form-group">
+                    <span class="text-danger">@ViewBag.Erro</span>
+                </div>
+
+                <!-- Botão de Login -->
+                <div class="form-group">
+                    <button type="submit" class="btn btn-success btn-lg btn-block">Login</button>
+                </div>
+
+                <!-- Link para recuperação de senha -->
+                <div class="form-group text-center">
+                    <a href="Funcionario/Edit" class="text-muted">Esqueceu sua senha?</a>
+                </div>
             </form>
         </div>
     </section>
+
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+        }
+
+        #painel-login {
+            background-color: #f4f6f9;
+        }
+
+        .container-login {
+            background: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            width: 100%;
+            max-width: 400px;
+        }
+
+        h2 {
+            font-size: 1.8rem;
+            color: #333;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-control {
+            border-radius: 5px;
+            padding: 1rem;
+            border: 1px solid #ddd;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .form-control:focus {
+            border-color: #28a745;
+            box-shadow: 0 0 5px rgba(40, 167, 69, 0.5);
+        }
+
+        .btn-success {
+            background-color: #28a745;
+            border: none;
+            padding: 1rem;
+            width: 100%;
+            font-size: 1.1rem;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn-success:hover {
+            background-color: #218838;
+        }
+
+        .btn-block {
+            display: block;
+            width: 100%;
+        }
+
+        .text-danger {
+            font-size: 0.875rem;
+        }
+
+        .text-center {
+            text-align: center;
+        }
+
+        .text-muted {
+            color: #6c757d;
+        }
+
+        .login-form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .login-form a {
+            text-decoration: none;
+            font-size: 0.875rem;
+        }
+
+        /* Animação de erro (para campos de erro) */
+        .form-control.error {
+            border-color: #dc3545;
+            box-shadow: 0 0 5px rgba(220, 53, 69, 0.5);
+        }
+    </style>
 </body>

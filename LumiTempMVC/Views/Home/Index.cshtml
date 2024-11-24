@@ -1,58 +1,103 @@
 ﻿@{
     ViewData["Title"] = "Página Inicial";
 }
+@*     <div class="Titulo">
+        <h1>Bem-vindos à <strong>LumiTemp</strong></h1>
+        <p>Transformamos a forma como sua empresa monitora e gerencia dados.</p>
+    </div>
 
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Página Inicial - LumiTemp</title>
-    <link rel="stylesheet" href="~/css/estilos.css">
-</head>
-<body>
-    <!-- Cabeçalho -->
-    <header>
-        <div class="container">
-            <h1>Bem-vindos à <strong>LumiTemp</strong></h1>
-            <p>Transformamos a forma como sua empresa monitora e gerencia dados.</p>
-        </div>
-    </header>
+    <div class="Subtitulo">
+        <p>
+            Na <strong>LumiTemp</strong>, somos especializados no aluguel de sensores de alta tecnologia para otimizar o monitoramento em tempo real.
+            Oferecemos soluções personalizadas para atender às suas necessidades específicas, com o objetivo de gerar insights valiosos que melhorem a eficiência operacional da sua empresa.
+        </p>
+        <p>
+            Descubra como nossa tecnologia pode revolucionar seu negócio. <a href="https://wa.me/+5511964835563"><strong>Entre em contato</strong></a>  e faça parte da inovação!
+        </p>
+    </div>
 
-    <!-- Seção de Introdução -->
-    <section class="intro">
-        <div class="container">
-            <p>
-                Na <strong>LumiTemp</strong>, somos especializados no aluguel de sensores de alta tecnologia para otimizar o monitoramento em tempo real.
-                Oferecemos soluções personalizadas para atender às suas necessidades específicas, com o objetivo de gerar insights valiosos que melhorem a eficiência operacional da sua empresa.
-            </p>
-            <p>
-                Descubra como nossa tecnologia pode revolucionar seu negócio. <a href="https://wa.me/+5511964835563"><strong>Entre em contato</strong></a>  e faça parte da inovação!
-            </p>
-        </div>
-    </section>
-
-        <div class="container">
-            @if (ViewBag.Logado == true)
-            {
-                <div class="button-container">
-                <a class="btn btn-primary" asp-area="" asp-controller="EmpresaParceira" asp-action="Index">Empresas Parceiras</a>
+    <div class="container">
+        @if (ViewBag.Logado == true)
+        {
+            <div class="button-container">
                 <a class="btn btn-primary" asp-area="" asp-controller="Funcionario" asp-action="Index">Funcionários</a>
                 <a class="btn btn-primary" asp-area="" asp-controller="Sensor" asp-action="Index">Sensores</a>
                 <a class="btn btn-primary" asp-area="" asp-controller="Dashboard" asp-action="Index">Dashboard</a>
                 <a class="btn btn-primary" asp-area="" asp-controller="Sobre" asp-action="Index">Sobre</a>
                 <a class="btn btn-primary" asp-area="" asp-controller="FiwareData" asp-action="Index">FiwareData</a>
-                </div>
-            }
-            else
-            {
-                <div class="button-container">
-                <a class ="btn btn-primary" asp-area="" asp-controller="Funcionario" asp-action="Create">Cadastrar Funcionário</a>
+            </div>
+        }
+        else
+        {
+            <div>
+                <a class="btn btn-primary" asp-area="" asp-controller="Funcionario" asp-action="Create">Cadastrar Funcionário</a>
                 <a class="btn btn-primary" asp-area="" asp-controller="Sobre" asp-action="Index">Sobre</a>
-                <a class="btn btn-primary" asp-area="" asp-controller="Login" asp-action="Index">Login</a>
-                </div>
-            }
-        </div>
+            </div>
+        }
+    </div>
+ *@
 
-</body>
-</html>
+<div class="hero_area">
+    <section class="slider_section">
+        <div class="slider_bg_box">
+            <img src="~/img/Home.png" alt="LumiTemp">
+        </div>
+        <div id="customCarousel1" class="carousel slide" data-ride="carousel" data-interval="5000">
+            <div class="carousel-inner">
+                <!-- Primeiro Slide -->
+                <div class="carousel-item active">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-md-7">
+                                <div class="detail-box">
+                                    <h1>Bem-vindo à <strong>LumiTemp</strong></h1>
+                                    <p>Transformando a indústria automotiva com sensores de alta precisão que combinam tecnologia e inovação.</p>
+                                    <div class="btn-box">
+                                        <a href="https://wa.me/+5511964835563" class="btn1">Saiba Mais</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Segundo Slide -->
+                <div class="carousel-item">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-md-7">
+                                <div class="detail-box">
+                                    <h1>Revolução nos Veículos</h1>
+                                    <p>Oferecemos soluções inteligentes que ajustam condições internas e externas dos veículos para maior eficiência e segurança.</p>
+                                    <div class="btn-box">
+                                        <a href="https://wa.me/+5511964835563" class="btn1">Entre em contato</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Terceiro Slide -->
+                <div class="carousel-item">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-md-7">
+                                <div class="detail-box">
+                                    <h1>Conecte-se ao Futuro</h1>
+                                    <p>Com tecnologia de ponta e inteligência artificial, nossos sensores ajudam você a antecipar e solucionar desafios.</p>
+                                    <div class="btn-box">
+                                        <a href="https://wa.me/+5511964835563" class="btn1">Fale Conosco</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <ol class="carousel-indicators">
+                <li data-target="#customCarousel1" data-slide-to="0" class="active"></li>
+                <li data-target="#customCarousel1" data-slide-to="1"></li>
+                <li data-target="#customCarousel1" data-slide-to="2"></li>
+            </ol>
+        </div>
+    </section>
+</div>

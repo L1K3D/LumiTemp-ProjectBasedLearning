@@ -1,16 +1,25 @@
 ﻿@model List<FuncionarioViewModel>
-<table class="table table-striped">
-    <tr>
-        <th>Código</th>
-        <th>Login</th>
-        <th>Data de Cadastro</th>
-    </tr>
-    @foreach (var funcionario in Model)
-    {
-        <tr>
-            <td>@funcionario.id</td>
-            <td>@funcionario.login_func</td>
-            <td>@funcionario.dt_cadr.ToShortDateString()</td>
-        </tr>
-    }
-</table>
+<div class="container mt-4">
+    <h2 class="text-center mb-4">Lista de Funcionários</h2>
+    <div class="table-responsive">
+        <table class="table table-bordered table-hover table-striped">
+            <thead class="thead-dark">
+                <tr>
+                    <th scope="col">Código</th>
+                    <th scope="col">Login</th>
+                    <th scope="col">Data de Cadastro</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var funcionario in Model)
+                {
+                    <tr>
+                        <td>@funcionario.id</td>
+                        <td>@funcionario.login_func</td>
+                        <td>@funcionario.dt_cadr.ToShortDateString()</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

@@ -1,27 +1,35 @@
 ﻿@{
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<fieldset id="areaFiltro" class="form-group">
-    <legend>Consulta avançada de Funcionários</legend>
+
+<fieldset id="areaFiltro" class="form-group p-4 border rounded shadow-sm">
+    <legend class="font-weight-bold text-primary">Consulta Avançada de Funcionários</legend>
     <div class="row">
-        <div class="col-lg-4">
-            Descrição<br />
-            <input type="text" id="descricao" class="form-control" />
+        <!-- Descrição -->
+        <div class="col-lg-4 col-md-6 mb-3">
+            <label for="descricao" class="control-label">Descrição</label>
+            <input type="text" id="descricao" class="form-control" placeholder="Digite a descrição" />
         </div>
-        <div class="col-lg-2">
-            Período <br />
+
+        <!-- Data Inicial -->
+        <div class="col-lg-2 col-md-4 mb-3">
+            <label for="dataInicial" class="control-label">Período Inicial</label>
             <input type="date" id="dataInicial" class="form-control" />
         </div>
-        <div class="col-lg-2">
-            <br />
+
+        <!-- Data Final -->
+        <div class="col-lg-2 col-md-4 mb-3">
+            <label for="dataFinal" class="control-label">Período Final</label>
             <input type="date" id="dataFinal" class="form-control" />
         </div>
-        <div class="col-lg-1">
-            <br />
-            <input type="button" id="btnFiltro" class="btn btn-success" value="Aplicar"
-                   onclick="aplicaFiltroConsultaAvancada()" />
+
+        <!-- Botão Aplicar Filtro -->
+        <div class="col-lg-1 col-md-4 mb-3 d-flex align-items-end">
+            <button id="btnFiltro" class="btn btn-success w-100" onclick="aplicaFiltroConsultaAvancada()">Aplicar</button>
         </div>
     </div>
 </fieldset>
-<div id="resultadoConsulta" class="table-responsive">
-</div>
+
+<!-- Resultado da Consulta -->
+<div id="resultadoConsulta" class="table-responsive mt-4"></div>
+

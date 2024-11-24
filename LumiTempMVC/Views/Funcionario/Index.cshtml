@@ -4,64 +4,167 @@
 }
 <body>
     <main>
-        <div>
-            <h1>Funcionários</h1> <!-- Título principal da página -->
-        </div>
+        <div class="container mt-5">
+            <h1 class="text-center mb-4">Funcionários</h1> <!-- Título principal da página -->
+            
+            <!-- Botões de ação -->
+            <div class="d-flex justify-content-between mb-4">
+                <a href="/funcionario/create" class="btn btn-primary btn-lg">Novo Registro</a> <!-- Botão para criar um novo registro -->
+                <a href="/home" class="btn btn-light btn-lg">Página Inicial</a> <!-- Botão para voltar à página inicial -->
+                <button class="btn btn-success btn-lg" onclick="extrairDados()">Extrair Dados</button> <!-- Botão para extrair dados -->
+            </div>
 
-        <div>
-            <a href="/funcionario/create" class="btn btn-primary">Novo Registro</a> <!-- Botão para criar um novo registro -->
-            <a href="/home" class="btn btn-light">Página Inicial</a> <!-- Botão para voltar à página inicial -->
-            <button class="btn btn-success" onclick="extrairDados()">Extrair Dados</button> <!-- Botão para extrair dados -->
-        </div>
-        <br />
-
-        <table class="table table-responsive">
             <!-- Tabela para exibir os funcionários -->
-            <thead>
-                <tr>
-                    <th>Ação</th>
-                    <th>Número do Usuário</th>
-                    <th>Login do Usuário</th>
-                    <th>Data de Cadastro do Usuário</th>
-                    <th>Imagem Funcionário</th>
-                </tr>
-            </thead>
-            <tbody>
-                @if (Model != null && Model.Count > 0) // Verifica se existem funcionários cadastrados
-                {
-                    foreach (var funcionario in Model) // Itera sobre a lista de funcionários
+            <table class="table table-striped table-bordered table-hover table-responsive">
+                <thead>
+                    <tr>
+                        <th>Ação</th>
+                        <th>Número do Usuário</th>
+                        <th>Login do Usuário</th>
+                        <th>Data de Cadastro</th>
+                        <th>Imagem Funcionário</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (Model != null && Model.Count > 0)
+                    {
+                        foreach (var funcionario in Model)
+                        {
+                            <tr>
+                                <td>
+                                    <a href="/Funcionario/Edit?id=@funcionario.id" class="btn btn-warning btn-sm">Editar</a> <!-- Botão para editar o funcionário -->
+                                    <a href="javascript:void(0);" onclick="apagarFuncionario(@funcionario.id)" class="btn btn-danger btn-sm">Apagar</a> <!-- Botão para apagar o funcionário -->
+                                </td>
+                                <td>@funcionario.id</td>
+                                <td>@funcionario.login_func</td>
+                                <td>@funcionario.dt_cadr</td>
+                                <td>
+                                    <img src="data:image/jpeg;base64,@funcionario.ImagemEmBase64" class="img-fluid rounded-circle" width="50" alt="Imagem do Funcionário">
+                                </td>
+                            </tr>
+                        }
+                    }
+                    else
                     {
                         <tr>
-                            <td>
-                                <a href="/Funcionario/Edit?id=@funcionario.id" class="btn btn-warning">Editar</a> <!-- Botão para editar o funcionário -->
-                                <a href="javascript:void(0);" onclick="apagarFuncionario(@funcionario.id)" class="btn btn-danger">Apagar</a> <!-- Botão para apagar o funcionário -->
-                            </td>
-                            <td>@funcionario.id</td> <!-- Número do usuário -->
-                            <td>@funcionario.login_func</td> <!-- Login do usuário -->
-                            <td>@funcionario.dt_cadr</td> <!-- Data de cadastro do usuário -->
-                            <td>
-                                <img id="imgPreview" src="data:image/jpeg;base64,@funcionario.ImagemEmBase64"class="img-responsive" width="50">
-                            </td>
+                            <td colspan="5" class="text-center text-muted">Nenhum Funcionário Cadastrado.</td>
                         </tr>
                     }
-                }
-                else // Se não houver funcionários cadastrados
-                {
-                    <tr>
-                        <td colspan="5" class="text-center">Nenhum Funcionário Cadastrado.</td> <!-- Mensagem informativa -->
-                    </tr>
-                }
-            </tbody>
-        </table>
+                </tbody>
+            </table>
+        </div>
+
         <script>
             function apagarFuncionario(id) {
-                if (confirm('Confirma a exclusão do registro?'))
+                if (confirm('Confirma a exclusão do registro?')) {
                     location.href = 'Funcionario/Delete?id=' + id;
+                }
             }
 
             function extrairDados() {
                 window.location.href = '@Url.Action("ExtrairDados", "Funcionario")'; // Redireciona para a ação de extração de dados
             }
         </script>
+
+        <style>
+            body {
+                font-family: 'Arial', sans-serif;
+                background-color: #f8f9fa;
+            }
+
+            .container {
+                max-width: 1200px;
+                margin: 0 auto;
+                padding: 30px;
+                background-color: #fff;
+                border-radius: 8px;
+                box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            }
+
+            .table {
+                width: 100%;
+                margin-top: 20px;
+            }
+
+            .table-striped tbody tr:nth-of-type(odd) {
+                background-color: #f9f9f9;
+            }
+
+            .btn {
+                font-size: 1rem;
+                padding: 0.8rem 1.2rem;
+                border-radius: 5px;
+                transition: background-color 0.3s ease;
+            }
+
+            .btn-lg {
+                font-size: 1.2rem;
+                padding: 1rem 1.5rem;
+            }
+
+            .btn-primary {
+                background-color: #007bff;
+                border: none;
+            }
+
+            .btn-primary:hover {
+                background-color: #0056b3;
+            }
+
+            .btn-light {
+                background-color: #f8f9fa;
+                border: 1px solid #ced4da;
+            }
+
+            .btn-light:hover {
+                background-color: #e2e6ea;
+            }
+
+            .btn-success {
+                background-color: #28a745;
+                border: none;
+            }
+
+            .btn-success:hover {
+                background-color: #218838;
+            }
+
+            .btn-warning {
+                background-color: #ffc107;
+                border: none;
+            }
+
+            .btn-warning:hover {
+                background-color: #e0a800;
+            }
+
+            .btn-danger {
+                background-color: #dc3545;
+                border: none;
+            }
+
+            .btn-danger:hover {
+                background-color: #c82333;
+            }
+
+            .img-fluid {
+                max-width: 100%;
+                height: auto;
+            }
+
+            .rounded-circle {
+                border-radius: 50%;
+            }
+
+            .text-muted {
+                color: #6c757d;
+            }
+
+            .table th, .table td {
+                text-align: center;
+                vertical-align: middle;
+            }
+
+        </style>
     </main>
 </body>

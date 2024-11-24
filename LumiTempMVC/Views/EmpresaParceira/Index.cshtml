@@ -3,83 +3,86 @@
     ViewData["Title"] = "Empresa Parceira"; // Define o título da página
 }
 
-
 <body>
-
-
-    <main>
-        <div>
-            <h1>Empresas Parceiras</h1> <!-- Título principal da página -->
+    <main class="container mt-5">
+        <!-- Título da página -->
+        <div class="mb-4">
+            <h1 class="text-center">Empresas Parceiras</h1>
         </div>
 
-        <div>
-            <a href="/EmpresaParceira/create" class="btn btn-primary">Novo Registro</a> <!-- Botão para criar um novo registro -->
-            <a href="/home" class="btn btn-light">Página Inicial</a> <!-- Botão para voltar à página inicial -->
-            <button class="btn btn-success" onclick="extrairDados()">Extrair Dados</button> <!-- Botão para extrair dados -->
+        <!-- Botões de ação -->
+        <div class="d-flex justify-content-between mb-4">
+            <a href="/EmpresaParceira/create" class="btn btn-primary">Novo Registro</a>
+            <a href="/home" class="btn btn-light">Página Inicial</a>
+            <button class="btn btn-success" onclick="extrairDados()">Extrair Dados</button>
         </div>
-        <br />
 
-        <table class="table table-responsive"> <!-- Tabela para exibir as empresas parceiras -->
-            <thead>
-                <tr>
-                    <th>Ação</th>
-                    <th>Código da Empresa</th>
-                    <th>Nome da Empresa</th>
-                    <th>CEP da Empresa</th>
-                    <th>Logradouro da Empresa</th>
-                    <th>Número da Empresa</th>
-                    <th>Complemento da Empresa</th>
-                    <th>Bairro da Empresa</th>
-                    <th>Cidade da Empresa</th>
-                    <th>Estado da Empresa</th>
-                    <th>CNPJ da Empresa</th>
-                    <th>Telefone para Contato</th>
-                    <th>ID do Usuário Relacionado à Empresa</th>
-                </tr>
-            </thead>
-            <tbody>
-                @if (Model != null && Model.Count > 0) // Verifica se existem empresas cadastradas
-                {
-                    foreach (var empresa in Model) // Itera sobre a lista de empresas
+        <!-- Tabela de Empresas Parceiras -->
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <thead class="thead-dark">
+                    <tr>
+                        <th>Ação</th>
+                        <th>Código da Empresa</th>
+                        <th>Nome da Empresa</th>
+                        <th>CEP</th>
+                        <th>Logradouro</th>
+                        <th>Número</th>
+                        <th>Complemento</th>
+                        <th>Bairro</th>
+                        <th>Cidade</th>
+                        <th>Estado</th>
+                        <th>CNPJ</th>
+                        <th>Telefone</th>
+                        <th>ID do Usuário</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (Model != null && Model.Count > 0)
+                    {
+                        foreach (var empresa in Model)
+                        {
+                            <tr>
+                                <td>
+                                    <a href="/EmpresaParceira/Edit?id=@empresa.id" class="btn btn-warning btn-sm">Editar</a>
+                                    <a href="javascript:void(0);" onclick="apagarEmpresaParceira(@empresa.id)" class="btn btn-danger btn-sm">Apagar</a>
+                                </td>
+                                <td>@empresa.id</td>
+                                <td>@empresa.nm_empr</td>
+                                <td>@empresa.cep_empr</td>
+                                <td>@empresa.log_empr</td>
+                                <td>@empresa.num_empr</td>
+                                <td>@empresa.compl_empr</td>
+                                <td>@empresa.bairro_empr</td>
+                                <td>@empresa.cidade_empr</td>
+                                <td>@empresa.estado_empr</td>
+                                <td>@empresa.cnpj_empr</td>
+                                <td>@empresa.telf_cont_empr</td>
+                                <td>@empresa.id_func</td>
+                            </tr>
+                        }
+                    }
+                    else
                     {
                         <tr>
-                            <td>
-                                <a href="/EmpresaParceira/Edit?id=@empresa.id" class="btn btn-warning">Editar</a> <!-- Botão para editar a empresa -->
-                                <a href="javascript:void(0);" onclick="apagarEmpresaParceira(@empresa.id)" class="btn btn-danger">Apagar</a> <!-- Botão para apagar a empresa -->
-                            </td>
-                            <td>@empresa.id</td> <!-- Código da empresa -->
-                            <td>@empresa.nm_empr</td> <!-- Nome da empresa -->
-                            <td>@empresa.cep_empr</td> <!-- CEP da empresa -->
-                            <td>@empresa.log_empr</td> <!-- Logradouro da empresa -->
-                            <td>@empresa.num_empr</td> <!-- Numero da empresa -->
-                            <td>@empresa.compl_empr</td> <!-- Complemento da empresa -->
-                            <td>@empresa.bairro_empr</td> <!-- Bairro da empresa -->
-                            <td>@empresa.cidade_empr</td> <!-- Cidade da empresa -->
-                            <td>@empresa.estado_empr</td> <!-- Estado da empresa -->
-                            <td>@empresa.cnpj_empr</td> <!-- CNPJ da empresa -->
-                            <td>@empresa.telf_cont_empr</td> <!-- Telefone para contato -->
-                            <td>@empresa.id_func</td> <!-- ID do usuário associado -->
+                            <td colspan="13" class="text-center">Nenhuma Empresa Cadastrada.</td>
                         </tr>
                     }
-                }
-                else // Se não houver empresas cadastradas
-                {
-                    <tr>
-                        <td colspan="7" class="text-center">Nenhuma Empresa Cadastrada.</td> <!-- Mensagem informativa -->
-                    </tr>
-                }
-            </tbody>
-        </table>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Scripts -->
         <script>
             function apagarEmpresaParceira(id) {
-                if (confirm('Confirma a exclusão do registro?'))
+                if (confirm('Confirma a exclusão do registro?')) {
                     location.href = 'EmpresaParceira/Delete?id=' + id;
+                }
             }
 
             function extrairDados() {
-                window.location.href = '@Url.Action("ExtrairDados", "EmpresaParceira")'; // Redireciona para a ação de extração de dados
+                window.location.href = '@Url.Action("ExtrairDados", "EmpresaParceira")';
             }
         </script>
     </main>
 </body>
-</html>

@@ -3,8 +3,18 @@
     ViewData["Title"] = "Erro";
 }
 
-<h2 class="text-danger">Um erro ocorreu durante o processamento da sua requisição. </h2>
+<div class="container mt-5">
+    <div class="alert alert-danger">
+        <h2 class="text-center"><i class="bi bi-exclamation-circle-fill"></i> Oops! Algo deu errado.</h2>
+        <p class="text-center">
+            <strong class="d-block mb-2">Detalhes do erro:</strong>
+            <code class="bg-light p-2 border rounded">@Model.Erro</code>
+        </p>
+        <div class="text-center">
+            <a href="Home" class="btn btn-danger">Voltar à Página Inicial</a>
+        </div>
+    </div>
+</div>
 
-<p>
-    <strong>Detalhes do erro: </strong> <code> @Model.Erro </code>
-</p>
+<!-- Link do Bootstrap Icons (se você estiver usando Bootstrap 5) -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
