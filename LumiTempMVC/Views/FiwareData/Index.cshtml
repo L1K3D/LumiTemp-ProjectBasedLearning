@@ -19,6 +19,7 @@
 
         <!-- Alerta -->
         <div id="alert" style="display: none; color: red; font-weight: bold;">Valor acima da média!</div>
+        <div id="offline-alert" style="display: none; color: gray; font-weight: bold;">Servidor Offline</div>
 
         <!-- Dropdown para selecionar tipo de sensor -->
         <label for="sensor-type">Selecione o Tipo de Sensor:</label>
@@ -70,9 +71,11 @@
             $.get(`/api/Api/temperature?lastN=${lastN}`, function (data) {
                 console.log("Data received:", data);
                 drawGraph(data, selectedSensor);
+                document.getElementById('offline-alert').style.display = 'none';
             }).fail(function (jqXHR, textStatus, errorThrown) {
                 console.error("Error fetching data:", textStatus, errorThrown);
                 drawGraph(null, selectedSensor);
+                document.getElementById('offline-alert').style.display = 'block';
             });
         }
 
@@ -112,8 +115,8 @@
                 }
             } else {
                 var offlineTrace = {
-                    x: [],
-                    y: [],
+                    x: [new Date(), new Date()],
+                    y: [0, 0],
                     type: 'scatter',
                     mode: 'lines+markers',
                     text: 'Servidor Offline',

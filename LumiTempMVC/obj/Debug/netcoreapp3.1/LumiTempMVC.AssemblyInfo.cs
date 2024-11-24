@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("LumiTempMVC")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+c190155c0549a4b0e0fffb511afcc99cc9e85591")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+d76b827af9e47e404da2bf9d891b61a54a377b60")]
 [assembly: System.Reflection.AssemblyProductAttribute("LumiTempMVC")]
 [assembly: System.Reflection.AssemblyTitleAttribute("LumiTempMVC")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

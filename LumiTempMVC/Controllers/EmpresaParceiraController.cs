@@ -37,11 +37,11 @@ namespace LumiTempMVC.Controllers
 
                 // Criação do conteúdo do arquivo
                 StringBuilder sb = new StringBuilder();
-                sb.AppendLine("Id, Nome"); // Cabeçalho do arquivo
+                sb.AppendLine("Id, Nome Empresa, CEP Empresa, Logradouro Empresa, Número Empresa, Complemento Empresa, Bairro Empresa, Cidade Empresa, Estado Empresa, CNPJ Empresa, Telefone Empresa, ID Funcionario"); // Cabeçalho do arquivo
 
                 foreach (var empresa in lista)
                 {
-                    sb.AppendLine($"{empresa.id}, {empresa.nm_empr}, {empresa.cep_empr}, {empresa.cnpj_empr}, {empresa.telf_cont_empr}, {empresa.id_func}"); // Adiciona cada funcionario ao arquivo
+                    sb.AppendLine($"{empresa.id}, {empresa.nm_empr}, {empresa.cep_empr}, {empresa.log_empr}, {empresa.num_empr}, {empresa.compl_empr}, {empresa.bairro_empr}, {empresa.cidade_empr}, {empresa.estado_empr}, {empresa.cnpj_empr}, {empresa.telf_cont_empr}, {empresa.id_func}"); // Adiciona cada funcionario ao arquivo
                 }
 
                 // Definindo o nome do arquivo

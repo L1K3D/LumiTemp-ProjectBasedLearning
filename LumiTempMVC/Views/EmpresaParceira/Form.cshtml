@@ -24,6 +24,13 @@
         <!-- Nome da Empresa -->
         <fieldset class="border p-3 mb-4">
             <div class="form-group">
+                <label for="id" class="control-label">Código do Sensor</label>
+                <input type="number" name="Id" value="@Model.id" class="form-control" @(ViewBag.Operacao == "I" ? "" : "readonly") />
+                <span asp-validation-for="id" class="text-danger"></span>
+            </div>
+
+        <fieldset class="border p-3 mb-4">
+            <div class="form-group">
                 <label for="nm_empr" class="control-label">Nome da Empresa</label>
                 <input asp-for="nm_empr" class="form-control" placeholder="Digite o nome da empresa" />
                 <span asp-validation-for="nm_empr" class="text-danger"></span>

@@ -152,15 +152,65 @@ namespace LumiTempMVC.Controllers
         {
             try
             {
-                ViewBag.Operacao = "A"; // Define a operação como "Atualização"
-                var model = DAO.Consulta(id); // Busca o registro pelo ID
-                if (model == null)
-                    return RedirectToAction(NomeViewIndex); // Redireciona se o registro não for encontrado
+                if (NecessitaCaixaComboFuncionarios == true)
+                {
+                    PreparaListaFuncionariosParaCombo();
+                    ViewBag.Operacao = "A";
+                    var model = DAO.Consulta(id); // Busca o registro pelo ID
+                    if (model == null)
+                        return RedirectToAction(NomeViewIndex); // Redireciona se o registro não for encontrado
+                    else
+                    {
+                        PreencheDadosParaView("A", model); // Preenche dados adicionais para a View
+                        return View(NomeViewForm, model); // Retorna o formulário preenchido com o registro
+                    }
+                }
+                else if (NecessitaCaixaComboEmpresas == true)
+                {
+
+                    PreparaListaEmpresasParceirasParaCombo();
+                    ViewBag.Operacao = "A";
+                    var model = DAO.Consulta(id); // Busca o registro pelo ID
+                    if (model == null)
+                        return RedirectToAction(NomeViewIndex); // Redireciona se o registro não for encontrado
+                    else
+                    {
+                        PreencheDadosParaView("A", model); // Preenche dados adicionais para a View
+                        return View(NomeViewForm, model); // Retorna o formulário preenchido com o registro
+                    }
+
+                }
+                else if (NecessitaCaixaComboEmpresas == true && NecessitaCaixaComboFuncionarios == true)
+                {
+
+                    PreparaListaFuncionariosParaCombo();
+                    PreparaListaEmpresasParceirasParaCombo();
+                    ViewBag.Operacao = "A";
+                    var model = DAO.Consulta(id); // Busca o registro pelo ID
+                    if (model == null)
+                        return RedirectToAction(NomeViewIndex); // Redireciona se o registro não for encontrado
+                    else
+                    {
+                        PreencheDadosParaView("A", model); // Preenche dados adicionais para a View
+                        return View(NomeViewForm, model); // Retorna o formulário preenchido com o registro
+                    }
+
+                }
                 else
                 {
-                    PreencheDadosParaView("A", model); // Preenche dados adicionais para a View
-                    return View(NomeViewForm, model); // Retorna o formulário preenchido com o registro
+
+                    ViewBag.Operacao = "A";
+                    var model = DAO.Consulta(id); // Busca o registro pelo ID
+                    if (model == null)
+                        return RedirectToAction(NomeViewIndex); // Redireciona se o registro não for encontrado
+                    else
+                    {
+                        PreencheDadosParaView("A", model); // Preenche dados adicionais para a View
+                        return View(NomeViewForm, model); // Retorna o formulário preenchido com o registro
+                    }
+
                 }
+
             }
             catch (Exception erro)
             {

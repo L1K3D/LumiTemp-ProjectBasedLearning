@@ -55,7 +55,7 @@ namespace LumiTempMVC.Controllers
 
                 // Criação do conteúdo do arquivo
                 StringBuilder sb = new StringBuilder();
-                sb.AppendLine("Id, Nome"); // Cabeçalho do arquivo
+                sb.AppendLine("Id, Login Funcionário, Data de cadastro funcionário"); // Cabeçalho do arquivo
 
                 foreach (var funcionario in lista)
                 {
