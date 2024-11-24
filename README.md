@@ -1,6 +1,6 @@
 # 🚀 LUMITEMP - System for Monitoring Electric Motor Drying Using IoT
 
-# 📚 Index
+# 📚 Table of Contents
 
 1. [💻 Technologies Used](#technologies-used)
 2. [📜 Introduction](#introduction)
@@ -76,11 +76,11 @@ The prototype consists of a 6-ohm, 50W heating resistor used for heating, attach
 
 
 ### Connections
-| Componente | Conexão |
-|------------|---------|
-| ESP32      | ...     |
-| Fonte DC   | ...     |
-| Protótipo  | ...     |
+| Component | Connection |
+|-----------|------------|
+| ESP32     | Connects to Wi-Fi and MQTT broker to transmit data |
+| DC Power Supply | Powers the system |
+| Prototype | Connects to temperature and heating elements for control |
 
 ### Electrical Diagram
 ![Diagrama Eletrico](https://github.com/user-attachments/assets/344704d4-6a32-4f0e-82db-04b97bd81879)
@@ -93,12 +93,12 @@ The prototype consists of a 6-ohm, 50W heating resistor used for heating, attach
 ### FIWARE
 FIWARE is an open-source platform that provides tools and components for developing smart solutions, especially for IoT and smart cities. It facilitates the integration of connected devices, real-time data management, and the creation of services based on open APIs, such as the Context Broker. With support for data analytics and security, FIWARE is ideal for developing scalable and efficient systems, enabling process automation and optimization across various sectors.
 
-## 🏗️ Architecture Overview
-The system is composed of three main parts:
+## 🏗️ System Architecture
+The system consists of the following key components:
 
-1. **Hardware (ESP32 and sensors):** The ESP32 connects to temperature sensors and sends data to the FIWARE platform via MQTT.
-2. **FIWARE Platform:** Receives data and manages IoT devices, providing an interface for data analysis.
-3. **Web Platform:** Interface where users can view data and control devices remotely.
+1. **Hardware (ESP32 and sensors):** Collects and transmits temperature data via Wi-Fi and MQTT.
+2. **FIWARE Platform:** Manages IoT data and devices, allowing users to control and monitor systems remotely.
+3. **Web Interface:** Provides an interface for user interaction, allowing temperature control and system monitoring.
 
 ### Architecture Diagram
 ```plaintext
@@ -687,26 +687,87 @@ GO
 ## 📑 Manual
 
 ### How to Run the System
-1. **Upload the Code to the ESP32:**
-   - Connect the ESP32 to your computer and upload the code to the microcontroller using the Arduino IDE.
-   - The code will read temperature data from the sensor and send it to the FIWARE platform via MQTT.
 
-2. **Access the Web Platform:**
-   - Open your browser and access the configured web platform to view the real-time temperature data.
+#### 1. Upload the Code to the ESP32
+   - **Connect the ESP32 to Your Computer:**
+     - Use a USB cable to connect the ESP32 to your computer.
+     - Make sure you have the **Arduino IDE** installed. If you don't have it yet, you can download it [here](https://www.arduino.cc/en/software).
+     - Open the Arduino IDE, select the appropriate board (`ESP32 Dev Module`) and port under **Tools > Board** and **Tools > Port**.
+   
+   - **Upload the Code to the ESP32:**
+     - Open the provided code in the Arduino IDE.
+     - Click on the **Upload** button in the IDE (the right arrow icon). This will compile and upload the code to your ESP32.
+     - Once the upload is complete, the ESP32 will start executing the code, reading temperature data from the sensor and sending it to the FIWARE platform via MQTT.
+
+#### 2. Access the Web Platform
+   - **View Real-Time Data:**
+     - Open a web browser (Chrome, Firefox, etc.) on your computer or smartphone.
+     - Enter the IP address or URL of the web platform configured to receive and display data.
+     - You should be able to see real-time temperature data, graphs, and status indicators for the motor drying system.
+     - The web platform will provide visual feedback with temperature trends, current readings, and any alerts or notifications based on the system’s thresholds.
 
 ### Example of Use
-- **Real-Time Monitoring:**
-  After setup, the motor temperature will be visible on the web interface. You can view temperature graphs and alerts.
+
+#### Real-Time Monitoring
+   - **View Temperature Data:**
+     - Once the system is up and running, you will be able to see the motor temperature on the web interface.
+     - The temperature readings will be updated in real-time as the ESP32 sends data to the FIWARE platform.
+     - The system will also display historical temperature data in graphical form, allowing you to track trends over time.
+   
+   - **Alerts and Notifications:**
+     - If the motor temperature exceeds or falls below the predefined thresholds, the system will trigger an alert on the web platform, notifying users of potential issues.
+     - The alert system is designed to provide real-time feedback on the motor's condition, ensuring timely intervention if necessary.
 
 ### How to Test
 
-1. **Test Data Sending:** After configuring the ESP32, check if the data is being sent correctly to the FIWARE platform.
-2. **Test the Web Interface:** Access the web platform and check if the information is displayed correctly and if the temperature graphs are updated.
+#### 1. Test Data Sending
+   - **Verify Data Transmission from ESP32:**
+     - After configuring the ESP32 and uploading the code, monitor the output in the **Arduino IDE Serial Monitor**.
+     - Ensure that the ESP32 is successfully connecting to the Wi-Fi network and the MQTT broker.
+     - You should see the temperature readings being transmitted periodically to the FIWARE platform. If there are no messages or connection issues, check the Wi-Fi configuration and MQTT settings in the code.
+   
+   - **Check Data on the FIWARE Platform:**
+     - Log in to the FIWARE platform and ensure the temperature data from the ESP32 is being received and displayed correctly in the platform’s dashboard.
 
+#### 2. Test the Web Interface
+   - **Access the Web Platform:**
+     - Open a web browser and navigate to the configured web platform URL.
+     - Verify that the temperature data is being displayed in real-time on the web interface.
+     - Check the following features:
+       - The **temperature graph** should be continuously updated with the latest data.
+       - The **temperature readings** should match what is being sent by the ESP32.
+       - Ensure that the web platform is receiving and rendering the data accurately.
+
+   - **Test the Alerts:**
+     - Manually simulate a change in the temperature (if possible) to trigger an alert.
+     - Check if the web platform correctly shows a notification when the temperature exceeds the defined threshold.
+   
 ### Test Coverage
 
-- **Connectivity Tests:** Ensure the ESP32 is connecting correctly to the Wi-Fi network.
-- **Data Visualization Tests:** Verify if the web interface is receiving and displaying the temperature data in real-time.
+#### Connectivity Tests
+   - **Wi-Fi Connectivity:**
+     - Ensure that the ESP32 is able to connect to the configured Wi-Fi network. If there are issues, check the SSID and password in the code and verify the network settings.
+   
+   - **MQTT Connectivity:**
+     - Verify that the ESP32 is successfully connecting to the MQTT broker and transmitting data.
+     - Use tools like **MQTT Explorer** or **MQTT.fx** to monitor MQTT messages and confirm that the data is being published correctly.
+
+#### Data Visualization Tests
+   - **Real-Time Data Update:**
+     - Check that the temperature data is updating in real-time on the web interface.
+     - Ensure that the system can handle changes in temperature readings and update the visualizations accordingly.
+   
+   - **Graphical Representation:**
+     - Verify that the web interface is rendering temperature graphs correctly, including historical data.
+     - Test the responsiveness of the platform to ensure it scales well on different devices (PCs, tablets, and smartphones).
+
+#### Alert and Notification Tests
+   - **Threshold-based Alerts:**
+     - Simulate scenarios where the motor temperature exceeds the upper or lower thresholds.
+     - Ensure that the system triggers an alert and sends notifications to the web platform.
+   
+   - **Test Alert Handling:**
+     - Check that the web platform displays the alert and provides clear information on the issue (e.g., “Motor temperature is too high!”).
 
 ## 🤝 Project Members
 
