@@ -27,7 +27,9 @@ GO
 ---------------------------------------------------------------------
 
 -- Remove a tabela de cadastro de funcionários caso ela já exista
-DROP TABLE IF EXISTS cadr_func;
+DROP TABLE IF EXISTS cadr_func
+
+GO
 
 -- Cria a tabela de cadastro de funcionários
 CREATE TABLE cadr_func (
@@ -36,14 +38,16 @@ CREATE TABLE cadr_func (
     SENHA_FUNC VARCHAR(30),                 -- Senha do funcionário (máximo 30 caracteres)
     DT_CADR DATE,                           -- Data de cadastro do funcionário
     IMAGEM VARBINARY(MAX)                   -- Imagem do funcionário
-);
+)
 
 GO
 
 ---------------------------------------------------------------------
 
 -- Remove a tabela de cadastro de empresas parceiras caso ela já exista
-DROP TABLE IF EXISTS cadr_empr_parc;
+DROP TABLE IF EXISTS cadr_empr_parc
+
+GO
 
 -- Cria a tabela de cadastro de empresas parceiras
 CREATE TABLE cadr_empr_parc (
@@ -61,14 +65,16 @@ CREATE TABLE cadr_empr_parc (
     ID_FUNC INT,                            -- Código do funcionário responsável (chave estrangeira)
     CONSTRAINT FK_CD_FUNC FOREIGN KEY (ID_FUNC)  
         REFERENCES cadr_func(ID)            -- Chave estrangeira referenciando 'ID' da tabela 'cadr_func'
-);
+)
 
 GO
 
 ---------------------------------------------------------------------
 
 -- Remove a tabela de cadastro de sensores caso ela já exista
-DROP TABLE IF EXISTS cadr_sens;
+DROP TABLE IF EXISTS cadr_sens
+
+GO
 
 -- Cria a tabela de cadastro de sensores
 CREATE TABLE cadr_sens (
@@ -83,6 +89,8 @@ CREATE TABLE cadr_sens (
     ID_EMPR INT,                            -- Código da empresa parceira (chave estrangeira)
     CONSTRAINT FK_CD_EMPR_SENS FOREIGN KEY (ID_EMPR)  -- Nome único para a chave estrangeira de 'ID_EMPR'
         REFERENCES cadr_empr_parc(ID)
-);
+)
+
+GO
 
 ---------------------------------------------------------------------

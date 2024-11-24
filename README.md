@@ -117,34 +117,48 @@ The system consists of the following key components:
 #include <WiFi.h>
 #include <PubSubClient.h>
 
-// Settings - editable variables
+// Configurations - editable variables
 const char* default_SSID = "your_wifi_network"; // Wi-Fi network name
 const char* default_PASSWORD = "your_wifi_password"; // Wi-Fi network password
-const char* default_BROKER_MQTT = "ip_host_fiware"; // IP of the MQTT Broker
-const int default_BROKER_PORT = 1883; // Port of the MQTT Broker
-const char* default_TOPICO_SUBSCRIBE = "/TEF/lamp001/cmd"; // MQTT topic for listening
-const char* default_TOPICO_PUBLISH_1 = "/TEF/lamp001/attrs"; // MQTT topic for sending information to the Broker
-const char* default_TOPICO_PUBLISH_2 = "/TEF/lamp001/attrs/l"; // MQTT topic for sending information to the Broker
-const char* default_ID_MQTT = "fiware_001"; // MQTT ID
-const int default_D4 = 2; // Onboard LED pin
+const char* default_BROKER_MQTT = "ip_host_fiware"; // MQTT Broker IP
+const int default_BROKER_PORT = 1883; // MQTT Broker port
+const char* default_ID_MQTT = "your_fiware_mqtt_id"; // MQTT ID
+
+// MQTT topics for temperature
+const char* default_TOPICO_TEMPERATURA_PUBLISH_1 = "/TEF/temp04x/attrs"; // Temperature state publication
+const char* default_TOPICO_TEMPERATURA_PUBLISH_2 = "/TEF/temp04x/attrs/t"; // Temperature value publication
+char* TOPICO_TEMPERATURA_PUBLISH_1 = const_cast<char*>(default_TOPICO_TEMPERATURA_PUBLISH_1);
+char* TOPICO_TEMPERATURA_PUBLISH_2 = const_cast<char*>(default_TOPICO_TEMPERATURA_PUBLISH_2);
 ```
 
 ### Wi-Fi and MQTT Broker Configuration
 Establishes the connection to the Wi-Fi network and the MQTT Broker. If the connection is lost, the code attempts to reconnect automatically.
 
 ```cpp
+// Editable settings for Wi-Fi and MQTT connection
+char* SSID = const_cast<char*>(default_SSID);
+char* PASSWORD = const_cast<char*>(default_PASSWORD);
+char* BROKER_MQTT = const_cast<char*>(default_BROKER_MQTT);
+int BROKER_PORT = default_BROKER_PORT;
+char* ID_MQTT = const_cast<char*>(default_ID_MQTT);
+int D4 = default_D4; // LED pin
+
+WiFiClient espClient; // Wi-Fi client
+PubSubClient MQTT(espClient); // MQTT client
+char EstadoSaida = '0'; // Initial state of the LED
+
 void initWiFi() {
-    delay(10);
-    Serial.println("------Conexao WI-FI------");
-    Serial.print("Conectando-se na rede: ");
-    Serial.println(SSID);
-    Serial.println("Aguarde");
-    reconectWiFi();
+    delay(10); // Short delay to allow the Wi-Fi module to initialize
+    Serial.println("------Conexao WI-FI------"); // Print Wi-Fi connection status
+    Serial.print("Conectando-se na rede: "); // Print message indicating network connection
+    Serial.println(SSID); // Print the SSID of the network
+    Serial.println("Aguarde"); // Print message asking to wait
+    reconectWiFi(); // Call function to reconnect to Wi-Fi
 }
 
 void initMQTT() {
-    MQTT.setServer(BROKER_MQTT, BROKER_PORT);
-    MQTT.setCallback(mqtt_callback);
+    MQTT.setServer(BROKER_MQTT, BROKER_PORT); // Set the MQTT broker server and port
+    MQTT.setCallback(mqtt_callback); // Set the callback function for incoming MQTT messages
 }
 ```
 
@@ -153,24 +167,23 @@ In the setup(), the necessary components are initialized, including the configur
 
 ```cpp
 void setup() {
-    InitOutput();
-    initSerial();
-    initWiFi();
-    initMQTT();
-    delay(5000);
-    MQTT.publish(TOPICO_PUBLISH_1, "s|on");
+    InitOutput(); // Initialize the output pin for the LED
+    initSerial(); // Initialize serial communication
+    initWiFi(); // Connect to the Wi-Fi network
+    initMQTT(); // Connect to the MQTT broker
+    delay(5000); // Delay for 5000 milliseconds (5 seconds) to ensure connections are stable
 }
 ```
 
 ### Main Loop
-The loop() function checks the Wi-Fi and MQTT connection, sends the LED state, and handles the transmission of data about the brightness.
+The loop() function checks the Wi-Fi and MQTT connection, sends the LED state, and handles the transmission of data about the temperature.
 
 ```cpp
 void loop() {
-    VerificaConexoesWiFIEMQTT();
-    EnviaEstadoOutputMQTT();
-    handleLuminosity();
-    MQTT.loop();
+    VerificaConexoesWiFIEMQTT(); // Check Wi-Fi and MQTT connections
+    handleTemperature(); // Monitor and handle temperature readings
+    MQTT.loop(); // Maintain the MQTT connection
+    delay(1500); // Delay for 1500 milliseconds (1.5 seconds)
 }
 ```
 
@@ -180,20 +193,20 @@ The reconnectWiFi() function attempts to reconnect the ESP32 to the Wi-Fi networ
 ```cpp
 void reconectWiFi() {
     if (WiFi.status() == WL_CONNECTED)
-        return;
-    WiFi.begin(SSID, PASSWORD);
+        return; // If already connected to Wi-Fi, exit the function
+    WiFi.begin(SSID, PASSWORD); // Start Wi-Fi connection with the given SSID and password
     while (WiFi.status() != WL_CONNECTED) {
-        delay(100);
-        Serial.print(".");
+        delay(100); // Delay for 100 milliseconds
+        Serial.print("."); // Print a dot to indicate connection progress
     }
-    Serial.println();
-    Serial.println("Conectado com sucesso na rede ");
-    Serial.print(SSID);
-    Serial.println("IP obtido: ");
-    Serial.println(WiFi.localIP());
+    Serial.println(); // Print a new line
+    Serial.println("Conectado com sucesso na rede "); // Print successful connection message
+    Serial.print(SSID); // Print the SSID of the connected network
+    Serial.println("IP obtido: "); // Print message for obtained IP
+    Serial.println(WiFi.localIP()); // Print the local IP address obtained
 
     // Ensure that the LED starts off
-    digitalWrite(D4, LOW);
+    digitalWrite(D4, LOW); // Set the LED pin to LOW (off)
 }
 ```
 
@@ -202,80 +215,86 @@ The mqtt_callback() function is responsible for handling messages received from 
 
 ```cpp
 void mqtt_callback(char* topic, byte* payload, unsigned int length) {
-    String msg;
+    String msg; // Initialize a string to store the message
     for (int i = 0; i < length; i++) {
-        char c = (char)payload[i];
-        msg += c;
+        char c = (char)payload[i]; // Convert each byte of the payload to a char
+        msg += c; // Append the char to the message string
     }
-    Serial.print("- Mensagem recebida: ");
-    Serial.println(msg);
+    Serial.print("- Mensagem recebida: "); // Print "Message received: "
+    Serial.println(msg); // Print the received message
 
     // Forms the topic pattern for comparison
-    String onTopic = String(topicPrefix) + "@on|";
-    String offTopic = String(topicPrefix) + "@off|";
+    String onTopic = String(topicPrefix) + "@on|"; // Define the topic pattern for "on" messages
+    String offTopic = String(topicPrefix) + "@off|"; // Define the topic pattern for "off" messages
 
     // Compares with the received topic
-    if (msg.equals(onTopic)) {
-        digitalWrite(D4, HIGH);
-        EstadoSaida = '1';
+    if (msg.equals(onTopic)) { // If the message matches the "on" pattern
+        digitalWrite(D4, HIGH); // Turn the LED on
+        EstadoSaida = '1'; // Set the LED state to on
     }
 
-    if (msg.equals(offTopic)) {
-        digitalWrite(D4, LOW);
-        EstadoSaida = '0';
+    if (msg.equals(offTopic)) { // If the message matches the "off" pattern
+        digitalWrite(D4, LOW); // Turn the LED off
+        EstadoSaida = '0'; // Set the LED state to off
     }
 }
 ```
 
 ### Control and Monitoring Functions
-These functions are responsible for ensuring that the LED and the brightness sensor operate correctly.
+These functions are responsible for ensuring that the LED and the temperature sensor operate correctly.
 
 #### Connection Verification
 The VerificaConexoesWiFIEMQTT() function ensures that Wi-Fi and MQTT are connected, and reconnects if necessary.
 
 ```cpp
 void VerificaConexoesWiFIEMQTT() {
-    if (!MQTT.connected())
-        reconnectMQTT();
-    reconectWiFi();
-}
-```
-
-#### LED State Transmission
-The EnviaEstadoOutputMQTT() function publishes the LED state to the MQTT Broker and prints the status to the serial monitor.
-
-```cpp
-void EnviaEstadoOutputMQTT() {
-    if (EstadoSaida == '1') {
-        MQTT.publish(TOPICO_PUBLISH_1, "s|on");
-        Serial.println("- Led Ligado");
-    }
-
-    if (EstadoSaida == '0') {
-        MQTT.publish(TOPICO_PUBLISH_1, "s|off");
-        Serial.println("- Led Desligado");
-    }
-    Serial.println("- Estado do LED onboard enviado ao broker!");
-    delay(1000);
+    if (!MQTT.connected()) // Check if the MQTT client is connected
+        reconnectMQTT(); // If not connected, attempt to reconnect to the MQTT broker
+    reconectWiFi(); // Ensure the Wi-Fi connection is still active, and reconnect if necessary
 }
 ```
 
 ### Helper Functions
 InitOutput(): Initializes the LED pin and performs a blink to indicate that the system has started.
 reconnectMQTT(): Attempts to reconnect to the MQTT Broker if the connection is lost.
-handleLuminosity(): Reads the brightness value from an analog sensor (connected to pin 34) and sends this value to the MQTT Broker.
+handleLuminosity(): Reads the temperature value from an analog sensor (connected to pin 34) and sends this value to the MQTT Broker.
 
 ```cpp
 void InitOutput() {
-    pinMode(D4, OUTPUT);
-    digitalWrite(D4, HIGH);
-    boolean toggle = false;
+    pinMode(D4, OUTPUT); // Set the D4 pin as an output
+    digitalWrite(D4, HIGH); // Turn the LED on
+    boolean toggle = false; // Initialize toggle variable to false
 
     for (int i = 0; i <= 10; i++) {
-        toggle = !toggle;
-        digitalWrite(D4, toggle);
-        delay(200);
+        toggle = !toggle; // Toggle the LED state
+        digitalWrite(D4, toggle); // Write the toggle state to the LED
+        delay(200); // Delay for 200 milliseconds
     }
+}
+
+void reconnectMQTT() {
+    while (!MQTT.connected()) { // Loop until the MQTT client is connected
+        Serial.print("* Tentando se conectar ao Broker MQTT: "); // Print message indicating connection attempt
+        Serial.println(BROKER_MQTT); // Print the MQTT broker IP
+        if (MQTT.connect(ID_MQTT)) { // Try to connect to the MQTT broker with the specified ID
+            Serial.println("Conectado com sucesso ao broker MQTT!"); // Print success message
+            MQTT.subscribe(TOPICO_LUMINOSIDADE_SUBSCRIBE); // Subscribe to the control topic
+        } else { // If connection failed
+            Serial.println("Falha ao reconectar no broker."); // Print failure message
+            Serial.println("Haverá nova tentativa de conexão em 2s"); // Print retry message
+            delay(2000); // Wait for 2000 milliseconds (2 seconds) before retrying
+        }
+    }
+}
+
+void handleTmperature() {
+    const float potPin = 34; // Analog pin for luminosity (Might need to change this to 'int')
+    float sensorValue = analogRead(potPin); // Read the sensor value (Might need to change this to 'int')
+    float temperature = map(sensorValue, 0, 4095, 0, 100); // Map the sensor value to a range of 0 to 100 (Might need to change this to 'int')
+    char msg[10];
+    sprintf(msg, "%d", temperature); // Convert the temperature to a string
+    MQTT.publish(TOPICO_TEMPERATURA_PUBLISH_2, msg); // Publish the temperature
+    Serial.println("Temperature: " + String(msg)); // Display the temperature on the serial monitor
 }
 ```
 
@@ -324,6 +343,7 @@ GO
 | `LOGIN_FUNC`  | `VARCHAR(30)` | Employee login (maximum 30 characters).                  |
 | `SENHA_FUNC`  | `VARCHAR(30)` | Employee password (maximum 30 characters).               |
 | `DT_CADR`     | `DATE`        | Employee registration date.                              |
+| `IMAGEM`      | `VARBINARY`   | Employee registration image.                             |
 
 **Remove the partner companies registration table if it already exists**
 
@@ -354,14 +374,20 @@ CREATE TABLE cadr_empr_parc (
 GO
 ```
 
-| Column           | Type          | Description                                                    |
-|------------------|---------------|----------------------------------------------------------------|
-| `CD_EMPR`        | `INT`         | Partner company code, primary key with auto-increment.         |
-| `NM_EMPR`        | `VARCHAR(30)` | Partner company name (maximum 30 characters).                  |
-| `CEP_EMPR`       | `VARCHAR(8)`  | Partner company ZIP code (8 characters).                       |
-| `CNPJ_EMPR`      | `VARCHAR(15)` | Partner company CNPJ (15 characters).                          |
-| `TELF_CONT_EMPR` | `VARCHAR(10)` | Partner company contact phone (10 characters).                 |
-| `CD_FUNC`        | `INT`         | Foreign key referencing the responsible employee.              |
+| Column           | Type          | Description                                                        |
+|------------------|---------------|--------------------------------------------------------------------|
+| `ID`             | `INT`         | Partner company code, primary key with auto-increment.             |
+| `NM_EMPR`        | `VARCHAR(30)` | Partner company name (maximum 30 characters).                      |
+| `CEP_EMPR`       | `VARCHAR(8)`  | Partner company ZIP code (8 characters).                           |
+| `LOG_EMPR`       | `VARCHAR(30)` | Partner company address (maximum 30 characters).                   |
+| `NUM_EMPR`       | `VARCHAR(4)`  | Partner company address number (maximum 4 characters).             |
+| `COMPL_EMPR`     | `VARCHAR(30)` | Partner company address complement (maximum 30 characters).        |
+| `BAIRRO_EMPR`    | `VARCHAR(20)` | Partner company neighborhood (maximum 20 characters).              |
+| `CIDADE_EMPR`    | `VARCHAR(20)` | Partner company city (maximum 20 characters).                      |
+| `ESTADO_EMPR`    | `VARCHAR(2)`  | Partner company state (maximum 2 characters).                      |
+| `CNPJ_EMPR`      | `VARCHAR(15)` | Partner company CNPJ (15 characters).                              |
+| `TELF_CONT_EMPR` | `VARCHAR(11)` | Partner company contact phone (11 characters).                     |
+| `ID_FUNC`        | `INT`         | Responsible employee code, foreign key referencing `cadr_func(ID)`.|
 
 **Remove the sensors registration table if it already exists**
 
@@ -392,7 +418,6 @@ CREATE TABLE cadr_sens (
 | `DS_TIPO_SENS`  | `VARCHAR(30)` | Description of the sensor type (maximum 30 characters).         |
 | `DT_VEND`       | `DATETIME`    | Sensor sale date. Required field.                               |
 | `VL_TEMP_ALVO`  | `DECIMAL(5,2)`| Target temperature value with 5 digits and 2 decimal places.    |
-| `VL_UMID_ALVO`  | `DECIMAL(5,2)`| Target humidity value with 5 digits and 2 decimal places.       |
 | `CD_MOTOR`      | `INT`         | Motor code related to the sensor.                               |
 | `CD_FUNC`       | `INT`         | Foreign key referencing the responsible employee.               |
 | `CD_EMPR`       | `INT`         | Foreign key referencing the related partner company.            |

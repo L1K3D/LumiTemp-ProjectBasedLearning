@@ -54,7 +54,6 @@ void setup() {
     initWiFi(); // Conecta ao Wi-Fi
     initMQTT(); // Conecta ao Broker MQTT
     delay(5000);
-    MQTT.publish(TOPICO_LUMINOSIDADE_PUBLISH_1, "s|on"); // Publica o estado inicial no tópico
 }
 
 // Função principal - loop
@@ -116,20 +115,6 @@ void VerificaConexoesWiFIEMQTT() {
     if (!MQTT.connected())
         reconnectMQTT();
     reconectWiFi();
-}
-
-// Envia o estado do LED ao broker MQTT
-void EnviaEstadoOutputMQTT() {
-    if (EstadoSaida == '1') {
-        MQTT.publish(TOPICO_LUMINOSIDADE_PUBLISH_1, "s|on");
-        Serial.println("- Led Ligado");
-    }
-    if (EstadoSaida == '0') {
-        MQTT.publish(TOPICO_LUMINOSIDADE_PUBLISH_1, "s|off");
-        Serial.println("- Led Desligado");
-    }
-    Serial.println("- Estado do LED onboard enviado ao broker!");
-    delay(1000);
 }
 
 // Função para inicializar o LED com uma sequência piscante
