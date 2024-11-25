@@ -37,6 +37,9 @@ namespace LumiTempMVC.DAO
             sensor.id_func = Convert.ToInt32(registro["ID_FUNC"]);
             sensor.id_empr = Convert.ToInt32(registro["ID_EMPR"]);
 
+            if (registro.Table.Columns.Contains("DescricaoEmpresa"))
+                sensor.DescricaoEmpresa = registro["DescricaoEmpresa"].ToString();
+
             return sensor; // Retorna o objeto SensorViewModel preenchido
         }
 
@@ -44,6 +47,20 @@ namespace LumiTempMVC.DAO
         {
             Tabela = "cadr_sens";
         }
-
+        public List<SensorViewModel> ConsultaAvancadaSensores(string descricao, int empresa, DateTime dataInicial,
+                                                              DateTime dataFinal)
+        {
+            SqlParameter[] p = {
+                new SqlParameter("descricao", descricao),
+                new SqlParameter("empresa", empresa),
+                new SqlParameter("dataInicial", dataInicial),
+                new SqlParameter("dataFinal", dataFinal),
+ };
+            var tabela = HelperDAO.ExecutaProcSelect("spConsultaAvancadaSensores", p);
+            var lista = new List<SensorViewModel>();
+            foreach (DataRow dr in tabela.Rows)
+                lista.Add(MontaModel(dr));
+            return lista;
+        }
     }
 }

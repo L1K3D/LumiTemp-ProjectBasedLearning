@@ -411,3 +411,26 @@ BEGIN
         ID_EMPR = @ID_EMPR
     WHERE ID = @ID                       -- Condi��o para identificar o sensor a ser atualizado
 END
+
+-- Cria��o da procedure spConsultaAvancadaSensores para consultar sensores
+
+create procedure [dbo].[spConsultaAvancadaSensores] 
+(
+	@descricao varchar(max),
+	@empresa int,
+	@dataInicial datetime,
+	@dataFinal datetime)
+as
+begin
+	declare @empresaIni int
+	declare @empresaFim int
+ 
+	set @empresaIni = case @empresa when 0 then 0 else @empresa end
+	set @empresaFim = case @empresa when 0 then 999999 else @empresa end 
+ select cadr_sens.*, cadr_empr_parc.NM_EMPR as 'DescricaoEmpresa'
+from cadr_sens 
+inner join cadr_empr_parc on cadr_sens.ID_EMPR = cadr_empr_parc.ID
+where cadr_sens.DS_TIPO_SENS like '%' + @descricao + '%' and 
+ cadr_sens.DT_VEND between @dataInicial and @dataFinal and 
+ cadr_sens.ID_EMPR between @empresaIni and @empresaFim; 
+end

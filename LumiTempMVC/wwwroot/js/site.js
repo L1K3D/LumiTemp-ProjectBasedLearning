@@ -49,3 +49,22 @@ function aplicaFiltroConsultaAvancada() {
     });
 
 } 
+function aplicaFiltroConsultaAvancada2() {
+    var vDescricao = document.getElementById('descricao').value;
+    var vEmpresa = document.getElementById('empresa').value;
+    var vDataInicial = document.getElementById('dataInicial').value;
+    var vDataFinal = document.getElementById('dataFinal').value;
+    $.ajax({
+        url: "/sensor/ObtemDadosConsultaAvancada2",
+        data: { descricao: vDescricao, empresa: vEmpresa, dataInicial: vDataInicial, dataFinal: vDataFinal },
+        success: function (dados) {
+            if (dados.erro != undefined) {
+                alert(dados.msg);
+            }
+            else {
+                document.getElementById('resultadoConsulta').innerHTML = dados;
+            }
+        },
+    });
+
+} 

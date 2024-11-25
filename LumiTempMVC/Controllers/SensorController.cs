@@ -6,6 +6,7 @@ using LumiTempMVC.DAO;
 using System.Text;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Http;
+using System.Data.SqlTypes;
 
 namespace LumiTempMVC.Controllers
 {
@@ -85,6 +86,49 @@ namespace LumiTempMVC.Controllers
             listaTipos.Add(new SelectListItem("UMIDADE", "UMIDADE"));
             listaTipos.Add(new SelectListItem("TEMPERATURA", "TEMPERATURA"));
             ViewBag.Tipos = listaTipos;
+        }
+        public IActionResult ExibeConsultaAvancada()
+        {
+            try
+            {
+                PreparaComboEmpresas();
+                ViewBag.empresas.Insert(0, new SelectListItem("TODAS", "0"));
+                return View("ConsultaAvancada");
+            }
+            catch (Exception erro)
+            {
+                return View("Error", new ErrorViewModel(erro.Message));
+            }
+        }
+        public IActionResult ObtemDadosConsultaAvancada2(string descricao, int empresa, DateTime dataInicial,
+            DateTime dataFinal)
+        {
+            try
+            {
+                SensorDAO dao = new SensorDAO();
+                if (string.IsNullOrEmpty(descricao))
+                    descricao = "";
+                if (dataInicial.Date == Convert.ToDateTime("01/01/0001"))
+                    dataInicial = SqlDateTime.MinValue.Value;
+                if (dataFinal.Date == Convert.ToDateTime("01/01/0001"))
+                    dataFinal = SqlDateTime.MaxValue.Value;
+                var lista = dao.ConsultaAvancadaSensores(descricao, empresa, dataInicial, dataFinal);
+                return PartialView("pvGridSensores", lista);
+            }
+            catch (Exception erro)
+            {
+                return Json(new { erro = true, msg = erro.Message });
+            }
+        }
+        private void PreparaComboEmpresas()
+        {
+            EmpresaParceiraDAO dao = new EmpresaParceiraDAO();
+            var lista = dao.Listagem();
+            List<SelectListItem> listaRetorno = new List<SelectListItem>();
+            foreach (var categ in lista)
+                listaRetorno.Add(new SelectListItem(categ.nm_empr, categ.id.ToString()));
+
+            ViewBag.Empresas = listaRetorno;
         }
 
     }

@@ -28,5 +28,8 @@ namespace LumiTempMVC.Models // Declaração do namespace para organizar o códi
 
         // Propriedade para armazenar o código da empresa associada ao sensor
         public int id_empr { get; set; }
+
+        //Propriedade para armazenar a Descrição da Empresa
+        public string DescricaoEmpresa { get; set; }
     }
 }

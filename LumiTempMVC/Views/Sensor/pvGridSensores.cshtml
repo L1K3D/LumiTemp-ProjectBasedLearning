@@ -1,0 +1,21 @@
+﻿@model List<SensorViewModel>
+<table class="table table-striped">
+    <tr>
+        <th>Código</th>
+        <th>Descrição Tipo Sensor</th>
+        <th>Data de Venda</th>
+        <th>Temperatura Alvo</th>
+        <th>Empresa</th>
+    </tr>
+    @foreach (var sensor in Model)
+    {
+        <tr>
+            <td>@sensor.id</td>
+            <td>@sensor.ds_tipo_sens</td>
+            <td>@sensor.dt_vend.ToShortDateString()</td>
+            <td>@sensor.vl_temp_alvo.ToString("0.00")</td>
+            <td>@sensor.id_empr - @sensor.DescricaoEmpresa</td>
+
+        </tr>
+    }
+</table>
