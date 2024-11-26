@@ -27,14 +27,20 @@
       - [LED State Transmission](#led-state-transmission)
    - [Helper Functions](#helper-functions)
 11. [🗃️ Database](#database)
+   - [Controllers](#controllers)
+   - [DAO (Data Access Object)](#dao-(data-access-object))
+   - [Models](#models)
+   - [Views](#views)
+   - [Main pages](#main-pages)
+13. [🌐 MVC Application ](#mvc-application)
    - [Table Creation](#table-creation)
    - [Procedure Creation](#procedure-creation)
-11. [📑 Manual](#manual)
+13. [📑 Manual](#manual)
    - [How to Run the System](#how-to-run-the-system)
    - [Example of Use](#example-of-use)
    - [How to Test](#how-to-test)
    - [Test Coverage](#test-coverage)
-12. [🤝 Project Members](#project-members)
+14. [🤝 Project Members](#project-members)
 
 
 ## 💻 Technologies Used
@@ -105,7 +111,7 @@ The system consists of the following key components:
 [Temperature Sensor] → [ESP32] → [FIWARE] → [Web Platform]
 ````
 
-![diagrama_camadas](https://github.com/L1K3D/LumiTemp-ProjectBasedLearning/blob/main/Fiware/FiwareDeploy_new_v4.png?raw=true)
+![diagrama_camadas](https://github.com/user-attachments/assets/7d92677a-88ec-4c5a-804d-a9f6d91a8cc4)
 
 ## 🔧 ESP32 Code
 
@@ -709,6 +715,919 @@ END
 GO
 ```
 
+## 🌐 MVC Application
+
+To display the collected data, we are using the MVC (Model-View-Controller) architecture implemented in C#. This approach provides a clear separation between business logic, user interface, and application flow control, making the system more organized, scalable, and easier to maintain. In our project, the Model will be responsible for managing the data received via MQTT and storing it appropriately. The Controller will mediate requests, process the data, and pass it to the presentation layer, while the View will display the information in a dynamic and interactive graph, making it easy to monitor the thermal behavior of the greenhouse in real-time.
+
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/226604d0-ec1e-4c52-888b-9a0d58689066" alt="MVC">
+</p>
+
+### Controllers
+Controllers are responsible for managing requests and coordinating actions between the View and Model. They receive user requests, interact with the DAO to retrieve or manipulate data, and decide which View to return as a response.
+Main controllers in the project:
+
+**ApiController:** Handles API requests, allowing other systems to interact with the application.
+```c#
+namespace LumiTempMVC.Controllers
+{
+
+    [Route("api/[controller]")]
+    [ApiController]
+    public class ApiController : ControllerBase
+    {
+
+        private readonly FiwareDataDAO _fiwareDataDAO;
+
+        public ApiController()
+        {
+
+            _fiwareDataDAO = new FiwareDataDAO();
+
+        }
+
+        [HttpGet("temperature")]
+        public async Task<IActionResult> GetTemperatureData(int lastN)
+        {
+            var data = await _fiwareDataDAO.GetTemperatureDataAsync(lastN);
+            if (data.Count == 0)
+            {
+                return NotFound("Sem dados de temperatura");
+            }
+            return Ok(data);
+        }
+
+    }
+}
+```
+
+**DashboardController:** Manages the display of a control panel, showing general system information.
+```c#
+namespace LumiTempMVC.Controllers
+{
+    public class DashboardController : Controller
+    {
+        private readonly SensorDAO _sensorDao;
+        private readonly FuncionarioDAO _funcionarioDao;
+        private readonly EmpresaParceiraDAO _empresaParceiraDao;
+
+        public DashboardController()
+        {
+            _sensorDao = new SensorDAO();
+            _funcionarioDao = new FuncionarioDAO();
+            _empresaParceiraDao = new EmpresaParceiraDAO();
+        }
+
+        public IActionResult Index()
+        {
+            var sensores = _sensorDao.Listagem();
+            var funcionarios = _funcionarioDao.Listagem();
+            var empresas = _empresaParceiraDao.Listagem();
+
+            var model = new DashboardViewModel
+            {
+                Sensores = sensores,
+                Funcionarios = funcionarios,
+                Empresas = empresas
+            };
+
+            return View(model);
+        }
+    }
+}
+```
+
+**EmpresaParceiraController:** Handles operations related to partner companies.
+```c#
+namespace LumiTempMVC.Controllers
+{
+    public class EmpresaParceiraController : PadraoController<EmpresaParceiraViewModel>
+    {
+        public EmpresaParceiraController()
+        {
+            DAO = new EmpresaParceiraDAO();
+            GeraProximoId = true;
+            NomeViewForm = "Form";
+            NomeViewIndex = "Index";
+            NecessitaCaixaComboEmpresas = false;
+            NecessitaCaixaComboFuncionarios = true;
+            PossuiCampoData = false;
+            ExigeAutenticacao = true;
+        }
+
+        public IActionResult ExtrairDados()
+        {
+            try
+            {
+                EmpresaParceiraDAO dao = new EmpresaParceiraDAO();
+                List<EmpresaParceiraViewModel> lista = dao.Listagem();
+
+                StringBuilder sb = new StringBuilder();
+                sb.AppendLine("Id, Nome Empresa, CEP Empresa, Logradouro Empresa, Número Empresa, Complemento Empresa, Bairro Empresa, Cidade Empresa, Estado Empresa, CNPJ Empresa, Telefone Empresa, ID Funcionario");
+
+                foreach (var empresa in lista)
+                {
+                    sb.AppendLine($"{empresa.id}, {empresa.nm_empr}, {empresa.cep_empr}, {empresa.log_empr}, {empresa.num_empr}, {empresa.compl_empr}, {empresa.bairro_empr}, {empresa.cidade_empr}, {empresa.estado_empr}, {empresa.cnpj_empr}, {empresa.telf_cont_empr}, {empresa.id_func}");
+                }
+
+                string fileName = "empresas.txt";
+                return File(Encoding.UTF8.GetBytes(sb.ToString()), "text/plain", fileName);
+            }
+            catch (Exception erro)
+            {
+                return RedirectToAction("Error", new ErrorViewModel(erro.ToString()));
+            }
+        }
+
+        protected override void ValidaDados(EmpresaParceiraViewModel empresa, string operacao)
+        {
+            if (string.IsNullOrEmpty(empresa.nm_empr))
+                ModelState.AddModelError("nm_empr", "Preencha o nome.");
+            
+            if (string.IsNullOrEmpty(empresa.log_empr))
+                ModelState.AddModelError("log_empr", "Preencha o logradouro.");
+
+            if (string.IsNullOrEmpty(empresa.num_empr))
+                ModelState.AddModelError("num_empr", "Preencha o número.");
+            
+            if (string.IsNullOrEmpty(empresa.bairro_empr))
+                ModelState.AddModelError("bairro_empr", "Preencha o bairro.");
+
+            if (string.IsNullOrEmpty(empresa.cidade_empr))
+                ModelState.AddModelError("cidade_empr", "Preencha a cidade.");
+
+            if (string.IsNullOrEmpty(empresa.estado_empr))
+                ModelState.AddModelError("estado_empr", "Preencha o estado.");
+
+            if (string.IsNullOrEmpty(empresa.cnpj_empr))
+            {
+                ModelState.AddModelError("cnpj_empr", "Preencha o CNPJ.");
+            }
+            else if (!IsValidCnpj(empresa.cnpj_empr))
+            {
+                ModelState.AddModelError("cnpj_empr", "CNPJ inválido.");
+            }
+
+            if (string.IsNullOrEmpty(empresa.cep_empr))
+            {
+                ModelState.AddModelError("cep_empr", "Preencha o CEP.");
+            }
+            else if (empresa.cep_empr.Length != 8 || !long.TryParse(empresa.cep_empr, out _))
+            {
+                ModelState.AddModelError("cep_empr", "CEP inválido.");
+            }
+
+            if (string.IsNullOrEmpty(empresa.telf_cont_empr))
+            {
+                ModelState.AddModelError("telf_cont_empr", "Preencha o telefone.");
+            }
+            else if (empresa.telf_cont_empr.Length < 10 || empresa.telf_cont_empr.Length > 11 || !long.TryParse(empresa.telf_cont_empr, out _))
+            {
+                ModelState.AddModelError("telf_cont_empr", "Telefone inválido.");
+            }
+        }
+
+        private bool IsValidCnpj(string cnpj)
+        {
+            if (cnpj.Length != 14 || !long.TryParse(cnpj, out _))
+                return false;
+
+            int[] multiplicador1 = { 5, 4, 3, 2, 9, 8, 7, 6, 5, 4, 3, 2 };
+            int[] multiplicador2 = { 6, 5, 4, 3, 2, 9, 8, 7, 6, 5, 4, 3, 2 };
+            string tempCnpj, digito;
+            int soma, resto;
+
+            tempCnpj = cnpj.Substring(0, 12);
+            soma = 0;
+
+            for (int i = 0; i < 12; i++)
+                soma += int.Parse(tempCnpj[i].ToString()) * multiplicador1[i];
+
+            resto = (soma % 11);
+            resto = resto < 2 ? 0 : 11 - resto;
+            digito = resto.ToString();
+            tempCnpj += digito;
+            soma = 0;
+
+            for (int i = 0; i < 13; i++)
+                soma += int.Parse(tempCnpj[i].ToString()) * multiplicador2[i];
+
+            resto = (soma % 11);
+            resto = resto < 2 ? 0 : 11 - resto;
+            digito += resto.ToString();
+
+            return cnpj.EndsWith(digito);
+        }
+
+        protected override void PreencheDadosParaView(string Operacao, EmpresaParceiraViewModel model)
+        {
+            base.PreencheDadosParaView(Operacao, model);
+        }
+    }
+}
+
+```
+
+**FuncionarioController:** Manages CRUD (create, read, update, and delete) actions for employees.
+```c#
+public class FuncionarioController : PadraoController<FuncionarioViewModel>
+{
+    public FuncionarioController()
+    {
+        DAO = new FuncionarioDAO();
+        GeraProximoId = true;
+        NomeViewForm = "Form";
+        NomeViewIndex = "Index";
+        NecessitaCaixaComboEmpresas = false;
+        NecessitaCaixaComboFuncionarios = false;
+        PossuiCampoData = true;
+        ExigeAutenticacao = false;
+    }
+
+    public byte[] ConvertImageToByte(IFormFile file)
+    {
+        if (file != null)
+            using (var ms = new MemoryStream())
+            {
+                file.CopyTo(ms);
+                return ms.ToArray();
+            }
+        else
+            return null;
+    }
+
+    public IActionResult ExtrairDados()
+    {
+        try
+        {
+            FuncionarioDAO dao = new FuncionarioDAO();
+            List<FuncionarioViewModel> lista = dao.Listagem();
+
+            StringBuilder sb = new StringBuilder();
+            sb.AppendLine("Id, Login Funcionário, Data de cadastro funcionário");
+
+            foreach (var funcionario in lista)
+            {
+                sb.AppendLine($"{funcionario.id}, {funcionario.login_func}, {funcionario.dt_cadr}");
+            }
+
+            string fileName = "funcionarios.txt";
+            return File(Encoding.UTF8.GetBytes(sb.ToString()), "text/plain", fileName);
+        }
+        catch (Exception erro)
+        {
+            return RedirectToAction("Error", new ErrorViewModel(erro.ToString()));
+        }
+    }
+
+    protected override void ValidaDados(FuncionarioViewModel funcionario, string operacao)
+    {
+        if (string.IsNullOrEmpty(funcionario.login_func))
+            ModelState.AddModelError("login_func", "Preencha o login");
+
+        if (string.IsNullOrEmpty(funcionario.senha_func))
+            ModelState.AddModelError("senha_func", "Preencha a senha.");
+
+        if (funcionario.dt_cadr == DateTime.MinValue)
+            ModelState.AddModelError("dt_cadr", "Preencha uma data");
+
+        if (funcionario.Imagem == null && operacao == "I")
+            ModelState.AddModelError("Imagem", "Escolha uma imagem.");
+        if (funcionario.Imagem != null && funcionario.Imagem.Length / 1024 / 1024 >= 2)
+            ModelState.AddModelError("Imagem", "Imagem limitada a 2 mb.");
+        
+        if (ModelState.IsValid)
+        {
+            if (
+
+```
+
+**SensorController:** Controls interactions with sensors, such as displaying data and performing analyses.
+```c#
+namespace LumiTempMVC.Controllers
+{
+    public class SensorController : PadraoController<SensorViewModel>
+    {
+        public SensorController()
+        {
+            DAO = new SensorDAO();
+            GeraProximoId = true;
+            NomeViewForm = "Form";
+            NomeViewIndex = "Index";
+            NecessitaCaixaComboEmpresas = true;
+            NecessitaCaixaComboFuncionarios = true;
+            PossuiCampoData = true;
+            ExigeAutenticacao = true;
+        }
+
+        public IActionResult ExtrairDados()
+        {
+            try
+            {
+                SensorDAO dao = new SensorDAO();
+                List<SensorViewModel> lista = dao.Listagem();
+
+                StringBuilder sb = new StringBuilder();
+                sb.AppendLine("Id, Descrição do tipo de sensor, Data da venda do sensor, valor da temperatura alvo configurada, código do motor atrelado ao sensor, id do funcionário atrelado ao sensor, id da empresa atrelada ao sensor");
+
+                foreach (var sensor in lista)
+                {
+                    sb.AppendLine($"{sensor.id}, {sensor.ds_tipo_sens}, {sensor.dt_vend}, {sensor.vl_temp_alvo}, {sensor.cd_motor}, {sensor.id_func}, {sensor.id_empr}");
+                }
+
+                string fileName = "sensores.txt";
+                return File(Encoding.UTF8.GetBytes(sb.ToString()), "text/plain", fileName);
+            }
+            catch (Exception erro)
+            {
+                return RedirectToAction("Error", new ErrorViewModel(erro.ToString()));
+            }
+        }
+
+        protected override void ValidaDados(SensorViewModel sensor, string operacao)
+        {
+            if (string.IsNullOrEmpty(sensor.ds_tipo_sens))
+                ModelState.AddModelError("ds_tipo_sens", "Preencha a descrição do sensor");
+
+            if (sensor.dt_vend == DateTime.MinValue)
+                ModelState.AddModelError("dt_vend", "Preencha uma data correta");
+
+            if (sensor.vl_temp_alvo <= 0.00)
+                ModelState.AddModelError("vl_temp_alvo", "Preencha o valor alvo");
+
+            if (sensor.cd_motor <= 0)
+                ModelState.AddModelError("cd_motor", "Preencha o código de um motor");
+        }
+
+        protected override void PreencheDadosParaView(string Operacao, SensorViewModel model)
+        {
+            base.PreencheDadosParaView(Operacao, model);
+            model.dt_vend = DateTime.Now;
+            PreparaListaFuncionariosParaCombo();
+            PreparaListaEmpresasParceirasParaCombo();
+
+            List<SelectListItem> listaTipos = new List<SelectListItem>
+            {
+                new SelectListItem("Selecione um tipo...", "0"),
+                new SelectListItem("LUMINOSIDADE", "LUMINOSIDADE"),
+                new SelectListItem("UMIDADE", "UMIDADE"),
+                new SelectListItem("TEMPERATURA", "TEMPERATURA")
+            };
+            ViewBag.Tipos = listaTipos;
+        }
+
+        public IActionResult ExibeConsultaAvancada()
+        {
+            try
+            {
+                PreparaComboEmpresas();
+                ViewBag.empresas.Insert(0, new SelectListItem("TODAS", "0"));
+                return View("ConsultaAvancada");
+            }
+            catch (Exception erro)
+            {
+                return View("Error", new ErrorViewModel(erro.Message));
+            }
+        }
+
+        public IActionResult ObtemDadosConsultaAvancada2(string descricao, int empresa, DateTime dataInicial, DateTime dataFinal)
+        {
+            try
+            {
+                SensorDAO dao = new SensorDAO();
+                if (string.IsNullOrEmpty(descricao))
+                    descricao = "";
+                if (dataInicial.Date == Convert.ToDateTime("01/01/0001"))
+                    dataInicial = SqlDateTime.MinValue.Value;
+                if (dataFinal.Date == Convert.ToDateTime("01/01/0001"))
+                    dataFinal = SqlDateTime.MaxValue.Value;
+                var lista = dao.ConsultaAvancadaSensores(descricao, empresa, dataInicial, dataFinal);
+                return PartialView("pvGridSensores", lista);
+            }
+            catch (Exception erro)
+            {
+                return Json(new { erro = true, msg = erro.Message });
+            }
+        }
+
+        private void PreparaComboEmpresas()
+        {
+            EmpresaParceiraDAO dao = new EmpresaParceiraDAO();
+            var lista = dao.Listagem();
+            List<SelectListItem> listaRetorno = new List<SelectListItem>();
+            foreach (var categ in lista)
+                listaRetorno.Add(new SelectListItem(categ.nm_empr, categ.id.ToString()));
+
+            ViewBag.Empresas = listaRetorno;
+        }
+    }
+}
+
+```
+
+### DAO (Data Access Object)
+DAO classes are responsible for direct communication with the database. They contain methods that perform operations such as inserting, updating, deleting, and retrieving data.
+Main DAOs in the project:
+
+**ConexaoDB:** This class manages the database connection.
+```c#
+namespace LumiTempMVC.DAO
+{
+    public class ConexaoDB
+    {
+        public static SqlConnection GetConexao()
+        {
+            string strCon = "Data Source=LOCALHOST; Initial Catalog=b_lumitemp_main_db; integrated security=true";
+            SqlConnection conexao = new SqlConnection(strCon);
+            conexao.Open();
+            return conexao;
+        }
+    }
+}
+```
+
+**FuncionarioDAO, EmpresaParceiraDAO, SensorDAO:** Each of these classes contains methods to handle specific data for their respective entities in the database.
+
+**FuncionarioDAO:**
+```c#
+namespace LumiTempMVC.DAO
+{
+    public class FuncionarioDAO : PadraoDAO<FuncionarioViewModel>
+    {
+        protected override SqlParameter[] CriaParametros(FuncionarioViewModel model)
+        {
+            object imgByte = model.ImagemEmByte ?? DBNull.Value;
+
+            SqlParameter[] parametros = new SqlParameter[5];
+            parametros[0] = new SqlParameter("ID", model.id);
+            parametros[1] = new SqlParameter("LOGIN_FUNC", model.login_func);
+            parametros[2] = new SqlParameter("SENHA_FUNC", model.senha_func);
+            parametros[3] = new SqlParameter("DT_CADR", model.dt_cadr);
+            parametros[4] = new SqlParameter("imagem", imgByte);
+
+            return parametros;
+        }
+
+        protected override FuncionarioViewModel MontaModel(DataRow registro)
+        {
+            FuncionarioViewModel funcionario = new FuncionarioViewModel
+            {
+                id = Convert.ToInt32(registro["ID"]),
+                login_func = Convert.ToString(registro["LOGIN_FUNC"]),
+                senha_func = Convert.ToString(registro["SENHA_FUNC"]),
+                dt_cadr = Convert.ToDateTime(registro["DT_CADR"])
+            };
+
+            if (registro["imagem"] != DBNull.Value)
+                funcionario.ImagemEmByte = registro["imagem"] as byte[];
+
+            return funcionario;
+        }
+
+        protected override void SetTabela()
+        {
+            Tabela = "cadr_func";
+        }
+
+        public List<FuncionarioViewModel> ConsultaAvancadaFuncionarios(string descricao, DateTime dataInicial, DateTime dataFinal)
+        {
+            SqlParameter[] p = {
+                new SqlParameter("descricao", descricao),
+                new SqlParameter("dataInicial", dataInicial),
+                new SqlParameter("dataFinal", dataFinal),
+            };
+
+            var tabela = HelperDAO.ExecutaProcSelect("spConsultaAvancadaFuncionarios", p);
+            var lista = new List<FuncionarioViewModel>();
+            foreach (DataRow dr in tabela.Rows)
+                lista.Add(MontaModel(dr));
+
+            return lista;
+        }
+    }
+}
+
+```
+**EmpresaParceiraDAO:**
+```c#
+namespace LumiTempMVC.DAO
+{
+    public class EmpresaParceiraDAO : PadraoDAO<EmpresaParceiraViewModel>
+    {
+        protected override SqlParameter[] CriaParametros(EmpresaParceiraViewModel model)
+        {
+            SqlParameter[] parametros = new SqlParameter[12];
+
+            parametros[0] = new SqlParameter("ID", model.id);
+            parametros[1] = new SqlParameter("NM_EMPR", model.nm_empr);
+            parametros[2] = new SqlParameter("CEP_EMPR", model.cep_empr);
+            parametros[3] = new SqlParameter("LOG_EMPR", model.log_empr);
+            parametros[4] = new SqlParameter("NUM_EMPR", model.num_empr);
+            parametros[5] = new SqlParameter("COMPL_EMPR", model.compl_empr ?? DBNull.Value);
+            parametros[6] = new SqlParameter("BAIRRO_EMPR", model.bairro_empr);
+            parametros[7] = new SqlParameter("CIDADE_EMPR", model.cidade_empr);
+            parametros[8] = new SqlParameter("ESTADO_EMPR", model.estado_empr);
+            parametros[9] = new SqlParameter("CNPJ_EMPR", model.cnpj_empr);
+            parametros[10] = new SqlParameter("TELF_CONT_EMPR", model.telf_cont_empr);
+            parametros[11] = new SqlParameter("ID_FUNC", model.id_func);
+
+            return parametros;
+        }
+
+        protected override EmpresaParceiraViewModel MontaModel(DataRow registro)
+        {
+            EmpresaParceiraViewModel empresa = new EmpresaParceiraViewModel
+            {
+                id = Convert.ToInt32(registro["ID"]),
+                nm_empr = Convert.ToString(registro["NM_EMPR"]),
+                cep_empr = Convert.ToString(registro["CEP_EMPR"]),
+                log_empr = Convert.ToString(registro["LOG_EMPR"]),
+                num_empr = Convert.ToString(registro["NUM_EMPR"]),
+                compl_empr = Convert.ToString(registro["COMPL_EMPR"]),
+                bairro_empr = Convert.ToString(registro["BAIRRO_EMPR"]),
+                cidade_empr = Convert.ToString(registro["CIDADE_EMPR"]),
+                estado_empr = Convert.ToString(registro["ESTADO_EMPR"]),
+                cnpj_empr = Convert.ToString(registro["CNPJ_EMPR"]),
+                telf_cont_empr = Convert.ToString(registro["TELF_CONT_EMPR"]),
+                id_func = Convert.ToInt32(registro["ID_FUNC"])
+            };
+
+            return empresa;
+        }
+
+        protected override void SetTabela()
+        {
+            Tabela = "cadr_empr_parc";
+        }
+    }
+}
+
+```
+**SensorDAO:**
+```c#
+public class SensorDAO : PadraoDAO<SensorViewModel>
+{
+    protected override SqlParameter[] CriaParametros(SensorViewModel model)
+    {
+        SqlParameter[] parametros = new SqlParameter[7];
+        parametros[0] = new SqlParameter("ID", model.id);
+        parametros[1] = new SqlParameter("DS_TIPO_SENS", model.ds_tipo_sens);
+        parametros[2] = new SqlParameter("DT_VEND", model.dt_vend);
+        parametros[3] = new SqlParameter("VL_TEMP_ALVO", model.vl_temp_alvo);
+        parametros[4] = new SqlParameter("CD_MOTOR", model.cd_motor);
+        parametros[5] = new SqlParameter("ID_FUNC", model.id_func);
+        parametros[6] = new SqlParameter("ID_EMPR", model.id_empr);
+        return parametros;
+    }
+
+    protected override SensorViewModel MontaModel(DataRow registro)
+    {
+        SensorViewModel sensor = new SensorViewModel();
+        sensor.id = Convert.ToInt32(registro["ID"]);
+        sensor.ds_tipo_sens = Convert.ToString(registro["DS_TIPO_SENS"]);
+        sensor.dt_vend = Convert.ToDateTime(registro["DT_VEND"]);
+        sensor.vl_temp_alvo = Convert.ToDouble(registro["VL_TEMP_ALVO"]);
+        sensor.cd_motor = Convert.ToInt32(registro["CD_MOTOR"]);
+        sensor.id_func = Convert.ToInt32(registro["ID_FUNC"]);
+        sensor.id_empr = Convert.ToInt32(registro["ID_EMPR"]);
+
+        if (registro.Table.Columns.Contains("DescricaoEmpresa"))
+            sensor.DescricaoEmpresa = registro["DescricaoEmpresa"].ToString();
+
+        return sensor;
+    }
+
+    protected override void SetTabela()
+    {
+        Tabela = "cadr_sens";
+    }
+
+    public List<SensorViewModel> ConsultaAvancadaSensores(string descricao, int empresa, DateTime dataInicial,
+                                                          DateTime dataFinal)
+    {
+        SqlParameter[] p = {
+            new SqlParameter("descricao", descricao),
+            new SqlParameter("empresa", empresa),
+            new SqlParameter("dataInicial", dataInicial),
+            new SqlParameter("dataFinal", dataFinal),
+        };
+        var tabela = HelperDAO.ExecutaProcSelect("spConsultaAvancadaSensores", p);
+        var lista = new List<SensorViewModel>();
+        foreach (DataRow dr in tabela.Rows)
+            lista.Add(MontaModel(dr));
+        return lista;
+    }
+}
+
+```
+
+**HelperDAO:** This is a utility class for database operations that are common to multiple entities.
+```c#
+namespace LumiTempMVC.DAO
+{
+    public static class HelperDAO
+    {
+        public static void ExecutaSQL(string sql, SqlParameter[] parametros)
+        {
+            using (SqlConnection conexao = ConexaoDB.GetConexao())
+            {
+                using (SqlCommand comando = new SqlCommand(sql, conexao))
+                {
+                    if (parametros != null)
+                        comando.Parameters.AddRange(parametros);
+                    comando.ExecuteNonQuery();
+                }
+            }
+        }
+
+        public static DataTable ExecutaSelect(string sql, SqlParameter[] parametros)
+        {
+            using (SqlConnection conexao = ConexaoDB.GetConexao())
+            {
+                using (SqlDataAdapter adapter = new SqlDataAdapter(sql, conexao))
+                {
+                    if (parametros != null)
+                        adapter.SelectCommand.Parameters.AddRange(parametros);
+
+                    DataTable tabelaTemp = new DataTable();
+                    adapter.Fill(tabelaTemp);
+                    return tabelaTemp;
+                }
+            }
+        }
+
+        public static void ExecutaProc(string nomeProc, SqlParameter[] parametros)
+        {
+            using (SqlConnection conexao = ConexaoDB.GetConexao())
+            {
+                using (SqlCommand comando = new SqlCommand(nomeProc, conexao))
+                {
+                    comando.CommandType = CommandType.StoredProcedure;
+                    if (parametros != null)
+                        comando.Parameters.AddRange(parametros);
+                    comando.ExecuteNonQuery();
+                }
+            }
+        }
+
+        public static DataTable ExecutaProcSelect(string nomeProc, SqlParameter[] parametros)
+        {
+            using (SqlConnection conexao = ConexaoDB.GetConexao())
+            {
+                using (SqlDataAdapter adapter = new SqlDataAdapter(nomeProc, conexao))
+                {
+                    if (parametros != null)
+                        adapter.SelectCommand.Parameters.AddRange(parametros);
+
+                    adapter.SelectCommand.CommandType = CommandType.StoredProcedure;
+
+                    DataTable tabela = new DataTable();
+                    adapter.Fill(tabela);
+                    return tabela;
+                }
+            }
+        }
+    }
+}
+
+```
+
+### Models
+Models represent the structure of the data manipulated in the application and usually correspond to tables in the database.
+In this project, classes ending in ViewModel are data transfer classes used to carry data between the Controller and the View.
+Main Models:
+
+**DashboardViewModel, FuncionarioViewModel, SensorViewModel:** Each of these classes contains the necessary properties to display data on a specific page, such as the dashboard, employee data, and sensors.
+
+**DashboardViewModel:**
+```c#
+namespace LumiTempMVC.Models
+{
+    public class DashboardViewModel
+    {
+        public List<SensorViewModel> Sensores { get; set; }
+        public List<FuncionarioViewModel> Funcionarios { get; set; }
+        public List<EmpresaParceiraViewModel> Empresas { get; set; }
+    }
+}
+```
+**FuncionarioViewModel:**
+```c#
+namespace LumiTempMVC.Models
+{
+    public class FuncionarioViewModel : PadraoViewModel 
+    {
+        public string login_func { get; set; }
+        public string senha_func { get; set; }
+        public DateTime dt_cadr { get; set; }
+        public IFormFile Imagem { get; set; }
+        public byte[] ImagemEmByte { get; set; }
+
+        public string ImagemEmBase64
+        {
+            get
+            {
+                if (ImagemEmByte != null)
+                    return Convert.ToBase64String(ImagemEmByte);
+                else
+                    return string.Empty;
+            }
+        }
+    }
+}
+```
+**SensorViewModel:**
+```c#
+namespace LumiTempMVC.Models
+{
+    public class SensorViewModel : PadraoViewModel
+    {
+        public string ds_tipo_sens { get; set; }
+        public DateTime dt_vend { get; set; }
+        public double vl_temp_alvo { get; set; }
+        public int cd_motor { get; set; }
+        public int id_func { get; set; }
+        public int id_empr { get; set; }
+        public string DescricaoEmpresa { get; set; }
+    }
+}
+```
+
+### Views
+Views are responsible for the user interface, displaying the data provided by the Controller. In this project, each folder within Views corresponds to a specific entity or functionality, and each folder contains page files (.cshtml).
+Example of View:
+
+**Dashboard/Index.cshtml:** Displays the control panel.
+```c#
+@model LumiTempMVC.Models.DashboardViewModel
+@{
+    ViewData["Title"] = "Dashboard - Visões Executivas";
+}
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewData["Title"]</title>
+    <link rel="stylesheet" href="~/css/site.css" />
+    <script src="https://cdn.jsdelivr.net/npm/plotly.js-dist@2.3.0"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        .chart-container {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+        }
+
+        .chart {
+            width: 48%;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>@ViewData["Title"]</h1>
+
+        <div class="chart-container">
+            <div id="empresas-pie-chart" class="chart"></div>
+            <div id="vendas-sensores-line-chart" class="chart"></div>
+            <div id="vendas-funcionarios-bar-chart" class="chart"></div>
+            <div id="vendas-tipo-sensores-bar-chart" class="chart"></div>
+        </div>
+
+        <script type="text/javascript">
+            $(document).ready(function () {
+                var empresas = @Html.Raw(Json.Serialize(Model.Empresas));
+
+                var empresaStates = empresas.map(empresa => empresa.estado_empr);
+                var empresaCounts = empresaStates.reduce((acc, state) => {
+                    acc[state] = (acc[state] || 0) + 1;
+                    return acc;
+                }, {});
+
+                var pieData = [{
+                    values: Object.values(empresaCounts),
+                    labels: Object.keys(empresaCounts),
+                    type: 'pie'
+                }];
+
+                var pieLayout = {
+                    title: 'Quantidade de Empresas por Estado'
+                };
+
+                Plotly.newPlot('empresas-pie-chart', pieData, pieLayout);
+
+                var sensores = @Html.Raw(Json.Serialize(Model.Sensores));
+                var vendasPorDia = sensores.reduce((acc, sensor) => {
+                    var date = new Date(sensor.dt_vend).toISOString().split('T')[0];
+                    acc[date] = (acc[date] || 0) + 1;
+                    return acc;
+                }, {});
+
+                var lineData = [{
+                    x: Object.keys(vendasPorDia),
+                    y: Object.values(vendasPorDia),
+                    type: 'scatter',
+                    mode: 'lines+markers',
+                    line: { shape: 'linear' }
+                }];
+
+                var lineLayout = {
+                    title: 'Quantidade de Vendas de Sensores por Dia e Mês de Venda',
+                    xaxis: { title: 'Data' },
+                    yaxis: { title: 'Quantidade' }
+                };
+
+                Plotly.newPlot('vendas-sensores-line-chart', lineData, lineLayout);
+
+                var funcionarios = @Html.Raw(Json.Serialize(Model.Funcionarios));
+                var vendasPorFuncionario = sensores.reduce((acc, sensor) => {
+                    var login = funcionarios.find(func => func.id === sensor.id_func).login_func;
+                    acc[login] = (acc[login] || 0) + 1;
+                    return acc;
+                }, {});
+
+                var barData = [{
+                    x: Object.keys(vendasPorFuncionario),
+                    y: Object.values(vendasPorFuncionario),
+                    type: 'bar',
+                    name: 'Quantidade de Sensores Vendidos'
+                }];
+
+                var barLayout = {
+                    title: 'Quantidade de Sensores Vendidos por Funcionário',
+                    xaxis: { title: 'Login Funcionário' },
+                    yaxis: { title: 'Quantidade de Sensores' }
+                };
+
+                Plotly.newPlot('vendas-funcionarios-bar-chart', barData, barLayout);
+
+                var vendasPorTipoFuncionario = sensores.reduce((acc, sensor) => {
+                    var login = funcionarios.find(func => func.id === sensor.id_func).login_func;
+                    acc[login] = acc[login] || { LUMINOSIDADE: 0, TEMPERATURA: 0, UMIDADE: 0 };
+                    acc[login][sensor.ds_tipo_sens.toUpperCase()] += 1;
+                    return acc;
+                }, {});
+
+                var traceLuminosidade = {
+                    y: Object.keys(vendasPorTipoFuncionario),
+                    x: Object.values(vendasPorTipoFuncionario).map(func => func.LUMINOSIDADE),
+                    name: 'LUMINOSIDADE',
+                    type: 'bar',
+                    orientation: 'h'
+                };
+
+                var traceTemperatura = {
+                    y: Object.keys(vendasPorTipoFuncionario),
+                    x: Object.values(vendasPorTipoFuncionario).map(func => func.TEMPERATURA),
+                    name: 'TEMPERATURA',
+                    type: 'bar',
+                    orientation: 'h'
+                };
+
+                var traceUmidade = {
+                    y: Object.keys(vendasPorTipoFuncionario),
+                    x: Object.values(vendasPorTipoFuncionario).map(func => func.UMIDADE),
+                    name: 'UMIDADE',
+                    type: 'bar',
+                    orientation: 'h'
+                };
+
+                var barStackedData = [traceLuminosidade, traceTemperatura, traceUmidade];
+
+                var barStackedLayout = {
+                    title: 'Quantidade de Sensores Vendidos por Tipo de Sensor',
+                    barmode: 'stack',
+                    xaxis: { title: 'Quantidade' },
+                    yaxis: { title: 'Login Funcionário' }
+                };
+
+                Plotly.newPlot('vendas-tipo-sensores-bar-chart', barStackedData, barStackedLayout);
+            });
+        </script>
+    </div>
+</body>
+</html>
+```
+
+### Main pages
+
+Home:
+
+![Home](https://github.com/user-attachments/assets/9fe105c2-7fd3-499f-889a-a39d2b1efd23)
+
+About us:
+
+![Sobre](https://github.com/user-attachments/assets/0e3ce64e-ea96-46f4-aa6e-55e2a6feb726)
+
+Login:
+
+![Login](https://github.com/user-attachments/assets/370ef7f1-9551-408c-8852-a8e178bc02e7)
+
+The user will only be able to access the rest of the platform after logging in.
+
 ## 📑 Manual
 
 ### How to Run the System
@@ -795,6 +1714,8 @@ GO
      - Check that the web platform displays the alert and provides clear information on the issue (e.g., “Motor temperature is too high!”).
 
 ## 🤝 Project Members
+
+![Project Members](https://github.com/user-attachments/assets/9ff8e54f-bbfa-4f48-b6b9-e7829fa02184)
 
 - Enzo Brito Alves de Oliveira - RA: 082220040
 - Erikson Vieira Queiroz - RA: 082220021
