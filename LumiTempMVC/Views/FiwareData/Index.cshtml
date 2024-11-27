@@ -1,4 +1,4 @@
-﻿@model List<SensorViewModel>
+﻿ @model List<SensorViewModel>
 @{
     ViewData["Title"] = "LumiTemp Data Viewer";
 }
@@ -152,8 +152,203 @@
         $(document).ready(function () {
             fetchSensorCodes();
             fetchData();
-            setInterval(fetchData, 1500); // Atualiza a cada 1,5 segundos
+            setInterval(fetchData, 12000); // Atualiza a cada 1,5 segundos
+        });
+    </script>
+</body>
+</html>  
+
+
+
+@* @model List<SensorViewModel>
+@{
+    ViewData["Title"] = "LumiTemp Data Viewer";
+}
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewData["Title"]</title>
+    <link rel="stylesheet" href="~/css/site.css" />
+    <script src="https://cdn.jsdelivr.net/npm/plotly.js-dist@2.3.0"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f9f9f9;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 20px auto;
+            background: #fff;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        label {
+            display: block;
+            margin: 10px 0 5px;
+            font-weight: bold;
+        }
+
+        select, input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        #alert, #offline-alert {
+            text-align: center;
+            margin-top: 10px;
+            padding: 10px;
+            border-radius: 4px;
+        }
+
+        #alert {
+            color: white;
+            background-color: #ff6b6b;
+        }
+
+        #offline-alert {
+            color: white;
+            background-color: #b0bec5;
+        }
+
+        #lumitemp-graph {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>@ViewData["Title"]</h1>
+
+        <!-- Alertas -->
+        <div id="alert" style="display: none;">⚠️ Valor acima da média!</div>
+        <div id="offline-alert" style="display: none;">🚫 Servidor Offline</div>
+
+        <!-- Seleção de sensores -->
+        <label for="sensor-type">Tipo de Sensor:</label>
+        <select id="sensor-type" onchange="fetchSensorCodes()">
+            <option value="">Selecione</option>
+            @foreach (var sensor in Model.Select(s => s.ds_tipo_sens).Distinct())
+            {
+                <option value="@sensor">@sensor</option>
+            }
+        </select>
+
+        <label for="sensor-code">Código do Sensor:</label>
+        <select id="sensor-code" onchange="fetchData()">
+            <option value="">Selecione</option>
+        </select>
+
+        <!-- Configurações adicionais -->
+        <label for="lastN">Número de Requisições:</label>
+        <input type="number" id="lastN" value="15" min="1" onchange="fetchData()" />
+
+        <!-- Gráfico -->
+        <div id="lumitemp-graph"></div>
+    </div>
+
+    <script type="text/javascript">
+        // Dados dos sensores
+        var sensors = @Html.Raw(Json.Serialize(Model));
+
+        // Atualiza o dropdown de códigos de sensores
+        function fetchSensorCodes() {
+            var sensorType = document.getElementById('sensor-type').value;
+            var sensorCodeDropdown = document.getElementById('sensor-code');
+            sensorCodeDropdown.innerHTML = '<option value="">Selecione</option>';
+
+            var filteredSensors = sensors.filter(sensor => sensor.ds_tipo_sens === sensorType);
+            filteredSensors.forEach(sensor => {
+                var option = document.createElement('option');
+                option.value = sensor.id;
+                option.text = sensor.id;
+                sensorCodeDropdown.appendChild(option);
+            });
+        }
+
+        // Busca dados do sensor selecionado
+        function fetchData() {
+            var sensorCode = document.getElementById('sensor-code').value;
+            var lastN = document.getElementById('lastN').value;
+
+            $.get(`/api/Api/temperature?lastN=${lastN}`, function (data) {
+                drawGraph(data, sensorCode);
+                document.getElementById('offline-alert').style.display = 'none';
+            }).fail(function () {
+                document.getElementById('offline-alert').style.display = 'block';
+                drawGraph(null);
+            });
+        }
+
+        // Desenha o gráfico
+        function drawGraph(data, sensorCode) {
+            var traces = [];
+            var alertTriggered = false;
+
+            if (data && data.length) {
+                var times = data.map(item => new Date(item.recvTime));
+                var values = data.map(item => item.attrValue);
+
+                traces.push({
+                    x: times,
+                    y: values,
+                    mode: 'lines+markers',
+                    name: 'Temperatura',
+                    line: { color: 'orange' }
+                });
+
+                var avg = values.reduce((a, b) => a + b, 0) / values.length;
+                traces.push({
+                    x: [times[0], times[times.length - 1]],
+                    y: [avg, avg],
+                    mode: 'lines',
+                    name: 'Média',
+                    line: { color: 'blue', dash: 'dot' }
+                });
+
+                alertTriggered = values.some(value => value > avg);
+            } else {
+                traces.push({
+                    x: [new Date(), new Date()],
+                    y: [0, 0],
+                    text: 'Servidor Offline',
+                    hoverinfo: 'text',
+                    line: { color: 'gray' }
+                });
+            }
+
+            document.getElementById('alert').style.display = alertTriggered ? 'block' : 'none';
+
+            Plotly.newPlot('lumitemp-graph', traces, {
+                title: 'Temperatura ao Longo do Tempo',
+                xaxis: { title: 'Tempo' },
+                yaxis: { title: 'Temperatura (°C)' }
+            });
+        }
+
+        // Inicializa
+        $(document).ready(function () {
+            fetchSensorCodes();
+            fetchData();
+            setInterval(fetchData, 1500);
         });
     </script>
 </body>
 </html>
+ *@

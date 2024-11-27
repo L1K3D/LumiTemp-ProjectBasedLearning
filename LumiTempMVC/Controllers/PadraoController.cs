@@ -35,9 +35,11 @@ namespace LumiTempMVC.Controllers
         // Método para exibir a lista de registros
         public virtual IActionResult Index()
         {
+
             try
             {
                 var lista = DAO.Listagem(); // Obtém a lista de registros do DAO
+
                 return View(NomeViewIndex, lista); // Retorna a View correspondente com a lista
             }
             catch (Exception erro)

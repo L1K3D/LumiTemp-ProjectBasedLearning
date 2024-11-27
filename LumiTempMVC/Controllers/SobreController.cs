@@ -22,6 +22,8 @@ namespace LumiTempMVC.Controllers
         // Método que retorna a view da página principal "Sobre".
         public IActionResult Index()
         {
+            ViewBag.Logado = HelperControllers.VerificaUserLogado(HttpContext.Session);
+
             return View();
         }
 

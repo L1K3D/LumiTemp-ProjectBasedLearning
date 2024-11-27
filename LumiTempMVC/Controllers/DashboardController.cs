@@ -20,6 +20,8 @@ namespace LumiTempMVC.Controllers
 
         public IActionResult Index()
         {
+            ViewBag.Logado = HelperControllers.VerificaUserLogado(HttpContext.Session);
+
             var sensores = _sensorDao.Listagem();
             var funcionarios = _funcionarioDao.Listagem();
             var empresas = _empresaParceiraDao.Listagem();

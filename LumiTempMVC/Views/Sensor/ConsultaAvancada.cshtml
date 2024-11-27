@@ -1,4 +1,4 @@
-﻿@{
+﻿@* @{
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <fieldset id="areaFiltro" class="form-group">
@@ -28,4 +28,47 @@
     </div>
 </fieldset>
 <div id="resultadoConsulta" class="table-responsive">
+</div> *@
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<fieldset id="areaFiltro" class="form-group p-4 border rounded shadow-sm bg-light">
+    <legend class="text-primary font-weight-bold">Consulta Avançada de Sensores</legend>
+    <div class="row g-3 align-items-end">
+        <!-- Campo de Descrição -->
+        <div class="col-lg-4">
+            <label for="descricao" class="form-label">Descrição</label>
+            <input type="text" id="descricao" class="form-control" placeholder="Digite a descrição" />
+        </div>
+        <!-- Campo de Empresa -->
+        <div class="col-lg-3">
+            <label for="empresa" class="form-label">Empresa</label>
+            <select id="empresa" class="form-control" asp-items="@ViewBag.empresas">
+                <option value="">Selecione</option>
+            </select>
+        </div>
+        <!-- Campo de Data Inicial -->
+        <div class="col-lg-2">
+            <label for="dataInicial" class="form-label">Data Inicial</label>
+            <input type="date" id="dataInicial" class="form-control" />
+        </div>
+        <!-- Campo de Data Final -->
+        <div class="col-lg-2">
+            <label for="dataFinal" class="form-label">Data Final</label>
+            <input type="date" id="dataFinal" class="form-control" />
+        </div>
+        <!-- Botão Aplicar Filtro -->
+        <div class="col-lg-1 d-flex justify-content-center">
+            <button id="btnFiltro" class="btn btn-success w-100" onclick="aplicaFiltroConsultaAvancada2()">
+                Aplicar
+            </button>
+        </div>
+    </div>
+</fieldset>
+
+<!-- Resultado da Consulta -->
+<div id="resultadoConsulta" class="table-responsive mt-4">
+    <!-- Tabela será carregada dinamicamente -->
 </div>
